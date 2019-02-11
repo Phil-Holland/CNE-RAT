@@ -1,0 +1,168 @@
+/* Global styles */
+
+input[type="checkbox"] {
+    transform:scale(1.5, 1.5);
+}
+
+form,fieldset {
+    margin-bottom: 0;
+}
+
+hr {
+    margin: 1rem 0;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    padding: 6px 0;
+}
+
+.container {
+    max-width: none !important;
+    padding-left: 40px !important;
+    padding-right: 40px !important;
+}
+
+/* Configuration page */
+
+#content {
+    padding-top: 20px;
+    padding-bottom: 50px;
+}
+
+#warwick {
+    float: right;
+}
+
+#images {
+    margin-bottom: 10px;
+}
+
+#images > img {
+    height: 70px;
+}
+
+#title {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+#subtitle {
+    text-align: center;
+}
+
+#configuration {
+    padding: 15px 25px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #f5f5f5;
+}
+
+.checkbox-label {
+    margin-left: 10px;
+    font-size: larger;
+}
+
+.button-black {
+    background-color: black !important;
+    border-color: black !important;
+}
+
+.button-large {
+    font-size: 1.4rem !important;
+    height: 4.5rem !important;
+    line-height: 4.5rem !important;
+    padding: 0 6rem !important;
+}
+
+textarea {
+    background: #f9f9f9 !important;
+    resize: vertical;
+}
+
+input[type="text"] {
+    background: #f9f9f9 !important;
+}
+
+input[type="email"] {
+    background: #f9f9f9 !important;
+}
+
+input[type="email"]:disabled {
+    background: #dddddd !important;
+}
+
+/* Results page */
+
+#title-results {
+    display: inline-block;
+}
+
+#title-results > a {
+    margin-bottom: 5px;
+    color: black !important;
+    text-decoration: underline;
+}
+
+#title-results > h3 {
+    margin-bottom: 0;
+    display: inline;
+}
+
+#title-results > span {
+    margin-bottom: 0;
+    display: inline;
+    font-size: larger;
+    margin-left: 5px;
+}
+
+#images-results {
+    display: inline-block;
+    float: right;
+}
+
+#images-results > img {
+    padding: 0 2rem;
+    height: 50px;
+    float: right;
+}
+
+#config-toggle {
+    text-decoration: underline;
+}
+
+#config-toggle:hover {
+    cursor: pointer;
+    color: #444444;
+}
+
+#config-code {
+    max-height: 240px;
+    overflow-y: scroll;
+}
+
+#analysis-sidebar-list {
+    margin-top: 10px;
+}
+
+#analysis-sidebar-list > li {
+    padding: 5px 5px;
+}
+
+#analysis-sidebar-list > li[data-active=true] {
+    font-weight: bold;
+    background-color: #f9f9f9;
+}
+
+#analysis-sidebar-list > li[data-active=false] {
+    text-decoration: underline;
+}
+
+#analysis-sidebar-list > li[data-active=false]:hover {
+    cursor: pointer;
+    color: #444444;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Get milligram & fonts from CDN -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+
+    <!-- Load custom CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css" >
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="row">
+            <div class="column column-20"></div>
+            <div class="column column-60">
+                <div id="images">
+                    <img src="logo.png" alt="Origene logo" id="logo">
+                    <img src="warwick.png" alt="Warwick crest" id="warwick">
+                </div>
+                <h1 id="title">{{ title }}</h1>
+                <div id="subtitle">{{ subtitle }}</div>
+                <hr>
+                <div id="configuration">
+                    <form id="config-form">
+                        <fieldset>
+                            <label for="cne-file">CNE .fasta file (upload or paste):</label>
+                            <input type="file" name="cne-file" data-target="cne">
+                            <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE .fasta file contents here"></textarea>
+                            <br>
+                            <input type="checkbox" id="task-rna-protein" checked="checked">
+                            <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis</span><br>
+                            <div id="rna-protein-config">
+                                <input type="text" name="rna_protein_example" id="rna-protein-example">
+                            </div>
+                            <input type="checkbox" id="task-rna-rna" checked="checked">
+                            <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis</span><br>
+                            <div id="rna-rna-config">
+                                <input type="text" name="rna_rna_example" id="rna-rna-example">
+                            </div>
+                            <br>
+                            <input type="checkbox" name="email-check" id="email-check">&nbsp;&nbsp;Send an email on analysis completion?<br>
+                            <input type="email" name="email" placeholder="mail@example.com" id="email" disabled>
+
+                            <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
+                        </fieldset>
+                    </form>    
+                </div>
+                <hr>
+                <small>{{ footer|safe }}</small>
+            </div>
+            <div class="column column-20"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="index.js"></script>
+
+</body>
+</html>
