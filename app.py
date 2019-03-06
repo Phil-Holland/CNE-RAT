@@ -4,6 +4,7 @@ from celery import Celery
 import markdown
 import uuid
 import datetime
+import os
 
 app = Flask(__name__, 
     template_folder='app/templates',
@@ -32,6 +33,10 @@ def inject_global_vars():
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/cneat')
+def cneat():
+    return render_template('cneat.html')
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
@@ -90,15 +95,18 @@ def new_analysis():
             redis.set('analyses:' + uid + ':config', json.dumps(config))
             break
     
+    working_dir = '/var/tmp/' + uid
+    os.mkdir(working_dir)
+
     if config['config']['task_rna_rna'] == True:
-        t1 = viennarna.viennarna.delay("test1", "test2")
+        t1 = viennarna.viennarna.delay(config, working_dir)
         redis.lpush('analyses:' + uid + ':tasks', 
             json.dumps({
                 'task_name': 'viennarna', 
                 'task_id': t1.task_id
             })
         )
-        t2 = intarna.intarna.delay("test1", "test2")
+        t2 = intarna.intarna.delay(config, working_dir)
         redis.lpush('analyses:' + uid + ':tasks', 
             json.dumps({
                 'task_name': 'intarna', 

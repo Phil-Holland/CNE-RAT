@@ -4,5 +4,5 @@ from app import celery
 
 @celery.task(name='intarna')
 def intarna(shared_cfg, tool_cfg):
-    time.sleep(10)
-    return '# this is some test content\n[Google](http://google.com)'
+    time.sleep(1)
+    return str(shared_cfg)
