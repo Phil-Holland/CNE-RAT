@@ -6,5 +6,5 @@ celery multi start 5 -A app.celery --pidfile="/var/run/celery/%n.pid" --logfile=
 
 celery flower -A app.celery --loglevel=info --persistent=True &
 
-# Start the primary process and put it in the background
+# start the primary process and put it in the background
 python app.py
