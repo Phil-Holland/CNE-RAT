@@ -1,6 +1,6 @@
 $(function() {    
     // upload data
-    $('input[type=file]').on('change', function(e) {
+    $('fieldset, .rna-rna-query-sequence').on('change', 'input[type=file]', function(e) {
         var target_id = '#' + $(this).attr('data-target');
         var file = $(this).prop('files')[0];
 
@@ -50,18 +50,27 @@ $(function() {
 
         // add values from task config div
         $('#rna-protein-config').children().each(function() {
-            config['task_rna_protein_config'][$(this).prop('name')] = 
-                $(this).val();
+            if($(this).is('input') || $(this).is('textarea')) {
+                config['task_rna_protein_config'][$(this).prop('name')] = 
+                    $(this).val();
+            }
         });
         $('#rna-rna-config').children().each(function() {
-            config['task_rna_rna_config'][$(this).prop('name')] = 
-                $(this).val();
+            if($(this).is('input') || $(this).is('textarea')) {
+                if($(this).is(':radio')) {
+                    if($(this).is(':checked')) {
+                        config['task_rna_rna_config'][$(this).prop('name')] = 
+                        $(this).val();
+                    }
+                } else {
+                    config['task_rna_rna_config'][$(this).prop('name')] = 
+                    $(this).val();
+                }
+            }
         });
         
         config['send_email'] = $('#email-check').is(":checked");
         config['email'] = $('#email').val();
-
-        console.dir(config);
 
         // TODO: client-side validation
 

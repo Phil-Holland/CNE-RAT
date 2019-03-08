@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
     <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <!-- Icon pack -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Load custom CSS -->
     <link rel="stylesheet" type="text/css" href="style.css" >
@@ -24,7 +26,7 @@
                     <img src="logo.png" alt="Origene logo" id="logo">
                     <img src="warwick.png" alt="Warwick crest" id="warwick">
                 </div>
-                <a href="/"><strong>&larr;</strong> go back</a>
+                <a href="/"><strong>&larr;</strong> back to tool select</a>
                 <h1 id="title">{{ title }}</h1>
                 <div id="subtitle">{{ subtitle }}</div>
                 <hr>
@@ -33,24 +35,70 @@
                         <fieldset>
                             <label for="cne-file">CNE FASTA file (upload or paste):</label>
                             <input type="file" name="cne-file" data-target="cne">
-                            <p>Only single sequence FASTA files are permitted</p>
+                            <p>
+                                Only single sequence FASTA files are permitted. The file can be edited before
+                                submission in the textbox below.
+                            </p>
                             <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
                             
                             <br>
                             <input type="checkbox" id="task-rna-protein" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
-                            <div id="rna-protein-config">
-                                <input type="text" name="rna_protein_example" id="rna-protein-example">
+                            <div class="config-nested">
+                                <p>
+                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
+                                        cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non 
+                                        ident, sunt in culpa officia deserunt mollit anim id est laborum.
+                                </p>
+                                <div id="rna-protein-config">
+                                    <br>
+                                    <input type="checkbox" name="rna_protein_example" id="rna-protein-example" checked="checked">
+                                    <span class="checkbox-label">Example configuration option</span>
+                                    <br>
+                                </div>
                             </div>
+                            <br>
                             <input type="checkbox" id="task-rna-rna" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis pipeline</span><br>
-                            <p>
-                                This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
-                                set of query RNA sequences (these are expected to be shorter than the CNE sequence). 
-                                Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
-                            </p>
-                            <div id="rna-rna-config">
-                                <input type="text" name="rna_rna_example" id="rna-rna-example">
+                            <div class="config-nested">
+                                <p>
+                                    This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
+                                    set of query RNA sequences (these are expected to be shorter than the CNE sequence). 
+                                    Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
+
+                                    Two separate tools are used in RNA-RNA interaction analysis: 
+                                    <a target="_blank" href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> and
+                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>. 
+                                    You may choose which of these tools are used during analysis, or run both.
+                                </p>
+                                <div id="rna-rna-config">
+                                    <br>
+                                    <p>
+                                        Select which analysis tool to use:
+                                    </p>
+                                    <input type="radio" name="rna_rna_pipeline" value="both" checked>
+                                    <span class="checkbox-label">Run <b>both</b> the <b>ViennaRNA</b> and <b>IntaRNA</b> interaction analysis pipelines</span>
+                                    <br>
+                                    <input type="radio" name="rna_rna_pipeline" value="vienna">
+                                    <span class="checkbox-label">Run just the <b>ViennaRNA</b> interaction analysis pipeline</span>
+                                    <br>
+                                    <input type="radio" name="rna_rna_pipeline" value="inta"> 
+                                    <span class="checkbox-label">Run just the <b>IntaRNA</b> interaction analysis pipeline</span>
+                                    <br>
+                                    <br>
+                                    <p>
+                                        Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file:
+                                    </p>
+                                    <label for="query_file">Query sequence(s) FASTA file (upload or paste):</label>
+                                    <input type="file" name="query_file" data-target="query-sequences">
+                                    <p>
+                                        The file can be edited before submission in the textbox below.
+                                    </p>
+                                    <textarea name="query_sequences" id="query-sequences" cols="30" rows="3" placeholder="Paste query sequence FASTA file contents here"></textarea>
+                                </div>
                             </div>
                             <br>
                             <input type="checkbox" name="email-check" id="email-check">&nbsp;&nbsp;Send an email on analysis completion?<br>

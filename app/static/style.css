@@ -4,6 +4,14 @@ input[type="checkbox"] {
     transform:scale(1.5, 1.5);
 }
 
+input[type="radio"] {
+    transform:scale(1.5, 1.5);
+}
+
+input[type="text"] {
+    margin-bottom: 0;
+}
+
 form,fieldset {
     margin-bottom: 0;
 }
@@ -89,6 +97,12 @@ a {
     background-color: #f5f5f5;
 }
 
+.config-nested {
+    padding-left: 15px;
+    border-left: 2px solid #a7a7a7;
+    margin-bottom: 10px;
+}
+
 fieldset > p {
     font-size: 0.9em;
 }
@@ -113,6 +127,8 @@ fieldset > p {
 textarea {
     background: #f9f9f9 !important;
     resize: vertical;
+    font-family: monospace;
+    font-size: 1.2em;
 }
 
 input[type="text"] {
@@ -174,20 +190,21 @@ input[type="email"]:disabled {
     margin-top: 10px;
 }
 
-#analysis-sidebar-list > li {
+#analysis-sidebar-list li {
     padding: 5px 5px;
+    display: inline;
 }
 
-#analysis-sidebar-list > li[data-active=true] {
+#analysis-sidebar-list li[data-active=true] {
     font-weight: bold;
     background-color: #f9f9f9;
 }
 
-#analysis-sidebar-list > li[data-active=false] {
+#analysis-sidebar-list li[data-active=false] {
     text-decoration: underline;
 }
 
-#analysis-sidebar-list > li[data-active=false]:hover {
+#analysis-sidebar-list li[data-active=false]:hover {
     cursor: pointer;
     color: #444444;
 }

@@ -9,6 +9,8 @@
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
     <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
     <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <!-- Icon pack -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Load custom CSS -->
     <link rel="stylesheet" type="text/css" href="../style.css" >
@@ -35,7 +37,7 @@
                 Started: <strong> {{ started }}</strong>
             </div>
             <div class="column column-25">
-                Status: <strong id="status"></strong>
+                Overall status: <strong id="status"></strong>
             </div>
             <div class="column column-25">
                 <span id="config-toggle">Show analysis configuration</span>
@@ -46,12 +48,15 @@
         </div>
         <hr>
         <div class="row">
-            <div class="column column-20">
+            <div class="column column-25">
                 <span>Select tool to view reports:</span>
                 <ul id="analysis-sidebar-list">
                 </ul>
             </div>
-            <div class="column column-80" id="task-content">
+            <div class="column column-75">
+                <div id="task-content">
+
+                </div>
             </div>
         </div>
         <hr>

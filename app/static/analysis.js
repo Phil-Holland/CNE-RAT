@@ -7,7 +7,14 @@ $(function() {
     // populate sidebar tool list
     function add_tool(title, name, id) {
         $('#analysis-sidebar-list').append(
-            '<li data-tool=' + id + ' data-name="' + name + '" data-active=false class=\'tool-link\'>' + title + '</li>'
+            '<div class=\'row\'>' +
+            '<div class=\'column column-10\'>' +
+            '<i id=\'tool-icon-' + name + '\' class=\'material-icons\'>hourglass_empty</i>&nbsp;' +
+            '</div>' +
+            '<div class=\'column column-90\'>' +
+            '<li data-tool=' + id + ' data-name="' + name + '" data-active=false class=\'tool-link\'>' + title + '</li>' +
+            '</div>' +
+            '</div>'
         );
         $('#task-content').append(
             '<div id="content-' + name + '" style="display: none"></div>'
@@ -56,11 +63,16 @@ var update_content = function(tid, name) {
     $.post('/get_task_data/' + tid, function(t_data) {
         t_data = JSON.parse(t_data);
         
+        console.log(name);
+        console.log(t_data);
+
         if(t_data.success) {
             $('#content-' + name).html(t_data.result);
         }
     });
 }
+
+var failure_text = 'Unfortunately, this tool has failed to complete successfully.';
 
 var update = function() {
     // get task status from flask
@@ -73,8 +85,15 @@ var update = function() {
                 var overall_status = 'COMPLETED';
                 for (var i = 0; i < data.statuses.length; i++) {
                     var el = data.statuses[i];
+                    $('#tool-icon-' + el.name).html('hourglass_empty');
+
                     if(el.status == 'FAILURE') {
                         overall_status = 'FAILURE';
+                        $('#tool-icon-' + el.name).html('close');
+                        $('#tool-icon-' + el.name).css('color', 'red');
+                        $('#tool-icon-' + el.name).css('font-weight', 'bold');
+
+                        $('#content-' + el.name).html(failure_text);
                     } else if(el.status == 'STARTED' || 
                         el.status == 'RECEIVED' || 
                         el.status == 'PENDING') {
@@ -86,6 +105,8 @@ var update = function() {
                         if(last_statuses == null || last_statuses[i].status != 'SUCCESS') {
                             update_content(el.id, el.name);
                         }
+                        $('#tool-icon-' + el.name).html('done');
+                        $('#tool-icon-' + el.name).css('color', 'green');
                     }
                 }
                 $('#status').html(overall_status);

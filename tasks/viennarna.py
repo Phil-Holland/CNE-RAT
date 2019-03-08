@@ -1,4 +1,6 @@
 import sys, time, subprocess, base64
+from Bio import SeqIO
+from io import StringIO
 sys.path.append('..')
 from app import celery 
 
@@ -6,26 +8,51 @@ from app import celery
 viennarna_template = """
 # ViennaRNA Toolchain Output
 
-CNE sequence: {cne}
+CNE sequence:
 
-Query sequences: {seq}
+```
+{cne}
+```
 
+Query sequences: 
 
+```
+{seq}
+```
+
+RNAcofold output:
+
+```
 {output}
+```
 
-"""
+"""    
 
 @celery.task(name='viennarna')
 def viennarna(config, working_dir):
-    cne = config['config']['cne']
-    query_sequences = config['config']['task_rna_rna_config']['query_sequences']
+    cne_sequences_fasta = config['config']['cne']
+    query_sequences_fasta = config['config']['task_rna_rna_config']['query_sequences']
+
+    cne_io = StringIO(cne_sequences_fasta)
+    cne_sequences_parsed = SeqIO.parse(cne_io, 'fasta')
+    cne_sequence = ''
+    for fasta in cne_sequences_parsed:
+        cne_sequence = str(fasta.seq)
+        break
+
+    query_io = StringIO(query_sequences_fasta)
+    query_sequences_parsed = SeqIO.parse(query_io, 'fasta')
+    query_sequences = []
+    for fasta in query_sequences_parsed:
+        query_sequences.append(str(fasta.seq))
 
     seq1 = query_sequences[0]
 
     rnacofold_input = '> cofold\n{cne}&{query}'.format(
-        cne=cne,
+        cne=cne_sequence,
         query=seq1
     )
+    print(rnacofold_input)
 
     p = subprocess.Popen(['RNAcofold', '-p'],
         cwd=working_dir, 
@@ -33,9 +60,10 @@ def viennarna(config, working_dir):
         stdin=subprocess.PIPE
     )
     output, err = p.communicate(input=str.encode(rnacofold_input))
-    
+    output = output.decode("utf-8")
+
     return viennarna_template.format(
-        cne=cne,
-        seq=', '.join(query_sequences),
+        cne=cne_sequence,
+        seq=',\n\n'.join(query_sequences),
         output=output
     )
