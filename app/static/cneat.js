@@ -50,21 +50,38 @@ $(function() {
 
         // add values from task config div
         $('#rna-protein-config').children().each(function() {
-            if($(this).is('input') || $(this).is('textarea')) {
-                config['task_rna_protein_config'][$(this).prop('name')] = 
-                    $(this).val();
+            if(($(this).is('input') || $(this).is('textarea'))
+                && !$(this).hasClass('config-exclude')) {
+
+                if($(this).is(':radio')) {
+                    if($(this).is(':checked')) {
+                        config['task_rna_protein_config'][$(this).prop('name')] = 
+                            $(this).val();
+                    }
+                } else if($(this).is(':checkbox')) {
+                    config['task_rna_protein_config'][$(this).prop('name')] = 
+                        $(this).is(":checked");
+                } else {
+                    config['task_rna_protein_config'][$(this).prop('name')] = 
+                        $(this).val();
+                }
             }
         });
         $('#rna-rna-config').children().each(function() {
-            if($(this).is('input') || $(this).is('textarea')) {
+            if(($(this).is('input') || $(this).is('textarea'))
+                && !$(this).hasClass('config-exclude')) {
+
                 if($(this).is(':radio')) {
                     if($(this).is(':checked')) {
                         config['task_rna_rna_config'][$(this).prop('name')] = 
-                        $(this).val();
+                            $(this).val();
                     }
+                } else if($(this).is(':checkbox')) {
+                    config['task_rna_rna_config'][$(this).prop('name')] = 
+                        $(this).is(":checked");
                 } else {
                     config['task_rna_rna_config'][$(this).prop('name')] = 
-                    $(this).val();
+                        $(this).val();
                 }
             }
         });

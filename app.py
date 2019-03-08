@@ -18,7 +18,7 @@ celery = Celery(app.name,
     broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)
 
-from tasks import viennarna, intarna
+from tasks import viennarna, intarna, protein
 
 redis = Redis(host='redis', port=6379)
 
@@ -98,21 +98,33 @@ def new_analysis():
     working_dir = '/var/tmp/' + uid
     os.mkdir(working_dir)
 
+    if config['config']['task_rna_protein'] == True:
+        t0 = protein.protein.delay(config, working_dir)
+        redis.lpush('analyses:' + uid + ':tasks', 
+            json.dumps({
+                'task_name': 'protein', 
+                'task_id': t0.task_id
+            })
+        )
+
     if config['config']['task_rna_rna'] == True:
-        t1 = viennarna.viennarna.delay(config, working_dir)
-        redis.lpush('analyses:' + uid + ':tasks', 
-            json.dumps({
-                'task_name': 'viennarna', 
-                'task_id': t1.task_id
-            })
-        )
-        t2 = intarna.intarna.delay(config, working_dir)
-        redis.lpush('analyses:' + uid + ':tasks', 
-            json.dumps({
-                'task_name': 'intarna', 
-                'task_id': t2.task_id
-            })
-        )
+        if config['config']['task_rna_rna_config']['rna_rna_pipeline'] in ['both', 'vienna']:
+            t1 = viennarna.viennarna.delay(config, working_dir)
+            redis.lpush('analyses:' + uid + ':tasks', 
+                json.dumps({
+                    'task_name': 'viennarna', 
+                    'task_id': t1.task_id
+                })
+            )
+
+        if config['config']['task_rna_rna_config']['rna_rna_pipeline'] in ['both', 'inta']:
+            t2 = intarna.intarna.delay(config, working_dir)
+            redis.lpush('analyses:' + uid + ':tasks', 
+                json.dumps({
+                    'task_name': 'intarna', 
+                    'task_id': t2.task_id
+                })
+            )
     
     return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'} 
 

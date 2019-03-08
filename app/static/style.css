@@ -38,6 +38,10 @@ a {
     text-decoration: underline;
 }
 
+pre {
+    padding-left: 10px;
+}
+
 .container {
     max-width: none !important;
     padding-left: 40px !important;

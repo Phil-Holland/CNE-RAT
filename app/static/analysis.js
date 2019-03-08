@@ -21,16 +21,17 @@ $(function() {
         );
     }
 
-    console.log(config);
-
-    if("task_rna_protein" in config && config["task_rna_protein"] == true) {
-        add_tool("RNA-protein interaction analysis tool", "rnaprotein", 1);
+    if('task_rna_protein' in config && config['task_rna_protein'] == true) {
+        add_tool('RNA-protein interaction analysis tool', 'protein', 1);
     }
-    if("task_rna_rna" in config && config["task_rna_rna"] == true) {
-        add_tool("RNA-RNA interaction analysis - ViennaRNA", "viennarna", 2);
-        add_tool("RNA-RNA interaction analysis - IntaRNA", "intarna", 3);
+    if('task_rna_rna' in config && config['task_rna_rna'] == true) {
+        var pipeline = config['task_rna_rna_config']['rna_rna_pipeline'];
+        if(pipeline == 'vienna' || pipeline == 'both')
+            add_tool('RNA-RNA interaction analysis - ViennaRNA', 'viennarna', 2);
+        if(pipeline == 'inta' || pipeline == 'both')
+            add_tool('RNA-RNA interaction analysis - IntaRNA', 'intarna', 3);
     }
-    $('#analysis-sidebar-list > li:first').attr('data-active', true);
+    $('#analysis-sidebar-list li:first').attr('data-active', true);
     $('#task-content > div:first').show();
 
     // when a specific tool output has been clicked

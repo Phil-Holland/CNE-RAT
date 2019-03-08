@@ -10,21 +10,21 @@ viennarna_template = """
 
 CNE sequence:
 
-```
+<pre>
 {cne}
-```
+</pre>
 
 Query sequences: 
 
-```
+<pre>
 {seq}
-```
+</pre>
 
 RNAcofold output:
 
-```
+<pre>
 {output}
-```
+</pre>
 
 """    
 
