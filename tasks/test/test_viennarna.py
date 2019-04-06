@@ -24,8 +24,8 @@ working_dir = os.path.dirname(os.path.realpath(__file__))
 
 print('Starting ViennaRNA task')
 output = viennarna(config, working_dir)
-print('Finished. Output:\n')
-print(str(output))
+#print('Finished. Output:\n')
+#print(str(output))
 
 file = open('test_viennarna_output.md','w')
 file.write(output)

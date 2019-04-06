@@ -212,3 +212,11 @@ input[type="email"]:disabled {
     cursor: pointer;
     color: #444444;
 }
+
+#task-content svg {
+    width: 100% !important;
+}
+
+#task-content summary:hover {
+    cursor: pointer;
+}

@@ -42,7 +42,7 @@ $(function() {
                 $('#content-' + $(this).attr('data-name')).hide();
             });
             $(this).attr('data-active', true);
-            $('#content-' + $(this).attr('data-name')).show();            
+            $('#content-' + $(this).attr('data-name')).show();
         }
     });
 
@@ -63,9 +63,6 @@ $(function() {
 var update_content = function(tid, name) {
     $.post('/get_task_data/' + tid, function(t_data) {
         t_data = JSON.parse(t_data);
-        
-        console.log(name);
-        console.log(t_data);
 
         if(t_data.success) {
             $('#content-' + name).html(t_data.result);
