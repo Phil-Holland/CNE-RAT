@@ -6,4 +6,3 @@ tornado>=4.2.0,<6.0.0
 Markdown==3.0.1
 biopython==1.73
 werkzeug==0.14.1
-Pillow==5.2.0

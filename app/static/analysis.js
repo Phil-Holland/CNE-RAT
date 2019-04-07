@@ -56,7 +56,7 @@ $(function() {
             $('#config-toggle').html("Hide analysis configuration")
         }
     });
-
+    
     update();
 });
 
@@ -66,12 +66,28 @@ var update_content = function(tid, name) {
 
         if(t_data.success) {
             $('#content-' + name).html(t_data.result);
+            $('#content-' + name).find('svg').each(function(i) {
+                $(this).attr('width', null);
+                $(this).attr('height', null);
+
+                $(this).click(function() {
+                    $("#svg-modal-content").html('');
+                    $("#svg-modal-content").append($(this).clone());
+                    $("#svg-modal").modal();
+
+                    svgPanZoom($("#svg-modal-content > svg")[0], {
+                        controlIconsEnabled: true,
+                        zoomScaleSensitivity: 0.5,
+                        contain: true
+                    });
+
+                });
+            });
         }
     });
 }
 
 var failure_text = 'Unfortunately, this tool has failed to complete successfully.';
-
 var update = function() {
     // get task status from flask
     $.post('/get_analysis_status/' + uid, function(data) {
