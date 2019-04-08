@@ -29,12 +29,6 @@ $(function() {
         }
     });
 
-
-    // email checkbox
-    $('#email-check').click(function() {
-        $('#email').prop('disabled', !($(this).prop('checked')));
-    });
-
     $('#config-form').submit(function(e) {
         e.preventDefault();
 
@@ -85,9 +79,6 @@ $(function() {
                 }
             }
         });
-        
-        config['send_email'] = $('#email-check').is(":checked");
-        config['email'] = $('#email').val();
 
         // TODO: client-side validation
 

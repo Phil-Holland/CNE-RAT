@@ -1,18 +1,26 @@
 
 # ViennaRNA Toolchain Output
 
+## Overview
+
 CNE sequence:
 
+`cne`:
 <pre>
 ACTTTTTTGAGTTAGTTTAAACACACCCGCA
 </pre>
 
 Query sequences: 
 
-<pre>
-CAATCTATTGTAACAAAGAA,
-CAATCTACCGAAACAAAA
-</pre>
+`query1`:
+
+<pre>CAATCTATTGTAACAAAGAA</pre>
+
+`query2`:
+
+<pre>CAATCTACCGAAACAAAA</pre>
+
+
 
 ---
 
@@ -26,12 +34,10 @@ following query sequence:
 CAATCTATTGTAACAAAGAA
 </pre>
 
-<details><summary><a>Click to show/hide report</a></summary>
-
 RNAcofold output:
 
 <pre>
-> cofold
+>cofold
 ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
 ...((((((......................&.............)))))). ( -3.30)
 ..{((((((.,,{{,................&......,...,,,)))))}. [ -5.04]
@@ -40,7 +46,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
 </pre>
 
 <div class="row">
-    <div class="column column">
+    <div class="column">
         <strong>Secondary structure prediction</strong>
         <hr>
         <?xml version='1.0' encoding='UTF-8'?>
@@ -107,7 +113,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
 </g>
 </svg>
     </div>
-    <div class="column column">
+    <div class="column">
         <strong>Interaction dot-plot</strong>
         <hr>
         <?xml version='1.0' encoding='UTF-8'?>
@@ -739,13 +745,17 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
 </g>
 </g>
 </svg>
+        <hr>
+        <p>
+        The dot plot shows a matrix of squares with area proportional 
+        to the pairing probability in the upper right half, and one square 
+        for each pair in the minimum free energy structure in the lower 
+        left half.
+        </p>
     </div>
 </div>
 
-</details>
-
 ---
-
 
 
 ## Interaction 2
@@ -757,12 +767,10 @@ following query sequence:
 CAATCTACCGAAACAAAA
 </pre>
 
-<details><summary><a>Click to show/hide report</a></summary>
-
 RNAcofold output:
 
 <pre>
-> cofold
+>cofold
 ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
 ....(((((.((..(((..............&.)))..)))))))..... ( -2.80)
 ....{((((.({.,(,,..............&..,.,,)}))))}..... [ -4.48]
@@ -771,7 +779,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
 </pre>
 
 <div class="row">
-    <div class="column column">
+    <div class="column">
         <strong>Secondary structure prediction</strong>
         <hr>
         <?xml version='1.0' encoding='UTF-8'?>
@@ -836,7 +844,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
 </g>
 </svg>
     </div>
-    <div class="column column">
+    <div class="column">
         <strong>Interaction dot-plot</strong>
         <hr>
         <?xml version='1.0' encoding='UTF-8'?>
@@ -1390,13 +1398,17 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
 </g>
 </g>
 </svg>
+        <hr>
+        <p>
+        The dot plot shows a matrix of squares with area proportional 
+        to the pairing probability in the upper right half, and one square 
+        for each pair in the minimum free energy structure in the lower 
+        left half.
+        </p>
     </div>
 </div>
 
-</details>
-
 ---
-
 
 
 

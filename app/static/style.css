@@ -242,10 +242,14 @@ input[type="email"]:disabled {
 
 #svg-modal-content {
     width: 100%;
-    height: 100%;
+    height: 95%;
 }
 
 #svg-modal-content svg {
     width: 100%;
     height: 100%;
+}
+
+#svg-modal-content svg:hover {
+    cursor: move;
 }
