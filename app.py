@@ -19,8 +19,12 @@ celery = Celery(app.name,
 celery.conf.update(app.config)
 
 from tasks import viennarna, intarna, protein
-
 redis = Redis(host='redis', port=6379)
+
+# load json schemas
+schema_cneat = ''
+with open("schemas/cneat.json") as f:
+    schema_cneat = f.read()
 
 @app.context_processor
 def inject_global_vars():
@@ -36,7 +40,7 @@ def index():
 
 @app.route('/cneat')
 def cneat():
-    return render_template('cneat.html')
+    return render_template('cneat.html', schema=schema_cneat)
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
@@ -46,6 +50,7 @@ def analysis(uid):
 
     started = redis.get('analyses:' + uid + ':started').decode("utf-8")
     config = redis.get('analyses:' + uid + ':config').decode("utf-8")
+    print(config)
     return render_template('analysis.html', uid=uid, config=config, started=started)
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
@@ -98,7 +103,7 @@ def new_analysis():
     working_dir = '/var/tmp/' + uid
     os.mkdir(working_dir)
 
-    if config['config']['task_rna_protein'] == True:
+    if config['rna_protein'] == True:
         t0 = protein.protein.delay(config, working_dir)
         redis.lpush('analyses:' + uid + ':tasks', 
             json.dumps({
@@ -107,8 +112,8 @@ def new_analysis():
             })
         )
 
-    if config['config']['task_rna_rna'] == True:
-        if config['config']['task_rna_rna_config']['rna_rna_pipeline'] in ['both', 'vienna']:
+    if config['rna_rna'] == True:
+        if config['rna_rna_config']['vienna']:
             t1 = viennarna.viennarna.delay(config, working_dir)
             redis.lpush('analyses:' + uid + ':tasks', 
                 json.dumps({
@@ -117,11 +122,11 @@ def new_analysis():
                 })
             )
 
-        if config['config']['task_rna_rna_config']['rna_rna_pipeline'] in ['both', 'inta']:
+        if config['rna_rna_config']['inta']:
             t2 = intarna.intarna.delay(config, working_dir)
             redis.lpush('analyses:' + uid + ':tasks', 
                 json.dumps({
-                    'task_name': 'intarna', 
+                    'task_name': 'intarna',
                     'task_id': t2.task_id
                 })
             )

@@ -5,17 +5,27 @@ from viennarna import viennarna
 
 # a simple script to run the viennarna task locally
 config = {
-	'config': {
-		'cne': '> cne\nACTTTTTTGAGTTAGTTTAAACACACCCGCA', 
-		'email': 'test@test.com', 
-		'send_email': False, 
-		'task_rna_protein': True, 
-		'task_rna_protein_config': {
-		}, 
-		'task_rna_rna': True, 
-		'task_rna_rna_config': {
-			'rna_rna_pipeline': 'both',
-			'query_sequences': '> query1\nCAATCTATTGTAACAAAGAA\n\n> query2\nCAATCTACCGAAACAAAA'
+	'cne': '>cne\nACTTTTTTGAGTTAGTTTAAACACACCCGCA', 
+	'rna_protein': False, 
+	'rna_protein_config': {
+	}, 
+	'rna_rna': True, 
+	'rna_rna_config': {
+		'query_sequences': '>query1\nCAATCTATTGTAACAAAGAA\n\n>query2\nCAATCTACCGAAACAAAA',
+		'vienna': True,
+		'vienna_config': {
+			'rnaduplex': True,
+			'rnaduplex_config': {
+				'deltaenergy': 10.2
+			},
+			'rnacofold': True,
+			'rnacofold_config': {
+				
+			}
+		},
+		'inta': False,
+		'inta_config': {
+			
 		}
 	}
 }

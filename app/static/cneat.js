@@ -12,80 +12,81 @@ $(function() {
         }
     });
 
+    // hide error when the form gets changed
+    $('#config-form').change(function() {
+        $('#validation-error').slideUp(100);
+    });
+
     // task checkboxes
     $('#task-rna-protein').click(function() {
-        if($(this).prop('checked')) {
-            $('#rna-protein-config').slideDown(100);
-        } else {
-            $('#rna-protein-config').slideUp(100);
-        }
+        if($(this).prop('checked')) $('#rna-protein-config').slideDown(100);
+        else $('#rna-protein-config').slideUp(100);
     });
 
     $('#task-rna-rna').click(function() {
-        if($(this).prop('checked')) {
-            $('#rna-rna-config').slideDown(100);
-        } else {
-            $('#rna-rna-config').slideUp(100);
-        }
+        if($(this).prop('checked')) $('#rna-rna-config').slideDown(100);
+        else $('#rna-rna-config').slideUp(100);
+    });
+
+    $('#run-vienna').click(function() {
+        if($(this).prop('checked')) $('#vienna-config').slideDown(100);
+        else $('#vienna-config').slideUp(100);
+    });
+    
+    $('#run-inta').click(function() {
+        if($(this).prop('checked')) $('#inta-config').slideDown(100);
+        else $('#inta-config').slideUp(100);
+    });
+
+    $('#run-rnaduplex').click(function() {
+        if($(this).prop('checked')) $('#rnaduplex-config').slideDown(100);
+        else $('#rnaduplex-config').slideUp(100);
+    });
+
+    $('#run-rnacofold').click(function() {
+        if($(this).prop('checked')) $('#rnacofold-config').slideDown(100);
+        else $('#rnacofold-config').slideUp(100);
     });
 
     $('#config-form').submit(function(e) {
         e.preventDefault();
 
-        // get form data, and build js config object
-        config = {};
-        config['cne'] = $('#cne').val();
-
-        config['task_rna_protein'] = $('#task-rna-protein').is(":checked");
-        config['task_rna_rna'] = $('#task-rna-rna').is(":checked");
-
-        config['task_rna_protein_config'] = {};
-        config['task_rna_rna_config'] = {};
-
-        // add values from task config div
-        $('#rna-protein-config').children().each(function() {
-            if(($(this).is('input') || $(this).is('textarea'))
-                && !$(this).hasClass('config-exclude')) {
-
-                if($(this).is(':radio')) {
-                    if($(this).is(':checked')) {
-                        config['task_rna_protein_config'][$(this).prop('name')] = 
-                            $(this).val();
-                    }
-                } else if($(this).is(':checkbox')) {
-                    config['task_rna_protein_config'][$(this).prop('name')] = 
-                        $(this).is(":checked");
-                } else {
-                    config['task_rna_protein_config'][$(this).prop('name')] = 
-                        $(this).val();
-                }
+        // get form data, and attempt to build config object
+        config = {
+            'cne': $('#cne').val(), 
+            'rna_protein': $('#task-rna-protein').is(":checked"), 
+            'rna_protein_config': {}, 
+            'rna_rna': $('#task-rna-rna').is(":checked"), 
+            'rna_rna_config': {
+                'query_sequences': $('#query-sequences').val(),
+                'vienna': $('#run-vienna').is(":checked"),
+                'vienna_config': {
+                    'rnaduplex': $('#run-rnaduplex').is(":checked"),
+                    'rnaduplex_config': {
+                        'deltaenergy': parseFloat($('#rnaduplex-deltaenergy').val())
+                    },
+                    'rnacofold': $('#run-rnacofold').is(":checked"),
+                    'rnacofold_config': {}
+                },
+                'inta': $('#run-inta').is(":checked"),
+                'inta_config': {}
             }
-        });
-        $('#rna-rna-config').children().each(function() {
-            if(($(this).is('input') || $(this).is('textarea'))
-                && !$(this).hasClass('config-exclude')) {
+        }
 
-                if($(this).is(':radio')) {
-                    if($(this).is(':checked')) {
-                        config['task_rna_rna_config'][$(this).prop('name')] = 
-                            $(this).val();
-                    }
-                } else if($(this).is(':checkbox')) {
-                    config['task_rna_rna_config'][$(this).prop('name')] = 
-                        $(this).is(":checked");
-                } else {
-                    config['task_rna_rna_config'][$(this).prop('name')] = 
-                        $(this).val();
-                }
-            }
-        });
+        // use JSON schema to perform client-side validation on the JSON object
+        var valid = validate(config);
+        if(!valid) {
+            // validation errors encountered!
+            console.log(validate.errors);
+            
+            $('#validation-error').slideDown(100);
 
-        // TODO: client-side validation
+            // don't send the form
+            return false;
+        }
 
         // send POST request to start analysis
-        $.post('/new_analysis', JSON.stringify({
-            config: config
-        }), function(data) {
+        $.post('/new_analysis', JSON.stringify(config), function(data) {
             if(data['success']) {
                 window.location.replace("/analysis/" + data.uid);
             }

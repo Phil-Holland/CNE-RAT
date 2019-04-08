@@ -80,7 +80,7 @@
     <script type="text/javascript">
         var uid = {{ uid|tojson }};
         var started = {{ started|tojson }};
-        var config = JSON.parse({{ config|tojson }}).config;
+        var config = JSON.parse({{ config|tojson }});
         $('#config-code').html(JSON.stringify(config, null, 2));
     </script>
     <script type="text/javascript" src="../analysis.js"></script>

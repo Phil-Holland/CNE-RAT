@@ -21,14 +21,13 @@ $(function() {
         );
     }
 
-    if('task_rna_protein' in config && config['task_rna_protein'] == true) {
+    if(config['rna_protein'] == true) {
         add_tool('RNA-protein interaction analysis tool', 'protein', 1);
     }
-    if('task_rna_rna' in config && config['task_rna_rna'] == true) {
-        var pipeline = config['task_rna_rna_config']['rna_rna_pipeline'];
-        if(pipeline == 'vienna' || pipeline == 'both')
+    if(config['rna_rna'] == true) {
+        if(config['rna_rna_config']['vienna'])
             add_tool('RNA-RNA interaction analysis - ViennaRNA', 'viennarna', 2);
-        if(pipeline == 'inta' || pipeline == 'both')
+        if(config['rna_rna_config']['inta'])
             add_tool('RNA-RNA interaction analysis - IntaRNA', 'intarna', 3);
     }
     $('#analysis-sidebar-list li:first').attr('data-active', true);

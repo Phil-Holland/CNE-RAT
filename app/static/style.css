@@ -151,6 +151,20 @@ input[type="email"]:disabled {
     background: #dddddd !important;
 }
 
+input[type="number"] {
+    width: auto !important;
+}
+
+#validation-error {
+    color: white;
+    padding: 10px 10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: #D54B4B;
+    margin-bottom: 5px;
+}
+
 /* Results page */
 
 #title-results {

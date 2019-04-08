@@ -1,0 +1,144 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"$id": "cneat",
+	"title": "CNEAT",
+	"description": "A schema defining a CNEAT analysis configuration",
+	"type": "object",
+	"properties": {
+		"cne": {
+			"description": "A string holding the CNE sequence in FASTA format",
+			"type": "string"
+		},
+		"rna_protein": {
+			"description": "A boolean representing whether or not the RNA-protein analysis pipeline should be executed",
+			"type": "boolean"
+		},
+		"rna_protein_config": {
+			"description": "Additional configuration options for the RNA-protein analysis pipeline",
+			"type": "object"
+		},
+		"rna_rna": {
+			"description": "A boolean representing whether or not the RNA-RNA analysis pipeline should be executed",
+			"type": "boolean"
+		},
+		"rna_rna_config": {
+			"description": "Additional configuration options for the RNA-protein analysis pipeline",
+			"type": "object",
+			"properties": {
+				"query_sequences": {
+					"description": "A string holding the query sequence(s) in FASTA format",
+					"type": "string"
+				},
+				"inta": {
+					"description": "A boolean representing whether or not the IntaRNA pipeline should be executed",
+					"type": "boolean"
+				},
+				"inta_config": {
+					"description": "Additional configuration options for the IntaRNA analysis pipeline",
+					"type": "object"
+				},
+				"vienna": {
+					"description": "A boolean representing whether or not the ViennaRNA pipeline should be executed",
+					"type": "boolean"
+				},
+				"vienna_config": {
+					"description": "Additional configuration options for the ViennaRNA analysis pipeline",
+					"type": "object",
+					"properties": {
+						"rnacofold": {
+							"description": "A boolean representing whether or not the RNAcofold executable should be run",
+							"type": "boolean"
+						},
+						"rnacofold_config": {
+							"description": "Additional configuration options for the RNAcofold executable",
+							"type": "object"
+						},
+						"rnaduplex": {
+							"description": "A boolean representing whether or not the RNAduplex executable should be run",
+							"type": "boolean"
+						},
+						"rnaduplex_config": {
+							"description": "Additional configuration options for the RNAduplex executable",
+							"type": "object",
+							"properties": {
+								"deltaenergy": {
+									"description": "A float representing the energy range for returned sub-optimal interactions, in kcal/mol",
+									"type": "number",
+									"minimum": 0
+								}
+							}
+						}
+					},
+					"required": [
+						"rnacofold",
+						"rnacofold_config",
+						"rnaduplex",
+						"rnaduplex_config"
+					],
+					"anyOf": [
+						{
+							"properties": {
+								"rnacofold": { 
+									"enum": [true] 
+								}
+							}
+						},
+						{
+							"properties": {
+								"rnaduplex": { 
+									"enum": [true]
+								}
+							}
+						}
+					]
+				}
+			},
+			"required": [
+				"query_sequences",
+				"inta",
+				"inta_config",
+				"vienna",
+				"vienna_config"
+			],
+			"anyOf": [
+				{
+					"properties": {
+						"inta": { 
+							"enum": [true] 
+						}
+					}
+				},
+				{
+					"properties": {
+						"vienna": { 
+							"enum": [true]
+						}
+					}
+				}
+			]
+		}
+	},
+	"required": [
+		"cne",
+		"rna_protein",
+		"rna_protein_config",
+		"rna_rna",
+		"rna_rna_config"
+	],
+	"anyOf": [
+        {
+			"properties": {
+				"rna_protein": { 
+					"enum": [true] 
+				}
+			}
+        },
+        {
+			"properties": {
+				"rna_rna": { 
+					"enum": [true]
+				}
+			}
+		}
+	]
+}

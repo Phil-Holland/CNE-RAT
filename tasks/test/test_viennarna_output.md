@@ -34,9 +34,25 @@ following query sequence:
 CAATCTATTGTAACAAAGAA
 </pre>
 
-RNAcofold output:
 
-<pre>
+**RNAduplex output**:
+
+<pre style="max-height: 40pc; overflow-y: scroll;">
+>cne
+>query
+.(((&.))).  28,31  :   8,12  (-0.50)
+.(.&.).  27,29  :  17,19  ( 1.20)
+.(.&.).  26,28  :  17,19  ( 1.60)
+.(((((((...((((.&.))))...)))))))   2,17  :   6,20  (-3.10)
+.(((((((.&.)))))))   2,10  :  13,20  (-3.30)
+
+</pre>
+
+
+
+**RNAcofold output**:
+
+<pre style="max-height: 40pc; overflow-y: scroll;">
 >cofold
 ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
 ...((((((......................&.............)))))). ( -3.30)
@@ -755,6 +771,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUAUUGUAACAAAGAA
     </div>
 </div>
 
+
 ---
 
 
@@ -767,9 +784,23 @@ following query sequence:
 CAATCTACCGAAACAAAA
 </pre>
 
-RNAcofold output:
 
-<pre>
+**RNAduplex output**:
+
+<pre style="max-height: 40pc; overflow-y: scroll;">
+>cne
+>query
+.((.&.)).  27,30  :   8,11  (-0.50)
+.((((.&.)))).  14,19  :  10,15  (-2.00)
+.(((((.((..(((.&.)))..))))))).   4,18  :   1,14  (-2.80)
+
+</pre>
+
+
+
+**RNAcofold output**:
+
+<pre style="max-height: 40pc; overflow-y: scroll;">
 >cofold
 ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
 ....(((((.((..(((..............&.)))..)))))))..... ( -2.80)
@@ -1407,6 +1438,7 @@ ACUUUUUUGAGUUAGUUUAAACACACCCGCA&CAAUCUACCGAAACAAAA
         </p>
     </div>
 </div>
+
 
 ---
 
