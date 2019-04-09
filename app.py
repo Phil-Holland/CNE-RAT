@@ -50,7 +50,7 @@ def analysis(uid):
 
     started = redis.get('analyses:' + uid + ':started').decode("utf-8")
     config = redis.get('analyses:' + uid + ':config').decode("utf-8")
-    print(config)
+    
     return render_template('analysis.html', uid=uid, config=config, started=started)
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
@@ -99,12 +99,9 @@ def new_analysis():
             redis.set('analyses:' + uid + ':started', started)
             redis.set('analyses:' + uid + ':config', json.dumps(config))
             break
-    
-    working_dir = '/var/tmp/' + uid
-    os.mkdir(working_dir)
 
     if config['rna_protein'] == True:
-        t0 = protein.protein.delay(config, working_dir)
+        t0 = protein.protein.delay(config, uid)
         redis.lpush('analyses:' + uid + ':tasks', 
             json.dumps({
                 'task_name': 'protein', 
@@ -114,7 +111,7 @@ def new_analysis():
 
     if config['rna_rna'] == True:
         if config['rna_rna_config']['vienna']:
-            t1 = viennarna.viennarna.delay(config, working_dir)
+            t1 = viennarna.viennarna.delay(config, uid)
             redis.lpush('analyses:' + uid + ':tasks', 
                 json.dumps({
                     'task_name': 'viennarna', 
@@ -123,7 +120,7 @@ def new_analysis():
             )
 
         if config['rna_rna_config']['inta']:
-            t2 = intarna.intarna.delay(config, working_dir)
+            t2 = intarna.intarna.delay(config, uid)
             redis.lpush('analyses:' + uid + ':tasks', 
                 json.dumps({
                     'task_name': 'intarna',

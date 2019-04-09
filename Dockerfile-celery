@@ -1,0 +1,41 @@
+FROM python:3.5
+
+ADD . /app
+WORKDIR /app
+
+# install any requirements
+RUN apt-get update && apt-get install -y \
+	libgsl2 \
+	libgsl-dev \
+	libmpfr-dev \
+	texlive-binaries \
+	build-essential \
+	libboost-all-dev \
+	autotools-dev \
+	autoconf
+
+# install viennarna
+RUN curl -L https://www.tbi.univie.ac.at/RNA/download/debian/debian_9_0/viennarna_2.4.11-1_amd64.deb --output viennarna.deb
+RUN dpkg -i viennarna.deb
+
+RUN curl -L https://www.tbi.univie.ac.at/RNA/download/debian/debian_9_0/viennarna-dev_2.4.11-2_amd64.deb --output viennarna-dev.deb
+RUN dpkg -i viennarna-dev.deb
+
+RUN apt-get install -f -y
+
+# build and install intarna
+RUN curl -L https://github.com/BackofenLab/IntaRNA/archive/v2.4.0.tar.gz --output intarna.tar.gz
+RUN tar xvf intarna.tar.gz
+RUN cd IntaRNA-2.4.0 && chmod a+x autotools-init.sh && ./autotools-init.sh && ./configure && make && make install
+
+# clean up
+RUN rm viennarna.deb
+RUN rm intarna.tar.gz && rm -r IntaRNA-2.4.0
+
+# install python requirements
+RUN pip install -r requirements.txt
+
+RUN mkdir -p /var/log/celery
+RUN mkdir -p /var/run/celery
+
+ENTRYPOINT ["sh", "start_script.sh"]

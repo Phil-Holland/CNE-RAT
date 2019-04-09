@@ -2,7 +2,8 @@ import sys, time, subprocess, base64
 sys.path.append('..')
 from Bio import SeqIO
 from io import StringIO
-from app import celery 
+from app import celery
+from .shared import create_working_dir, get_sequences_from_fasta
 
 intarna_template = """
 # IntaRNA Tool Output
@@ -30,48 +31,54 @@ IntaRNA output:
 # def intarna(shared_cfg, tool_cfg):
 #     time.sleep(1)
 #     return str(shared_cfg)
-def intarna(config, working_dir):
+def intarna(config, uid):
+	# create a working directory, based on the task uid
+	working_dir = create_working_dir(uid, 'intarna')
+
 	#params - to get from config object in the future
-	cne_sequences_fasta = config['config']['cne']
-	query_sequences_fasta = config['config']['task_rna_rna_config']['query_sequences']
-	
-	cne_io = StringIO(cne_sequences_fasta)
-	cne_sequences_parsed = SeqIO.parse(cne_io, 'fasta')
-	cne_sequence = ''
-	for fasta in cne_sequences_parsed:
-		cne_sequence = str(fasta.seq)
-		break
+	# cne_sequences_fasta = config['config']['cne']
+	# query_sequences_fasta = config['config']['task_rna_rna_config']['query_sequences']
 
-	query_io = StringIO(query_sequences_fasta)
-	query_sequences_parsed = SeqIO.parse(query_io, 'fasta')
-	query_sequences = []
-	for fasta in query_sequences_parsed:
-		query_sequences.append(str(fasta.seq))	
+	# cne_io = StringIO(cne_sequences_fasta)
+	# cne_sequences_parsed = SeqIO.parse(cne_io, 'fasta')
+	# cne_sequence = ''
+	# for fasta in cne_sequences_parsed:
+	# 	cne_sequence = str(fasta.seq)
+	# 	break
 
-	seq1 = query_sequences[0]
+	# query_io = StringIO(query_sequences_fasta)
+	# query_sequences_parsed = SeqIO.parse(query_io, 'fasta')
+	# query_sequences = []
+	# for fasta in query_sequences_parsed:
+	# 	query_sequences.append(str(fasta.seq))	
 
-	intarna_input = '-t {cne} -q {query} --energy=V'.format(
-		cne = cne_sequence,
-		query = seq1
-	)
-	print(intarna_input)
+	# seq1 = query_sequences[0]
+
+	# intarna_input = '-t {cne} -q {query} --energy=V'.format(
+	# 	cne = cne_sequence,
+	# 	query = seq1
+	# )
+	# print(intarna_input)
 
 	#run inta
-	p = subprocess.Popen(['IntaRNA', '-t', cne_sequence, '-q', seq1, '--energy=V'],
+	#p = subprocess.Popen(['IntaRNA', '-t', cne_sequence, '-q', seq1, '--energy=V'],
+	p = subprocess.Popen(['IntaRNA', '--help'],
 		cwd = working_dir,
 		stdout = subprocess.PIPE,
-		stdin = subprocess.PIPE,
+		stdin = subprocess.PIPE
 		#env = inta
 	)
 	# output, err = p.communicate(input=str.encode(intarna_input))
 	output, err = p.communicate()
 	output = output.decode("utf-8")
 
-	return intarna_template.format(
-		cne = cne_sequence,
-		seq = ',\n\n'.join(query_sequences),
-		output = output
-	)
+	return output
+
+	# return intarna_template.format(
+	# 	cne = cne_sequence,
+	# 	seq = ',\n\n'.join(query_sequences),
+	# 	output = output
+	# )
 
 
 

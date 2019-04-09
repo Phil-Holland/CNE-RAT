@@ -1,9 +1,8 @@
 import sys, time, subprocess, base64, os
-from Bio import SeqIO
-from io import StringIO
 sys.path.append('..')
 from app import celery
 from flask import Markup
+from .shared import create_working_dir, get_sequences_from_fasta
 
 # define the main report templates here, and fill out the contents later:
 # overall report template
@@ -104,29 +103,11 @@ def convert_ps_to_svg(filename, working_dir):
     os.remove(working_dir + '/' + filename + '.svg')
     return contents
 
-def get_sequences_from_fasta(fasta_string, limit=None):
-    seq_io = StringIO(fasta_string)
-    sequences_parsed = SeqIO.parse(seq_io, 'fasta')
-    sequences = []
-    for i, fasta in enumerate(sequences_parsed):
-        # get sequence, and convert to uppercase
-        sequence = str(fasta.seq).upper()
-        seq_id = str(fasta.id)
-
-        # make sure the sequence is only A,C,G,T/U
-        # since we are only working with RNA sequences, we can assume this must be true
-        for c in sequence:
-            if not(c in ['A', 'C', 'G', 'T', 'U']):
-                raise Exception('A sequence contains invalid character: %s' % c)
-        sequences.append((seq_id, sequence))
-        if limit:
-            if i >= limit-1:
-                break
-
-    return sequences
-
 @celery.task(name='viennarna')
-def viennarna(config, working_dir):
+def viennarna(config, uid):
+    # create a working directory, based on the task uid
+    working_dir = create_working_dir(uid, 'viennarna')
+
     # retrieve the relevent fields from the configuration object
     cne_sequences_fasta = config['cne']
     query_sequences_fasta = config['rna_rna_config']['query_sequences']
