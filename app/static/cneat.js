@@ -54,21 +54,25 @@ $(function() {
         // get form data, and attempt to build config object
         config = {
             'cne': $('#cne').val(), 
-            'rna_protein': $('#task-rna-protein').is(":checked"), 
-            'rna_protein_config': {}, 
-            'rna_rna': $('#task-rna-rna').is(":checked"), 
+            'rna_protein': $('#task-rna-protein').is(':checked'), 
+            'rna_protein_config': {
+                'drosophila_melanogaster': $('#species-drosophila').is(':checked'),
+                'homo_sapiens': $('#species-homo').is(':checked'),
+                'mus_musculus': $('#species-mus').is(':checked')
+            }, 
+            'rna_rna': $('#task-rna-rna').is(':checked'), 
             'rna_rna_config': {
                 'query_sequences': $('#query-sequences').val(),
-                'vienna': $('#run-vienna').is(":checked"),
+                'vienna': $('#run-vienna').is(':checked'),
                 'vienna_config': {
-                    'rnaduplex': $('#run-rnaduplex').is(":checked"),
+                    'rnaduplex': $('#run-rnaduplex').is(':checked'),
                     'rnaduplex_config': {
                         'deltaenergy': parseFloat($('#rnaduplex-deltaenergy').val())
                     },
-                    'rnacofold': $('#run-rnacofold').is(":checked"),
+                    'rnacofold': $('#run-rnacofold').is(':checked'),
                     'rnacofold_config': {}
                 },
-                'inta': $('#run-inta').is(":checked"),
+                'inta': $('#run-inta').is(':checked'),
                 'inta_config': {}
             }
         }

@@ -1,8 +1,5 @@
 FROM python:3.5
 
-ADD . /app
-WORKDIR /app
-
 # install any requirements
 RUN apt-get update && apt-get install -y \
 	libgsl2 \
@@ -31,6 +28,9 @@ RUN cd IntaRNA-2.4.0 && chmod a+x autotools-init.sh && ./autotools-init.sh && ./
 # clean up
 RUN rm viennarna.deb
 RUN rm intarna.tar.gz && rm -r IntaRNA-2.4.0
+
+ADD . /app
+WORKDIR /app
 
 # install python requirements
 RUN pip install -r requirements.txt

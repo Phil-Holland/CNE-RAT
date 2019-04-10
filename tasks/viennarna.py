@@ -11,13 +11,6 @@ viennarna_template = """
 
 ## Overview
 
-CNE sequence:
-
-<pre>
-{cne_id}:
-{cne}
-</pre>
-
 Query sequences: 
 
 {query_seqs}
@@ -30,7 +23,7 @@ Query sequences:
 
 # a template used to display just the output of an RNAduplex run
 vienna_duplex_template = """
-**RNAduplex output**:
+### RNAduplex output:
 
 Also returning interactions within an energy range of `{deltaenergy} kcal/mol` 
 from the *minimum free energy* solution.
@@ -42,7 +35,7 @@ from the *minimum free energy* solution.
 
 # a template used to display just the output of an RNAcofold run
 vienna_cofold_template = """
-**RNAcofold output**:
+### RNAcofold output:
 
 <pre style="max-height: 40pc; overflow-y: scroll;">
 {cofold_output}
@@ -135,7 +128,7 @@ def viennarna(config, uid):
                 cne=cne_sequence,
                 query=sequence
             )
-            p = subprocess.Popen(['RNAduplex', '-e', str(float(rnaduplex_de))],
+            p = subprocess.Popen(['RNAduplex', '-s', '-e', str(float(rnaduplex_de))],
                 cwd=working_dir, 
                 stdout=subprocess.PIPE, 
                 stdin=subprocess.PIPE
@@ -197,8 +190,6 @@ def viennarna(config, uid):
         query_sequences_display += '<pre>%s:\n%s</pre>\n\n' % (Markup.escape(seq_id), Markup.escape(sequence))
 
     return viennarna_template.format(
-        cne=Markup.escape(cne_sequence),
-        cne_id=Markup.escape(cne_id),
         query_seqs=query_sequences_display,
         analyses=analyses
     )

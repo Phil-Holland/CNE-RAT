@@ -82,6 +82,19 @@ var update_content = function(tid, name) {
 
                 });
             });
+            $('#content-' + name).find('table').each(function(i) {
+                $(this).DataTable({
+                    paging: false, 
+                    scrollX: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        {
+                            extend: 'csv',
+                            text: 'Download as csv file'
+                        }
+                    ]
+                });
+            });
         }
     });
 }

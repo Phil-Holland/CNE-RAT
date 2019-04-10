@@ -5,6 +5,7 @@ services:
             context: .
             dockerfile: Dockerfile-web
         ports:
+            - "6565:8000"
             - "5000:5000"
         volumes:
             - .:/app

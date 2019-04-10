@@ -1,5 +1,6 @@
 import os
 from Bio import SeqIO
+from Bio.Alphabet import IUPAC
 from io import StringIO
 
 # a collection of utility functions for different tasks to use
@@ -13,9 +14,13 @@ def create_working_dir(uid, name):
 
 	return working_dir
 
-def get_sequences_from_fasta(fasta_string, limit=None):
+def get_sequences_from_fasta(fasta_string, limit=None, return_record=False, dna_alphabet=False):
     seq_io = StringIO(fasta_string)
-    sequences_parsed = SeqIO.parse(seq_io, 'fasta')
+    sequences_parsed = None
+    if dna_alphabet:
+        sequences_parsed = SeqIO.parse(seq_io, 'fasta', alphabet=IUPAC.IUPACUnambiguousDNA())
+    else:
+        sequences_parsed = SeqIO.parse(seq_io, 'fasta')
     sequences = []
     for i, fasta in enumerate(sequences_parsed):
         # get sequence, and convert to uppercase
@@ -27,7 +32,10 @@ def get_sequences_from_fasta(fasta_string, limit=None):
         for c in sequence:
             if not(c in ['A', 'C', 'G', 'T', 'U']):
                 raise Exception('A sequence contains invalid character: %s' % c)
-        sequences.append((seq_id, sequence))
+        if return_record:
+            sequences.append(fasta)
+        else:
+            sequences.append((seq_id, sequence))
         if limit:
             if i >= limit-1:
                 break
