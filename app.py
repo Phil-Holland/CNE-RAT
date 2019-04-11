@@ -77,7 +77,7 @@ def analysis(uid):
     # get required vars from the redis database
     started = redis.get('analyses:' + uid + ':started').decode("utf-8")
     config = redis.get('analyses:' + uid + ':config').decode("utf-8")
-    
+
     return render_template('analysis.html', uid=uid, config=config, started=started)
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
@@ -102,7 +102,7 @@ def get_analysis_status(uid):
         res = celery.AsyncResult(t['task_id'])
         status = res.state
         statuses.append({'name': t['task_name'], 'id': t['task_id'], 'status': status})
-    return json.dumps({'success': True, 'statuses': statuses}), 200, {'ContentType':'application/json'} 
+    return json.dumps({'success': True, 'statuses': statuses}), 200, {'ContentType':'application/json'}
 
 @app.route('/get_task_data/<tid>', methods=['POST'])
 def get_task_data(tid):
@@ -158,9 +158,9 @@ def new_analysis():
 
     if config['rna_protein'] == True:
         t0 = protein.protein.delay(config, uid)
-        redis.lpush('analyses:' + uid + ':tasks', 
+        redis.lpush('analyses:' + uid + ':tasks',
             json.dumps({
-                'task_name': 'protein', 
+                'task_name': 'protein',
                 'task_id': t0.task_id
             })
         )
@@ -168,16 +168,16 @@ def new_analysis():
     if config['rna_rna'] == True:
         if config['rna_rna_config']['vienna'] == True:
             t1 = viennarna.viennarna.delay(config, uid)
-            redis.lpush('analyses:' + uid + ':tasks', 
+            redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
-                    'task_name': 'viennarna', 
+                    'task_name': 'viennarna',
                     'task_id': t1.task_id
                 })
             )
 
         if config['rna_rna_config']['inta'] == True:
             t2 = intarna.intarna.delay(config, uid)
-            redis.lpush('analyses:' + uid + ':tasks', 
+            redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
                     'task_name': 'intarna',
                     'task_id': t2.task_id
@@ -189,8 +189,9 @@ def new_analysis():
         'uid': uid
     }), 200, {'ContentType':'application/json'} 
 
+    return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'}
+
 if __name__ == "__main__":
     # script entry point - runs the debugger if the script is executed with python 
     # from the command line
     app.run(host="0.0.0.0", debug=True)
-    
