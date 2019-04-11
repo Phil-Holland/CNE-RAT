@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # taken from https://docs.docker.com/config/containers/multi-service_container/
 
 rm /var/run/celery/*.pid
