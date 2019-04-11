@@ -40,17 +40,17 @@
                                 submission in the textbox below.
                             </p>
                             <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
-                            
+
                             <br>
                             <input type="checkbox" id="task-rna-protein" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                    cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non 
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                    cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non
                                     ident, sunt in culpa officia deserunt mollit anim id est laborum.
                                 </p>
                                 <div id="rna-protein-config">
@@ -73,12 +73,12 @@
                             <div class="config-nested">
                                 <p>
                                     This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
-                                    set of query RNA sequences. 
+                                    set of query RNA sequences.
                                     Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
 
-                                    Two separate tools are used in RNA-RNA interaction analysis: 
+                                    Two separate tools are used in RNA-RNA interaction analysis:
                                     <a target="_blank" href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> and
-                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>. 
+                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>.
                                     You may choose which of these tools are used during analysis, or run both.
                                 </p>
                                 <div id="rna-rna-config">
@@ -106,15 +106,15 @@
                                         <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
                                         <div class="config-nested" id="rnaduplex-config">
                                             <p>
-                                                This tool considers only <i>intermolecular</i> interactions between each evaluated 
+                                                This tool considers only <i>intermolecular</i> interactions between each evaluated
                                                 sequence pair, allowing for potential binding sites to be quickly identified.
                                             </p>
                                             <label for="rnaduplex-deltaenergy">Energy range for returned sub-optimal interactions:</label>
                                             <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0">
                                             <span><code>kcal/mol</code></span>
                                             <p>
-                                                The computed free energy of all returned interactions will be within 
-                                                the defined range away from the minimum free energy interaction solution. 
+                                                The computed free energy of all returned interactions will be within
+                                                the defined range away from the minimum free energy interaction solution.
                                                 Higher values will return more potential interactions.
                                             </p>
                                         </div>
@@ -142,7 +142,7 @@
                             </div>
                             <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
                         </fieldset>
-                    </form>    
+                    </form>
                 </div>
                 <hr>
                 <small>{{ footer|safe }}</small>

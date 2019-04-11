@@ -6,14 +6,14 @@ import uuid
 import datetime
 import os
 
-app = Flask(__name__, 
+app = Flask(__name__,
     template_folder='app/templates',
     static_url_path='',
     static_folder='app/static')
 app.config['CELERY_BROKER_URL'] = 'redis://redis:6379/1'
 app.config['CELERY_RESULT_BACKEND'] = 'redis://redis:6379/1'
 
-celery = Celery(app.name, 
+celery = Celery(app.name,
     backend=app.config['CELERY_RESULT_BACKEND'],
     broker=app.config['CELERY_BROKER_URL'])
 celery.conf.update(app.config)
@@ -50,7 +50,7 @@ def analysis(uid):
 
     started = redis.get('analyses:' + uid + ':started').decode("utf-8")
     config = redis.get('analyses:' + uid + ':config').decode("utf-8")
-    
+
     return render_template('analysis.html', uid=uid, config=config, started=started)
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
@@ -68,7 +68,7 @@ def get_analysis_status(uid):
         res = celery.AsyncResult(t['task_id'])
         status = res.state
         statuses.append({'name': t['task_name'], 'id': t['task_id'], 'status': status})
-    return json.dumps({'success': True, 'statuses': statuses}), 200, {'ContentType':'application/json'} 
+    return json.dumps({'success': True, 'statuses': statuses}), 200, {'ContentType':'application/json'}
 
 @app.route('/get_task_data/<tid>', methods=['POST'])
 def get_task_data(tid):
@@ -76,12 +76,12 @@ def get_task_data(tid):
     if res.state == 'SUCCESS':
         # render markdown
         content = markdown.markdown(res.result)
-        return json.dumps({'success': True, 'result': content}), 200, {'ContentType':'application/json'} 
+        return json.dumps({'success': True, 'result': content}), 200, {'ContentType':'application/json'}
     else:
         return abort(404)
 
 @app.route('/new_analysis', methods=['POST'])
-def new_analysis():    
+def new_analysis():
     # get analysis start time
     started = datetime.datetime.utcnow().strftime("%H:%M:%S %Y-%m-%d")
 
@@ -102,9 +102,9 @@ def new_analysis():
 
     if config['rna_protein'] == True:
         t0 = protein.protein.delay(config, uid)
-        redis.lpush('analyses:' + uid + ':tasks', 
+        redis.lpush('analyses:' + uid + ':tasks',
             json.dumps({
-                'task_name': 'protein', 
+                'task_name': 'protein',
                 'task_id': t0.task_id
             })
         )
@@ -112,24 +112,23 @@ def new_analysis():
     if config['rna_rna'] == True:
         if config['rna_rna_config']['vienna']:
             t1 = viennarna.viennarna.delay(config, uid)
-            redis.lpush('analyses:' + uid + ':tasks', 
+            redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
-                    'task_name': 'viennarna', 
+                    'task_name': 'viennarna',
                     'task_id': t1.task_id
                 })
             )
 
         if config['rna_rna_config']['inta']:
             t2 = intarna.intarna.delay(config, uid)
-            redis.lpush('analyses:' + uid + ':tasks', 
+            redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
                     'task_name': 'intarna',
                     'task_id': t2.task_id
                 })
             )
-    
-    return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'} 
+
+    return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
-    

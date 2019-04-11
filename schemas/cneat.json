@@ -38,21 +38,21 @@
 			"anyOf": [
 				{
 					"properties": {
-						"drosophila_melanogaster": { 
-							"enum": [true] 
-						}
-					}
-				},
-				{
-					"properties": {
-						"homo_sapiens": { 
+						"drosophila_melanogaster": {
 							"enum": [true]
 						}
 					}
 				},
 				{
 					"properties": {
-						"mus_musculus": { 
+						"homo_sapiens": {
+							"enum": [true]
+						}
+					}
+				},
+				{
+					"properties": {
+						"mus_musculus": {
 							"enum": [true]
 						}
 					}
@@ -120,14 +120,14 @@
 					"anyOf": [
 						{
 							"properties": {
-								"rnacofold": { 
-									"enum": [true] 
+								"rnacofold": {
+									"enum": [true]
 								}
 							}
 						},
 						{
 							"properties": {
-								"rnaduplex": { 
+								"rnaduplex": {
 									"enum": [true]
 								}
 							}
@@ -145,14 +145,14 @@
 			"anyOf": [
 				{
 					"properties": {
-						"inta": { 
-							"enum": [true] 
+						"inta": {
+							"enum": [true]
 						}
 					}
 				},
 				{
 					"properties": {
-						"vienna": { 
+						"vienna": {
 							"enum": [true]
 						}
 					}
@@ -170,14 +170,14 @@
 	"anyOf": [
         {
 			"properties": {
-				"rna_protein": { 
-					"enum": [true] 
+				"rna_protein": {
+					"enum": [true]
 				}
 			}
         },
         {
 			"properties": {
-				"rna_rna": { 
+				"rna_rna": {
 					"enum": [true]
 				}
 			}

@@ -1,4 +1,4 @@
-$(function() {    
+$(function() {
     // upload data
     $('fieldset, .rna-rna-query-sequence').on('change', 'input[type=file]', function(e) {
         var target_id = '#' + $(this).attr('data-target');
@@ -6,7 +6,7 @@ $(function() {
 
         var read = new FileReader();
         read.readAsBinaryString(file);
-        
+
         read.onloadend = function() {
             $(target_id).val(read.result);
         }
@@ -32,7 +32,7 @@ $(function() {
         if($(this).prop('checked')) $('#vienna-config').slideDown(100);
         else $('#vienna-config').slideUp(100);
     });
-    
+
     $('#run-inta').click(function() {
         if($(this).prop('checked')) $('#inta-config').slideDown(100);
         else $('#inta-config').slideUp(100);
@@ -53,14 +53,14 @@ $(function() {
 
         // get form data, and attempt to build config object
         config = {
-            'cne': $('#cne').val(), 
-            'rna_protein': $('#task-rna-protein').is(':checked'), 
+            'cne': $('#cne').val(),
+            'rna_protein': $('#task-rna-protein').is(':checked'),
             'rna_protein_config': {
                 'drosophila_melanogaster': $('#species-drosophila').is(':checked'),
                 'homo_sapiens': $('#species-homo').is(':checked'),
                 'mus_musculus': $('#species-mus').is(':checked')
-            }, 
-            'rna_rna': $('#task-rna-rna').is(':checked'), 
+            },
+            'rna_rna': $('#task-rna-rna').is(':checked'),
             'rna_rna_config': {
                 'query_sequences': $('#query-sequences').val(),
                 'vienna': $('#run-vienna').is(':checked'),
@@ -82,7 +82,7 @@ $(function() {
         if(!valid) {
             // validation errors encountered!
             console.log(validate.errors);
-            
+
             $('#validation-error').slideDown(100);
 
             // don't send the form

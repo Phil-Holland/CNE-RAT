@@ -3,7 +3,7 @@
 var last_statuses = null;
 
 $(function() {
-    
+
     // populate sidebar tool list
     function add_tool(title, name, id) {
         $('#analysis-sidebar-list').append(
@@ -55,7 +55,7 @@ $(function() {
             $('#config-toggle').html("Hide analysis configuration")
         }
     });
-    
+
     update();
 });
 
@@ -84,7 +84,7 @@ var update_content = function(tid, name) {
             });
             $('#content-' + name).find('table').each(function(i) {
                 $(this).DataTable({
-                    paging: false, 
+                    paging: false,
                     scrollX: true,
                     dom: 'Bfrtip',
                     buttons: [
@@ -120,8 +120,8 @@ var update = function() {
                         $('#tool-icon-' + el.name).css('font-weight', 'bold');
 
                         $('#content-' + el.name).html(failure_text);
-                    } else if(el.status == 'STARTED' || 
-                        el.status == 'RECEIVED' || 
+                    } else if(el.status == 'STARTED' ||
+                        el.status == 'RECEIVED' ||
                         el.status == 'PENDING') {
                         overall_status = 'PROCESSING';
                     } else if(el.status != 'SUCCESS') {
