@@ -31,13 +31,17 @@ with open("schemas/cnefinder.json") as g:
     schema_cnefinder = g.read()
 
 
-@app.context_processor
-def inject_global_vars():
-    return dict(
+cnefinder_metadata = dict(
+        title='CNEFinder',
+        subtitle='Finding Conserved Non-coding Elements in Genomes',
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+)
+
+cneat_metadata = dict(
         title='CNEAT',
         subtitle='The CNE Analysis Tool',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'
-    )
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+)
 
 @app.route('/')
 def index():
@@ -45,11 +49,11 @@ def index():
 
 @app.route('/cneat')
 def cneat():
-    return render_template('cneat.html', schema=schema_cneat)
+    return render_template('cneat.html', schema=schema_cneat, **cneat_metadata)
 
 @app.route('/cnefinder')
 def cnefinder():
-    return render_template('cnefinder.html', schema=schema_cnefinder)
+    return render_template('cnefinder.html', schema=schema_cnefinder, **cnefinder_metadata)
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
