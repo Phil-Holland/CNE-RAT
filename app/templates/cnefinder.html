@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Get milligram & fonts from CDN -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <!-- Icon pack -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Load custom CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css" >
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="row" id="configuration-row">
+            <div class="column column-20"></div>
+            <div class="column column-60">
+                <div id="images">
+                    <img src="logo.png" alt="Origene logo" id="logo">
+                    <img src="warwick.png" alt="Warwick crest" id="warwick">
+                </div>
+                <a href="/"><strong>&larr;</strong> back to tool select</a>
+                <h1 id="title">{{ title }}</h1>
+                <div id="subtitle">{{ subtitle }}</div>
+                <hr>
+                <div id="configuration">
+                    <form id="config-form">
+                        <fieldset>
+                            <label for="cne-file">CNE FASTA file (upload or paste):</label>
+                            <input type="file" name="cne-file" data-target="cne">
+                            <p>
+                                Only single sequence FASTA files are permitted. The file can be edited before
+                                submission in the textbox below.
+                            </p>
+                            <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
+
+                            <br>
+                            <input type="checkbox" id="task-rna-protein" checked="checked">
+                            <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
+                            <div class="config-nested">
+                                <p>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                                    cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non
+                                    ident, sunt in culpa officia deserunt mollit anim id est laborum.
+                                </p>
+                                <div id="rna-protein-config">
+                                    <label>Select relevant species:</label>
+                                    <p>You must choose at least one species to consider.</p>
+                                    <input type="checkbox" id="species-drosophila" checked="checked">
+                                    <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
+                                    <br>
+                                    <input type="checkbox" id="species-homo" checked="checked">
+                                    <span class="checkbox-label"><i>Homo sapiens</i> (humans)</span>
+                                    <br>
+                                    <input type="checkbox" id="species-mus" checked="checked">
+                                    <span class="checkbox-label"><i>Mus musculus</i> (house mouse)</span>
+                                    <br>
+                                </div>
+                            </div>
+                            <br>
+                            <input type="checkbox" id="task-rna-rna" checked="checked">
+                            <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis pipeline</span><br>
+                            <div class="config-nested">
+                                <p>
+                                    This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
+                                    set of query RNA sequences.
+                                    Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
+
+                                    Two separate tools are used in RNA-RNA interaction analysis:
+                                    <a target="_blank" href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> and
+                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>.
+                                    You may choose which of these tools are used during analysis, or run both.
+                                </p>
+                                <div id="rna-rna-config">
+                                    <p>
+                                        Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file:
+                                    </p>
+                                    <label for="query-file">Query sequence(s) FASTA file (upload or paste):</label>
+                                    <input type="file" name="query-file" data-target="query-sequences">
+                                    <p>
+                                        The file can be edited before submission in the textbox below.
+                                    </p>
+                                    <textarea id="query-sequences" cols="30" rows="3" placeholder="Paste query sequence(s) FASTA file contents here"></textarea>
+                                    <br>
+                                    <p>
+                                        Select which analysis tool to use (must select at least one):
+                                    </p>
+
+                                    <input type="checkbox" id="run-vienna" checked>
+                                    <span class="checkbox-label">Run the <b>ViennaRNA</b> interaction analysis pipeline</span>
+                                    <div class="config-nested" id="vienna-config">
+                                        <p>
+                                            Select which ViennaRNA executables to include in the analysis (must select at least one):
+                                        </p>
+                                        <input type="checkbox" id="run-rnaduplex" checked>
+                                        <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
+                                        <div class="config-nested" id="rnaduplex-config">
+                                            <p>
+                                                This tool considers only <i>intermolecular</i> interactions between each evaluated
+                                                sequence pair, allowing for potential binding sites to be quickly identified.
+                                            </p>
+                                            <label for="rnaduplex-deltaenergy">Energy range for returned sub-optimal interactions:</label>
+                                            <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0">
+                                            <span><code>kcal/mol</code></span>
+                                            <p>
+                                                The computed free energy of all returned interactions will be within
+                                                the defined range away from the minimum free energy interaction solution.
+                                                Higher values will return more potential interactions.
+                                            </p>
+                                        </div>
+                                        <br>
+                                        <input type="checkbox" id="run-rnacofold" checked>
+                                        <span class="checkbox-label">Run the <b>RNAcofold</b> tool <i>(slow)</i></span>
+                                        <div class="config-nested" id="rnacofold-config">
+                                            <p>Note: this is not recommended for analysis of very large sequences.</p>
+                                        </div>
+                                    </div>
+                                    <br>
+
+                                    <input type="checkbox" id="run-inta" checked>
+                                    <span class="checkbox-label">Run the <b>IntaRNA</b> interaction analysis pipeline</span>
+                                    <div class="config-nested" id="inta-config">
+                                        Test
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <br>
+                            <div id="validation-error" style="display: none;">
+                                <b>Error!</b>
+                                There is an error in the analysis configuration form, please correct this before trying again.
+                            </div>
+                            <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
+                        </fieldset>
+                    </form>
+                </div>
+                <hr>
+                <small>{{ footer|safe }}</small>
+            </div>
+            <div class="column column-20"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js"></script>
+    <script type="text/javascript">
+        var schema = JSON.parse({{ schema|tojson }});
+
+        // validator
+        var ajv = new Ajv();
+        var validate = ajv.compile(schema);
+    </script>
+    <script type="text/javascript" src="cneat.js"></script>
+
+</body>
+</html>

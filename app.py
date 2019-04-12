@@ -35,9 +35,14 @@ redis = Redis(host='redis', port=6379, password=redis_password)
 # load json schemas (from external json file)
 schema_cneat = ''
 schema_cneat_json = None
+schema_cnefinder = ''
 with open("schemas/cneat.json") as f:
     schema_cneat = f.read()
     schema_cneat_json = json.loads(schema_cneat)
+
+with open("schemas/cnefinder.json") as g:
+    schema_cnefinder = g.read()
+
 
 # import the task python files here to avoid issues
 from tasks import viennarna, intarna, protein
@@ -64,6 +69,10 @@ def index():
 def cneat():
     '''route for the cneat configuration page - also sends the required cneat schema'''
     return render_template('cneat.html', schema=schema_cneat)
+
+@app.route('/cnefinder')
+def cnefinder():
+    return render_template('cnefinder.html', schema=schema_cnefinder)
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
