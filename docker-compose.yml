@@ -1,18 +1,24 @@
 version: '3'
 services:
     web:
+        environment:
+            - DEBUG=${DEBUG}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
         build:
             context: .
             dockerfile: Dockerfile-web
         ports:
-            - "6565:8000"
-            - "5000:5000"
+            - "6565:5000"
         volumes:
             - .:/app
         depends_on:
             - redis
             - celery
     celery:
+        environment:
+            - FLOWER_USER=${FLOWER_USER}
+            - FLOWER_PASSWORD=${FLOWER_PASSWORD}
+            - REDIS_PASSWORD=${REDIS_PASSWORD}
         build:
             context: .
             dockerfile: Dockerfile-celery
@@ -29,5 +35,5 @@ services:
             - "9736:6379"
         volumes:
             - ./data:/data
-        entrypoint: redis-server --appendonly yes
+        entrypoint: redis-server --requirepass ${REDIS_PASSWORD} --appendonly yes
         restart: always

@@ -245,6 +245,14 @@ input[type="number"] {
     font-size: smaller;
 }
 
+#task-content .export-button {
+    font-size: small;
+    font-weight: normal;
+    color: black;
+    border-color: black;
+    margin-top: 2em;
+}
+
 #task-content svg {
     width: 100% !important;
 }

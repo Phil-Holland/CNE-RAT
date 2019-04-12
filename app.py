@@ -6,12 +6,15 @@ import uuid
 import datetime
 import os
 
+# get the redis password - set as a system environment variable
+redis_password = os.environ['REDIS_PASSWORD']
+
 app = Flask(__name__, 
     template_folder='app/templates',
     static_url_path='',
     static_folder='app/static')
-app.config['CELERY_BROKER_URL'] = 'redis://redis:6379/1'
-app.config['CELERY_RESULT_BACKEND'] = 'redis://redis:6379/1'
+app.config['CELERY_BROKER_URL'] = 'redis://:{}@redis:6379/1'.format(redis_password)
+app.config['CELERY_RESULT_BACKEND'] = 'redis://:{}@redis:6379/1'.format(redis_password)
 
 celery = Celery(app.name, 
     backend=app.config['CELERY_RESULT_BACKEND'],
@@ -19,7 +22,7 @@ celery = Celery(app.name,
 celery.conf.update(app.config)
 
 from tasks import viennarna, intarna, protein
-redis = Redis(host='redis', port=6379)
+redis = Redis(host='redis', port=6379, password=redis_password)
 
 # load json schemas
 schema_cneat = ''

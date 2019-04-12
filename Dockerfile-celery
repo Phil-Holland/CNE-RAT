@@ -38,4 +38,4 @@ RUN pip install -r requirements.txt
 RUN mkdir -p /var/log/celery
 RUN mkdir -p /var/run/celery
 
-ENTRYPOINT ["sh", "start_script.sh"]
+ENTRYPOINT ["sh", "celery_start_script.sh"]

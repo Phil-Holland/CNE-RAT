@@ -117,7 +117,8 @@ var update_content = function(tid, name) {
             $('#content-' + name).find('table').each(function(i) {
                 $(this).addClass('display compact nowrap');
                 $(this).DataTable({
-                    paging: false, 
+                    paging: false,
+                    "order": [[ 5, "desc" ]],
                     "sScrollX": "100%",
                     "sScrollXInner": "100%",
                     "bScrollCollapse": true,
@@ -125,12 +126,22 @@ var update_content = function(tid, name) {
                        "leftColumns": 1
                     },
                     dom: 'Bfrtip',
-                    buttons: [
-                        {
-                            extend: 'csv',
-                            text: 'Download as csv file'
-                        }
-                    ]
+                    buttons: {
+                        dom: {
+                            button: {
+                                tag: 'button',
+                                className: ''
+                            }
+                        },
+                        buttons: [
+                            {
+                                extend: 'csv',
+                                text: 'Export to csv file',
+                                title: 'table',
+                                className: 'export-button button button-outline'
+                            }
+                        ]
+                    }
                 });
             });
 

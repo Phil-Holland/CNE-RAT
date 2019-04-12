@@ -72,7 +72,7 @@ def intarna(config, uid):
 		output = output.decode("utf-8")
 
 		analyses += inta_analysis_template.format(
-			interaction_no=str(i),
+			interaction_no=str(i+1),
 			query=sequence,
 			input=' '.join(cmd),
 			output=output

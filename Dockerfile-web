@@ -7,4 +7,5 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 
 #ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8000", "app:app"]
-ENTRYPOINT ["python", "app.py"]
+#ENTRYPOINT ["python", "app.py"]
+ENTRYPOINT ["sh", "web_start_script.sh"]

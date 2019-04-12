@@ -117,11 +117,6 @@ class CisbpRNA:
         hits_df = hits_df[hits_df["rbp_species"].isin(self.species)] # only keep results for specified species
         hits_df = hits_df.sort_values(by=["start"])
 
-        # save results
-        # save_name = "{}.txt".format(seq_record.id)
-        # save_path = os.path.join(save_dir, save_name)
-        # hits_df.to_csv(save_path, sep="\t", index=False)
-
         return hits_df
 
 @celery.task(name='protein')
