@@ -1,5 +1,7 @@
 # CNE Finder + CNEAT
 
+![](https://i.imgur.com/nD6EXzX.png)
+
 This project includes two tools used for the identification and analysis of conserved non-coding elements.
 
 - **CNE Finder**
