@@ -77,7 +77,24 @@
 				},
 				"inta_config": {
 					"description": "Additional configuration options for the IntaRNA analysis pipeline",
-					"type": "object"
+					"type": "object",
+					"properties": {
+						"prediction_mode": {
+							"type": "string",
+							"description": "The mode of prediction used by the IntaRNA executable (H=heuristic, M=exact)",
+							"enum": ["H", "M"]
+						},
+						"minpu": {
+							"description": "A float representing minimum unpaired probability of returned results",
+							"type": "number",
+							"minimum": 0,
+							"maximum": 1
+						}
+					},
+					"required": [
+						"prediction_mode",
+						"minpu"
+					]
 				},
 				"vienna": {
 					"description": "A boolean representing whether or not the ViennaRNA pipeline should be executed",

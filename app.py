@@ -1,6 +1,7 @@
 from flask import Flask, render_template, redirect, request, app, abort, json
 from redis import Redis
 from celery import Celery
+from jsonschema import validate, ValidationError
 import markdown
 import uuid
 import datetime
@@ -26,15 +27,20 @@ redis = Redis(host='redis', port=6379, password=redis_password)
 
 # load json schemas
 schema_cneat = ''
+schema_cneat_json = None
 with open("schemas/cneat.json") as f:
     schema_cneat = f.read()
+    schema_cneat_json = json.loads(schema_cneat)
 
 @app.context_processor
 def inject_global_vars():
     return dict(
         title='CNEAT',
         subtitle='The CNE Analysis Tool',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'
+        footer=(
+            'Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>, ' +
+            'and <a target="_blank" href="http://www.celeryproject.org/">Celery</a>'
+        )
     )
 
 @app.route('/')
@@ -89,6 +95,15 @@ def new_analysis():
     started = datetime.datetime.utcnow().strftime("%H:%M:%S %Y-%m-%d")
 
     config = request.get_json(force=True)
+
+    # make sure config is valid (using schemas/cneat.json)
+    try:
+        validate(instance=config, schema=schema_cneat_json)
+    except ValidationError as e:
+        return json.dumps({
+            'success': False,
+            'error': str(e) 
+        }), 400, {'ContentType':'application/json'}
 
     if config is None:
         return json.dumps({'success': False}), 400, {'ContentType':'application/json'}

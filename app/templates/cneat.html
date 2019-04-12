@@ -36,12 +36,14 @@
                             <label for="cne-file">CNE FASTA file (upload or paste):</label>
                             <input type="file" name="cne-file" data-target="cne">
                             <p>
-                                Only single sequence FASTA files are permitted. The file can be edited before
-                                submission in the textbox below.
+                                <i>Only single sequence FASTA files are permitted. The file can be edited before
+                                submission in the textbox below.</i>
                             </p>
                             <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
                             
                             <br>
+                            <label>Choose analysis pipeline(s) to execute:</label>
+                            <p><i>You must choose at least one pipeline to execute.</i></p>
                             <input type="checkbox" id="task-rna-protein" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
@@ -55,7 +57,7 @@
                                 </p>
                                 <div id="rna-protein-config">
                                     <label>Select relevant species:</label>
-                                    <p>You must choose at least one species to consider.</p>
+                                    <p><i>You must choose at least one species to consider.</i></p>
                                     <input type="checkbox" id="species-drosophila" checked="checked">
                                     <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
                                     <br>
@@ -82,26 +84,32 @@
                                     You may choose which of these tools are used during analysis, or run both.
                                 </p>
                                 <div id="rna-rna-config">
-                                    <p>
-                                        Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file:
-                                    </p>
                                     <label for="query-file">Query sequence(s) FASTA file (upload or paste):</label>
+                                    <p>
+                                        <i>Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file.</i>
+                                    </p>
                                     <input type="file" name="query-file" data-target="query-sequences">
                                     <p>
                                         The file can be edited before submission in the textbox below.
                                     </p>
                                     <textarea id="query-sequences" cols="30" rows="3" placeholder="Paste query sequence(s) FASTA file contents here"></textarea>
                                     <br>
-                                    <p>
-                                        Select which analysis tool to use (must select at least one):
-                                    </p>
+                                    <label>Select which analysis tool to use:</label>
+                                    <p><i>You must select at least one tool to use.</i></p>
 
                                     <input type="checkbox" id="run-vienna" checked>
                                     <span class="checkbox-label">Run the <b>ViennaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="vienna-config">
                                         <p>
-                                            Select which ViennaRNA executables to include in the analysis (must select at least one):
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+                                            consequat.
                                         </p>
+
+                                        <label>Select which ViennaRNA executables to run in the analysis:</label>
+                                        <p><i>You must select at least one executable to run.</i></p>
+
                                         <input type="checkbox" id="run-rnaduplex" checked>
                                         <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
                                         <div class="config-nested" id="rnaduplex-config">
@@ -109,8 +117,8 @@
                                                 This tool considers only <i>intermolecular</i> interactions between each evaluated 
                                                 sequence pair, allowing for potential binding sites to be quickly identified.
                                             </p>
-                                            <label for="rnaduplex-deltaenergy">Energy range for returned sub-optimal interactions:</label>
-                                            <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0">
+                                            <label for="rnaduplex-deltaenergy">Set energy range for returned sub-optimal interactions:</label>
+                                            <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0" step="0.5">
                                             <span><code>kcal/mol</code></span>
                                             <p>
                                                 The computed free energy of all returned interactions will be within 
@@ -130,7 +138,26 @@
                                     <input type="checkbox" id="run-inta" checked>
                                     <span class="checkbox-label">Run the <b>IntaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="inta-config">
-                                        Test
+                                        <p>
+                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
+                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
+                                            consequat.
+                                        </p>
+                                        <label for="inta-prediction-mode">Choose interaction prediction mode:</label>
+                                        <select name="inta-prediction-mode" id="inta-prediction-mode">
+                                            <option value="H">Heuristic (fast)</option>
+                                            <option value="M">Exact (slow)</option>
+                                        </select>
+
+                                        <label for="inta-minpu">Set minimum unpaired probability:</label>
+                                        <p>
+                                            Only return interactions where each individual position of the interacting 
+                                            subsequences has to have an unpaired probability (<code>Pu</code>) reaching at least the given value.
+                                            <i>Must be within the range 0-1.</i>
+                                        </p>
+                                        <span><code>Minimum Pu:</code></span>
+                                        <input name="inta-minpu" id="inta-minpu" type="number" value="0" min="0" max="1" step="0.1">
                                     </div>
                                     <br>
                                 </div>

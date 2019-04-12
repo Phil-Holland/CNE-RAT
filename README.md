@@ -14,8 +14,10 @@ This project includes two tools used for the identification and analysis of cons
 
 **IMPORTANT!**
 
-- This application has been written using *Docker*.
+- This application has been written using **Docker**.
 	- Please visit https://www.docker.com/get-started to install Docker on your system.
+- Additionally, **Docker Compose** is also required 
+	- Please visit https://docs.docker.com/compose/install/ to install Docker compose on your system
 - Create a new file named `.env` in the project's root directory, using the `.env-template` file as a template.
 	- Change the username/password values to secure your application (necessary if the tool is not being used privately).
 - Some additional files must be downloaded to allow the RNA-protein analysis pipeline to execute successfully, which cannot be distributed with this project.

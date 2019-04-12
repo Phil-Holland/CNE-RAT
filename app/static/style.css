@@ -66,6 +66,11 @@ pre {
         flex: 0 0 100% !important;
     }
 
+    .column-60 {
+        max-width: 100% !important;
+        flex: 0 0 100% !important;
+    }
+
     .column-20 {
         display: none !important;
     }
@@ -113,7 +118,7 @@ pre {
     margin-bottom: 10px;
 }
 
-fieldset > p {
+fieldset p {
     font-size: 0.9em;
 }
 
@@ -316,6 +321,7 @@ input[type="number"] {
     }
 
     .column-80 {
+        width: 100% !important;
         max-width: 100% !important;
         flex: 0 0 100% !important;
     }

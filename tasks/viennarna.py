@@ -64,7 +64,7 @@ vienna_cofold_template = """
 
 # a template used to display results for each CNE-RNA interaction
 vienna_analysis_template = """
-## Interaction {interaction_no}
+## Query {interaction_no}
 
 Evaluating interactions between the CNE sequence and the 
 following query sequence:

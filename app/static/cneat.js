@@ -73,7 +73,10 @@ $(function() {
                     'rnacofold_config': {}
                 },
                 'inta': $('#run-inta').is(':checked'),
-                'inta_config': {}
+                'inta_config': {
+                    'prediction_mode': $('#inta-prediction-mode').val(),
+                    'minpu': parseFloat($('#inta-minpu').val())
+                }
             }
         }
 
