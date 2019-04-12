@@ -1,8 +1,5 @@
 .vscode
 
-# data
-data/appendonly.aof
-
 # flower persist file
 flower
 
