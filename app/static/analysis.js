@@ -1,6 +1,8 @@
 // main script file for the analysis results page
 
 var last_statuses = null;
+var scrolls = {};
+var failure_text = 'Unfortunately, this tool has failed to complete successfully.';
 
 $(function() {
     
@@ -17,7 +19,7 @@ $(function() {
             '</div>'
         );
         $('#task-content').append(
-            '<div id="content-' + name + '" style="display: none"></div>'
+            '<div id="content-' + name + '" class="task" style="display: none"></div>'
         );
     }
 
@@ -36,12 +38,21 @@ $(function() {
     // when a specific tool output has been clicked
     $('.tool-link').click(function() {
         if($(this).attr('data-active') == 'false') {
+            var el = this;
             $('.tool-link').each(function() {
-                $(this).attr('data-active', false);
-                $('#content-' + $(this).attr('data-name')).hide();
+                if($(this).attr('data-active') == 'true') {
+                    $(this).attr('data-active', false);
+                    scrolls[$(this).attr('data-name')] = $(document).scrollTop();
+                    $('#content-' + $(this).attr('data-name')).hide();
+                }
+            }).promise().done(function() {
+                $(el).attr('data-active', true);
+                $('#content-' + $(el).attr('data-name')).show();
+                $('#content-' + $(el).attr('data-name')).find('table').each(function(i) {
+                    $(this).resize();
+                });
+                window.scrollTo(0, scrolls[$(el).attr('data-name')]);
             });
-            $(this).attr('data-active', true);
-            $('#content-' + $(this).attr('data-name')).show();
         }
     });
 
@@ -56,8 +67,29 @@ $(function() {
         }
     });
     
+    // when the window is resized
+    $(window).resize(resize_window);
+
     update();
+    resize_window();
 });
+
+var resize_window = function() {
+    if($(window).width() <= 960) {
+        $('.tool-link').each(function() {
+            $('#content-' + $(this).attr('data-name')).show();
+        });
+    } else {
+        $('.tool-link').each(function() {
+            if($(this).attr('data-active') == 'true') {
+                $('#content-' + $(this).attr('data-name')).show();
+            } else {
+                $('#content-' + $(this).attr('data-name')).hide();
+            }
+        });
+    }
+}
+
 
 var update_content = function(tid, name) {
     $.post('/get_task_data/' + tid, function(t_data) {
@@ -83,9 +115,15 @@ var update_content = function(tid, name) {
                 });
             });
             $('#content-' + name).find('table').each(function(i) {
+                $(this).addClass('display compact nowrap');
                 $(this).DataTable({
                     paging: false, 
-                    scrollX: true,
+                    "sScrollX": "100%",
+                    "sScrollXInner": "100%",
+                    "bScrollCollapse": true,
+                    "fixedColumns":   {
+                       "leftColumns": 1
+                    },
                     dom: 'Bfrtip',
                     buttons: [
                         {
@@ -95,11 +133,12 @@ var update_content = function(tid, name) {
                     ]
                 });
             });
+
+            scrolls[name] = 0;
         }
     });
 }
 
-var failure_text = 'Unfortunately, this tool has failed to complete successfully.';
 var update = function() {
     // get task status from flask
     $.post('/get_analysis_status/' + uid, function(data) {

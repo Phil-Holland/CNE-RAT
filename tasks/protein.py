@@ -2,14 +2,10 @@ import sys, time
 sys.path.append('..')
 from app import celery 
 from .shared import create_working_dir, get_sequences_from_fasta
-
-import sys
 import os
-import time
 import glob
 from os import listdir
 from os.path import isfile, join
-
 import pandas as pd
 import numpy as np
 import Bio
@@ -17,6 +13,23 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio import motifs
 from Bio.Alphabet import IUPAC
+
+protein_template = """
+# RNA-Protein Toolchain Output
+
+## Overview
+
+Query species: 
+
+{query_species}
+
+---
+
+## Hits Table
+
+{table}
+
+"""
 
 class CisbpRNA:
     
@@ -119,15 +132,22 @@ def protein(config, uid):
 
     # build list of relevant species
     species = []
+    species_display = ''
     if config['rna_protein_config']['drosophila_melanogaster'] == True:
         species.append('drosophila_melanogaster')
+        species_display += '- *Drosophila melanogaster*\n'
     if config['rna_protein_config']['homo_sapiens'] == True:
         species.append('homo_sapiens')
+        species_display += '- *Homo sapiens*\n'
     if config['rna_protein_config']['mus_musculus'] == True:
         species.append('mus_musculus')
+        species_display += '- *Mus musculus*\n'
 
     # load data from CISBP-RNA
     cisbp_rna = CisbpRNA(species)
 
     hits_df = cisbp_rna.scan(cne_record)
-    return str(hits_df.to_html(index=False))
+    return protein_template.format(
+        query_species=species_display,
+        table=str(hits_df.to_html())
+    )

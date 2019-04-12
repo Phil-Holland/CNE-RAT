@@ -22,48 +22,55 @@
 </head>
 <body>
     <div class="container" id="content">
-        <div id="title-results">
-            <a href="/cneat"><strong>&larr;</strong> run new analysis</a>
-            <br>
-            <h3>{{ title }}</h3> <span>{{ subtitle }}</span>
-        </div>
-        <div id="images-results">
-            <img src="../warwick.png" alt="Warwick crest" id="warwick">
-            <img src="../logo.png" alt="Origene logo" id="logo">
-        </div>
-        <hr>
         <div class="row">
-            <div class="column column-25">
-                Analysis ID: <strong>{{ uid }}</strong>
-            </div>
-            <div class="column column-25">
-                Started: <strong> {{ started }}</strong>
-            </div>
-            <div class="column column-25">
-                Overall status: <strong id="status"></strong>
-            </div>
-            <div class="column column-25">
-                <span id="config-toggle">Show analysis configuration</span>
-            </div>
-        </div>
-        <div style="display: none" id="config">
-            <pre><code id="config-code"></code></pre>
-        </div>
-        <hr>
-        <div class="row">
-            <div class="column column-25">
-                <span>Select tool to view reports:</span>
-                <ul id="analysis-sidebar-list">
-                </ul>
-            </div>
-            <div class="column column-75">
-                <div id="task-content">
+            <div class="column column-20" id="analysis-left">
+                <div id="analysis-sidebar">
+                    <div id="title-results">
+                        <a href="/cneat"><strong>&larr;</strong> run new analysis</a>
+                        <br>
+                        <h3>{{ title }}</h3> <span>{{ subtitle }}</span>
+                    </div>
+                    <br>
 
+                    <span>Select tool to view reports:</span>
+                    <ul id="analysis-sidebar-list">
+                    </ul>
+
+                    <hr>
+                    <small>{{ footer|safe }}</small>
+                    <div id="images-results">
+                        <img src="../warwick.png" alt="Warwick crest" id="warwick">
+                        <img src="../logo.png" alt="Origene logo" id="logo">
+                    </div>
+                </div>
+            </div>
+            <div class="column column-80" id="analysis-right">
+                <div id="analysis-top">
+                    <hr>
+                    <div class="row">
+                        <div class="column column-25">
+                            Analysis ID: <strong>{{ uid }}</strong>
+                        </div>
+                        <div class="column column-25">
+                            Started: <strong> {{ started }}</strong>
+                        </div>
+                        <div class="column column-25">
+                            Overall status: <strong id="status"></strong>
+                        </div>
+                        <div class="column column-25">
+                            <span id="config-toggle">Show analysis configuration</span>
+                        </div>
+                    </div>
+                    <div style="display: none" id="config">
+                        <pre><code id="config-code"></code></pre>
+                    </div>
+                    <hr>
+                </div>
+                <div id="task-content">
+        
                 </div>
             </div>
         </div>
-        <hr>
-        <small>{{ footer|safe }}</small>
     </div>
 
     <div id="svg-modal" class="modal">
