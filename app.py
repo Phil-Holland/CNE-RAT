@@ -44,21 +44,17 @@ with open("schemas/cnefinder.json") as g:
     schema_cnefinder = g.read()
 
 
-# import the task python files here to avoid issues
-from tasks import viennarna, intarna, protein
+cnefinder_metadata = dict(
+        title='CNEFinder',
+        subtitle='Finding Conserved Non-coding Elements in Genomes',
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+)
 
-@app.context_processor
-def inject_global_vars():
-    '''injects any global variables required by multiple page templates - called by flask'''
-
-    return dict(
+cneat_metadata = dict(
         title='CNEAT',
         subtitle='The CNE Analysis Tool',
-        footer=(
-            'Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>, ' +
-            'and <a target="_blank" href="http://www.celeryproject.org/">Celery</a>'
-        )
-    )
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+)
 
 @app.route('/')
 def index():
@@ -67,12 +63,11 @@ def index():
 
 @app.route('/cneat')
 def cneat():
-    '''route for the cneat configuration page - also sends the required cneat schema'''
-    return render_template('cneat.html', schema=schema_cneat)
+    return render_template('cneat.html', schema=schema_cneat, **cneat_metadata)
 
 @app.route('/cnefinder')
 def cnefinder():
-    return render_template('cnefinder.html', schema=schema_cnefinder)
+    return render_template('cnefinder.html', schema=schema_cnefinder, **cnefinder_metadata)
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
