@@ -27,7 +27,7 @@ This project includes two tools used for the identification and analysis of cons
 
 ### Running
 
-- Once *Docker* + *Docker compose* have been installed, running the following commands in the project root will build and start the application:
+- Once the prerequisite setup has been completed, running the following `docker-compose` commands in the project root will build and start the application:
  
 ```
 docker-compose build
@@ -35,7 +35,8 @@ docker-compose build
 docker-compose up
 ```
 
-- Once the application has started successfully, the CNEAT interface can be accessed at [http://localhost:6565](http://localhost:6565).
+- `docker-compose build` may take a long time to complete on first run.
+- Once the application has started successfully, the web interface can be accessed at [http://localhost:6565](http://localhost:6565).
 	- *This may be different if using Docker toolbox, see: https://stackoverflow.com/questions/42866013/docker-toolbox-localhost-not-working*
 
 ### Configuration/Monitoring
