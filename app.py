@@ -23,8 +23,13 @@ redis = Redis(host='redis', port=6379)
 
 # load json schemas
 schema_cneat = ''
+schema_cnefinder = ''
 with open("schemas/cneat.json") as f:
     schema_cneat = f.read()
+
+with open("schemas/cnefinder.json") as g:
+    schema_cnefinder = g.read()
+
 
 @app.context_processor
 def inject_global_vars():
@@ -41,6 +46,10 @@ def index():
 @app.route('/cneat')
 def cneat():
     return render_template('cneat.html', schema=schema_cneat)
+
+@app.route('/cnefinder')
+def cnefinder():
+    return render_template('cnefinder.html', schema=schema_cnefinder)
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
