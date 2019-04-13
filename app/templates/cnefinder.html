@@ -33,114 +33,92 @@
                 <div id="configuration">
                     <form id="config-form">
                         <fieldset>
-                            <label for="cne-file">CNE FASTA file (upload or paste):</label>
-                            <input type="file" name="cne-file" data-target="cne">
-                            <p>
-                                Only single sequence FASTA files are permitted. The file can be edited before
-                                submission in the textbox below.
-                            </p>
-                            <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
-
-                            <br>
-                            <input type="checkbox" id="task-rna-protein" checked="checked">
-                            <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
+                            <label for="ensembl-site">Ensembl site (or site archive) URL for reference genome:</label>
+                            <input type="url" name="ensembl-site-ref" id="ensembl-site-ref"  placeholder="https://www.ensembl.org/" required>
+                            <div id="ref-site-val-error"style="display: none;" >
+                                <b>Error!</b>
+                                Please ensure URL corresponds to a valid Ensembl site.
+                            </div>
                             <div class="config-nested">
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                    cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non
-                                    ident, sunt in culpa officia deserunt mollit anim id est laborum.
-                                </p>
-                                <div id="rna-protein-config">
-                                    <label>Select relevant species:</label>
-                                    <p>You must choose at least one species to consider.</p>
-                                    <input type="checkbox" id="species-drosophila" checked="checked">
-                                    <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
-                                    <br>
-                                    <input type="checkbox" id="species-homo" checked="checked">
-                                    <span class="checkbox-label"><i>Homo sapiens</i> (humans)</span>
-                                    <br>
-                                    <input type="checkbox" id="species-mus" checked="checked">
-                                    <span class="checkbox-label"><i>Mus musculus</i> (house mouse)</span>
+                                <div id="ref-dataset">
+                                    <span class="text-label">Select a BioMart from the dropdown:</span>
+                                    <select id="ref-dataset-dropdown"></select>
                                     <br>
                                 </div>
                             </div>
-                            <br>
-                            <input type="checkbox" id="task-rna-rna" checked="checked">
-                            <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis pipeline</span><br>
+
+                            <label for="ensembl-site">Ensembl site (or site archive) URL for query genome:</label>
+                            <input type="url" name="ensembl-site-query" id="ensembl-site-query" placeholder="https://www.ensembl.org/" required>
+                            <div id="query-site-val-error"style="display: none;" >
+                                <b>Error!</b>
+                                Please ensure URL corresponds to a valid Ensembl site.
+                            </div>
                             <div class="config-nested">
-                                <p>
-                                    This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
-                                    set of query RNA sequences.
-                                    Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
-
-                                    Two separate tools are used in RNA-RNA interaction analysis:
-                                    <a target="_blank" href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> and
-                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>.
-                                    You may choose which of these tools are used during analysis, or run both.
-                                </p>
-                                <div id="rna-rna-config">
-                                    <p>
-                                        Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file:
-                                    </p>
-                                    <label for="query-file">Query sequence(s) FASTA file (upload or paste):</label>
-                                    <input type="file" name="query-file" data-target="query-sequences">
-                                    <p>
-                                        The file can be edited before submission in the textbox below.
-                                    </p>
-                                    <textarea id="query-sequences" cols="30" rows="3" placeholder="Paste query sequence(s) FASTA file contents here"></textarea>
-                                    <br>
-                                    <p>
-                                        Select which analysis tool to use (must select at least one):
-                                    </p>
-
-                                    <input type="checkbox" id="run-vienna" checked>
-                                    <span class="checkbox-label">Run the <b>ViennaRNA</b> interaction analysis pipeline</span>
-                                    <div class="config-nested" id="vienna-config">
-                                        <p>
-                                            Select which ViennaRNA executables to include in the analysis (must select at least one):
-                                        </p>
-                                        <input type="checkbox" id="run-rnaduplex" checked>
-                                        <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
-                                        <div class="config-nested" id="rnaduplex-config">
-                                            <p>
-                                                This tool considers only <i>intermolecular</i> interactions between each evaluated
-                                                sequence pair, allowing for potential binding sites to be quickly identified.
-                                            </p>
-                                            <label for="rnaduplex-deltaenergy">Energy range for returned sub-optimal interactions:</label>
-                                            <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0">
-                                            <span><code>kcal/mol</code></span>
-                                            <p>
-                                                The computed free energy of all returned interactions will be within
-                                                the defined range away from the minimum free energy interaction solution.
-                                                Higher values will return more potential interactions.
-                                            </p>
-                                        </div>
-                                        <br>
-                                        <input type="checkbox" id="run-rnacofold" checked>
-                                        <span class="checkbox-label">Run the <b>RNAcofold</b> tool <i>(slow)</i></span>
-                                        <div class="config-nested" id="rnacofold-config">
-                                            <p>Note: this is not recommended for analysis of very large sequences.</p>
-                                        </div>
-                                    </div>
-                                    <br>
-
-                                    <input type="checkbox" id="run-inta" checked>
-                                    <span class="checkbox-label">Run the <b>IntaRNA</b> interaction analysis pipeline</span>
-                                    <div class="config-nested" id="inta-config">
-                                        Test
-                                    </div>
+                                <div id="query-dataset">
+                                    <span class="text-label">Select a BioMart from the dropdown:</span>
+                                    <select id="query-dataset-dropdown"></select>
                                     <br>
                                 </div>
                             </div>
+
+                            <div class="general-config">
+                                <label for="min-cne-length">Minimum CNE length:</label>
+                                <input type="number" id="min-cne-length" min="1" value="100">
+                                <br>
+                                <label for="min-cne-length">Similarity threshold:</label>
+                                <input type="number" id="min-cne-length" min="0" max="1" step="0.01" value="0.95">
+                                <br>
+                            </div>
+
+
                             <br>
+                            <input type="checkbox" id="task-gene-name" checked="checked">
+                            <span class="checkbox-label">Search for CNEs by <b>gene name</b></span><br>
+                            <div class="config-nested">
+                                <div id="gene-name-config">
+                                    <label>Choose a gene name within the reference and query genomes:</label>
+                                    <span class="text-label">Reference gene name</span>
+                                    <input type="text" id="ref-gene-name">
+                                    <br>
+                                    <span class="text-label">Query gene name</span>
+                                    <input type="text" id="query-gene-name">
+                                    <br>
+                                </div>
+                            </div>
+
+                            <br>
+                            <input type="checkbox" id="task-index-position">
+                            <span class="checkbox-label">Search for CNEs by <b>index position</b></span><br>
+                            <div class="config-nested">
+                                <div id="index-position-config">
+                                    <label>Choose a chromosome and start and end positions within the reference and query genomes:</label>
+                                    <div class="text-label">Reference chromosome:</div>
+                                    <input type="number" id="ref-chromosome" min="0">
+                                    <br>
+                                    <div class="text-label">Reference start pos:</div>
+                                    <input type="number" id="ref-start-pos" min="0">
+                                    <br>
+                                    <div class="text-label">Reference end pos:</div>
+                                    <input type="number" id="ref-end-pos" min="0">
+                                    <br>
+                                    <br>
+                                    <div class="text-label">Query chromosome:</div>
+                                    <input type="number" id="query-chromosome" min="0">
+                                    <br>
+                                    <div class="text-label">Query start pos:</div>
+                                    <input type="number" id="query-start-pos" min="0">
+                                    <br>
+                                    <div class="text-label">Query end pos:</div>
+                                    <input type="number" id="query-end-pos" min="0">
+                                    <br>
+                                </div>
+                            </div>
+
                             <div id="validation-error" style="display: none;">
                                 <b>Error!</b>
                                 There is an error in the analysis configuration form, please correct this before trying again.
                             </div>
-                            <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
+                            <input class="button-large button-black" type="submit" id="submit-button" value="Launch CNEFinder">
                         </fieldset>
                     </form>
                 </div>
@@ -160,7 +138,7 @@
         var ajv = new Ajv();
         var validate = ajv.compile(schema);
     </script>
-    <script type="text/javascript" src="cneat.js"></script>
+    <script type="text/javascript" src="cnefinder.js"></script>
 
 </body>
 </html>
