@@ -2,7 +2,7 @@
 
 ![](https://i.imgur.com/nD6EXzX.png)
 
-This project includes two tools used for the identification and analysis of conserved non-coding elements.
+This project includes two tools used for the identification and analysis of conserved non-coding elements. It has been developed as part of a masters degree project at the University of Warwick.
 
 - **CNE Finder**
 	- Processes whole genome sequence data, to locate potential **C**onserved **N**on-coding **E**lements.
