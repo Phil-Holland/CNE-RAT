@@ -155,7 +155,7 @@ input[type="number"] {
     width: auto !important;
 }
 
-#validation-error {
+#validation-error, #ref-site-val-error, #query-site-val-error {
     color: white;
     padding: 10px 10px;
     -webkit-border-radius: 5px;

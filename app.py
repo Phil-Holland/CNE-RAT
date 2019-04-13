@@ -1,10 +1,12 @@
 from flask import Flask, render_template, redirect, request, app, abort, json
 from redis import Redis
 from celery import Celery
+from forms import EnsemblForm
 import markdown
 import uuid
 import datetime
 import os
+import requests
 
 app = Flask(__name__,
     template_folder='app/templates',
@@ -34,13 +36,13 @@ with open("schemas/cnefinder.json") as g:
 cnefinder_metadata = dict(
         title='CNEFinder',
         subtitle='Finding Conserved Non-coding Elements in Genomes',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>',
 )
 
 cneat_metadata = dict(
         title='CNEAT',
         subtitle='The CNE Analysis Tool',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'    
+        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'
 )
 
 @app.route('/')
@@ -54,6 +56,22 @@ def cneat():
 @app.route('/cnefinder')
 def cnefinder():
     return render_template('cnefinder.html', schema=schema_cnefinder, **cnefinder_metadata)
+
+@app.route('/check_url', methods=['POST'])
+def check_url():
+    data = request.get_json(force=True) #json.loads(request.data)
+    path = "/biomart/martservice"
+    payload = {'type': 'registry', 'requestid': 'biomaRt'}
+
+    flag = True
+
+    if data.get('url'):
+        r = requests.post(data.get('url') + path, data=payload)
+        if r.status_code != 200:
+            flag = False
+
+    return json.dumps({'success': flag}), 200, {'ContentType':'application/json'}
+
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
