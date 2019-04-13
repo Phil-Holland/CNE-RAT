@@ -37,6 +37,7 @@ $(function() {
                     $('#ref-dataset').slideUp(100);
                 } else {
                     $('#ref-dataset').slideDown(100);
+                    populate_mart_dropdown('#ref-dataset-dropdown', data['content'])
                 }
             }
         });
@@ -64,11 +65,18 @@ $(function() {
                     $('#query-dataset').slideUp(100);
                 } else {
                     $('#query-dataset').slideDown(100);
+                    populate_mart_dropdown('#query-dataset-dropdown', data['content'])
                 }
             }
         });
     });
 
+    function populate_mart_dropdown(dropdown, obj) {
+        $(dropdown).empty()
+        $.each(obj, function(key, value) {
+            $(dropdown).append('<option>' + value.displayName + '</option>');
+        });
+    }
 
     /*
         task checkboxes
