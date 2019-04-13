@@ -8,6 +8,7 @@ from redis import Redis
 from celery import Celery
 from jsonschema import validate, ValidationError
 from forms import EnsemblForm
+import xml.etree.ElementTree as ET
 
 # get the redis password, which is set as a system environment variable through docker
 redis_password = os.environ['REDIS_PASSWORD']
@@ -78,13 +79,28 @@ def check_url():
     payload = {'type': 'registry', 'requestid': 'biomaRt'}
 
     flag = True
+    content = {}
 
     if data.get('url'):
         r = requests.post(data.get('url') + path, data=payload)
+
+        # if no valid marts, likely to return 404
         if r.status_code != 200:
             flag = False
+        else:
+            tree = ET.ElementTree(ET.fromstring(r.text))
+            root = tree.getroot()
 
-    return json.dumps({'success': flag}), 200, {'ContentType':'application/json'}
+            # parse xml reponse as tree looking for `visible` biomarts
+            for child in root:
+                attributes = child.attrib
+                if attributes.get('visible', "0") == "1":
+
+                    content[attributes.get('name')] = {
+                        'displayName': attributes.get('displayName'),
+                        'database': attributes.get('database') }
+
+    return json.dumps({'success': flag, 'content': content}), 200, {'ContentType':'application/json'}
 
 
 @app.route('/analysis/<uid>')
