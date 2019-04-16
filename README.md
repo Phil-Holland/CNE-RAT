@@ -1,6 +1,6 @@
 # CNE Finder + CNEAT
 
-![](https://i.imgur.com/nD6EXzX.png)
+![](https://i.imgur.com/HVVRXvT.png)
 
 This project includes two tools used for the identification and analysis of conserved non-coding elements. It has been developed as part of a masters degree project at the University of Warwick.
 
