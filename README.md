@@ -51,3 +51,14 @@ docker-compose up
 - Celery is used to process jobs. *Flower* is a web interface to monitor task progress + worker status.
 	- By default, this can be accessed through port `5555`.
 	- This monitoring interface is protected with simple authentication. To set the admin username + password, change the `FLOWER_USER` and `FLOWER_PASSWORD` environment variables in the `.env` file.
+
+### Running Tests
+
+- This project includes a test suite, which can be run by building a "test" version of the application
+- Use the following two commands to build and run all tests:
+
+```
+docker-compose -f docker-compose.yml -f docker-compose.test.yml build
+
+docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit
+```

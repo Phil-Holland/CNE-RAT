@@ -36,27 +36,9 @@
 				"mus_musculus"
 			],
 			"anyOf": [
-				{
-					"properties": {
-						"drosophila_melanogaster": { 
-							"enum": [true] 
-						}
-					}
-				},
-				{
-					"properties": {
-						"homo_sapiens": { 
-							"enum": [true]
-						}
-					}
-				},
-				{
-					"properties": {
-						"mus_musculus": { 
-							"enum": [true]
-						}
-					}
-				}
+				{"properties": {"drosophila_melanogaster": { "enum": [true] }}},
+				{"properties": {"homo_sapiens": { "enum": [true] }}},
+				{"properties": {"mus_musculus": { "enum": [true] }}}
 			]
 		},
 		"rna_rna": {
@@ -135,20 +117,8 @@
 						"rnaduplex_config"
 					],
 					"anyOf": [
-						{
-							"properties": {
-								"rnacofold": { 
-									"enum": [true] 
-								}
-							}
-						},
-						{
-							"properties": {
-								"rnaduplex": { 
-									"enum": [true]
-								}
-							}
-						}
+						{"properties": {"rnacofold": { "enum": [true] }}},
+						{"properties": {"rnaduplex": { "enum": [true] }}}
 					]
 				}
 			},
@@ -160,20 +130,8 @@
 				"vienna_config"
 			],
 			"anyOf": [
-				{
-					"properties": {
-						"inta": { 
-							"enum": [true] 
-						}
-					}
-				},
-				{
-					"properties": {
-						"vienna": { 
-							"enum": [true]
-						}
-					}
-				}
+				{ "properties": { "inta": { "enum": [true] }}},
+				{ "properties": { "vienna": { "enum": [true] }}}
 			]
 		}
 	},
@@ -185,19 +143,7 @@
 		"rna_rna_config"
 	],
 	"anyOf": [
-        {
-			"properties": {
-				"rna_protein": { 
-					"enum": [true] 
-				}
-			}
-        },
-        {
-			"properties": {
-				"rna_rna": { 
-					"enum": [true]
-				}
-			}
-		}
+		{ "properties": { "rna_protein": { "enum": [true] }}},
+		{ "properties": { "rna_rna": { "enum": [true] }}}
 	]
 }

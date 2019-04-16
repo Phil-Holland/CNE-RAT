@@ -1,0 +1,25 @@
+version: '3'
+services:
+    pytest:
+        container_name: pytest
+        build:
+            context: .
+            dockerfile: Dockerfile-pytest
+        volumes:
+            - ./tests:/tests
+        depends_on:
+            - web
+            - redis
+    web:
+        container_name: web_test
+        environment:
+            - DEBUG=1
+    celery:
+        container_name: celery_test
+        logging:
+            driver: "none"
+    redis:
+        container_name: redis_test
+        entrypoint: redis-server --requirepass ${REDIS_PASSWORD} --appendonly no
+        logging:
+            driver: "none"
