@@ -6,7 +6,7 @@ class TestPageCodes():
 
     @pytest.mark.it('Returns HTTP code 200 when requesting the homepage')
     def test_homepage(self):
-        assert requests.get('http://web:5000').status_code == 200
+        assert requests.get('http://web:5000/').status_code == 200
 
     @pytest.mark.it('Returns HTTP code 200 when requesting the CNEAT configuration page')
     def test_cneat(self):
