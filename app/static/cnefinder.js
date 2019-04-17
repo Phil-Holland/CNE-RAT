@@ -130,9 +130,9 @@ $(function() {
         else $('#gene-name-config').slideUp(100);
     });
 
-    // default to using gene name search
+    // default to using index position search
     $(document).ready(function(){
-        $('#index-position-config').slideUp(100);
+        $('#gene-name-config').slideUp(100);
     });
 
     $('#task-index-position').click(function() {
