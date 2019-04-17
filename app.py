@@ -66,9 +66,13 @@ def check_url():
 
     flag = True
     content = {}
+    urlstring = data.get('url')
 
-    if data.get('url'):
-        r = requests.post(data.get('url') + path, data=payload)
+    if urlstring:
+        if urlstring[-1] == '/': # trim trailing forward slash if necessary
+            urlstring = urlstring[:-1]
+
+        r = requests.post(urlstring + path, data=payload)
 
         # if no valid marts, likely to return 404
         if r.status_code != 200:
@@ -85,7 +89,40 @@ def check_url():
                     content[attributes.get('name')] = {
                         'displayName': attributes.get('displayName'),
                         'database': attributes.get('database') }
+    return json.dumps({'success': flag, 'content': content}), 200, {'ContentType':'application/json'}
 
+@app.route('/find_datasets', methods=['POST'])
+def find_datasets():
+    data = request.get_json(force=True) #json.loads(request.data)
+    path = "/biomart/martservice"
+
+    mart = data.get('mart')
+    payload = {'type': 'datasets', 'requestid': 'biomaRt', 'mart' : mart}
+
+    flag = True
+    content = {}
+    urlstring = data.get('url')
+
+    if urlstring:
+        if urlstring[-1] == '/': # trim trailing forward slash if necessary
+            urlstring = urlstring[:-1]
+
+        r = requests.post(urlstring + path, data=payload)
+
+        # if no valid marts, likely to return 404
+        if r.status_code != 200:
+            flag = False
+        else:
+            # request returns a tab and newline deliminated raw string for some reason
+            dataset_lines = r.text.split('\n')
+            datasets = [row.split('\t') for row in dataset_lines if row and not row.isspace()]
+
+            for d in datasets:
+                if d[3] == 1 or d[3] == '1': # check for `visibility` of dataset on site
+
+                    # https://rdrr.io/github/grimbough/biomaRt/src/R/biomaRt.R#sym-listDatasets
+                    # key names taken from this link (the biomaRt source)
+                    content[d[1]] = {'description' : d[2], 'version' : d[4]}
     return json.dumps({'success': flag, 'content': content}), 200, {'ContentType':'application/json'}
 
 
