@@ -125,6 +125,58 @@ def find_datasets():
                     content[d[1]] = {'description' : d[2], 'version' : d[4]}
     return json.dumps({'success': flag, 'content': content}), 200, {'ContentType':'application/json'}
 
+@app.route('/output/<uid>')
+def output(uid):
+    # make sure the cnefinder exists
+    if not redis.exists('cnefinder:' + uid):
+        return abort(404)
+
+    started = redis.get('cnefinder:' + uid + ':started').decode("utf-8")
+    config = redis.get('cnefinder:' + uid + ':config').decode("utf-8")
+
+    return render_template('output.html', uid=uid, config=config, started=started, **cnefinder_metadata)
+
+@app.route('/get_cnefinder_status/<uid>', methods=['POST'])
+def get_cnefinder_status(uid):
+    # make sure the analysis exists
+    if not redis.exists('cnefinder:' + uid):
+        return abort(404)
+
+    tasks = redis.lrange('cnefinder:' + uid + ':tasks', 0, -1)
+
+    statuses = []
+    for t in tasks:
+        t = json.loads(t.decode('UTF-8'))
+        # get celery task status
+        res = celery.AsyncResult(t['task_id'])
+        status = res.state
+        statuses.append({'name': t['task_name'], 'id': t['task_id'], 'status': status})
+    return json.dumps({'success': True, 'statuses': statuses}), 200, {'ContentType':'application/json'}
+
+@app.route('/new_cnefinder', methods=['POST'])
+def new_cnefinder():
+    # get cnefinder run start time
+    started = datetime.datetime.utcnow().strftime("%H:%M:%S %Y-%m-%d")
+    config = request.get_json(force=True)
+
+    if config is None:
+        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+
+    # generate a unique ID (chance of collision is basically impossible)
+    uid = ''
+    while(True):
+        uid = str(uuid.uuid4())[:8]
+        if not redis.exists('cnefinder:' + uid):
+            redis.set('cnefinder:' + uid, uid)
+            redis.set('cnefinder:' + uid + ':started', started)
+            redis.set('cnefinder:' + uid + ':config', json.dumps(config))
+            break
+
+        # no if-blocks needed for task type gene-name or index-position, as they
+        # are handled by the same python task script.
+
+    return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'}
+
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
