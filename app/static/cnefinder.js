@@ -144,4 +144,63 @@ $(function() {
         else $('#index-position-config').slideUp(100);
     });
 
+    /*
+        submit button
+    */
+    $('#config-form').submit(function(e) {
+        e.preventDefault();
+
+        // get form data, and attempt to build config object
+        config = {
+            'ensembl_request_config': {
+                'ref_site': $('#ensembl-site-ref').val(),
+                'query_site': $('#ensembl-site-query').val(),
+                'ref_mart': $('#ref-mart-dropdown option:selected').val(),
+                'query_mart': $('#query-mart-dropdown option:selected').val(),
+                'ref_dataset': $('#ref-dataset-dropdown option:selected').val(),
+                'query_dataset': $('#query-dataset-dropdown option:selected').val(),
+
+            },
+            'general_config': {
+                'min_cne_length': $('#min-cne-length').val(),
+                'sim_threshold': $('#sim-threshold').val(),
+            },
+            'gene_name': $('#task-gene-name').is(':checked'),
+            'gene_name_config': {
+                'ref_gene_name': $('#ref-gene-name').val(),
+                'query_gene_name': $('#query-gene-name').val(),
+            },
+            'index_position': $('#task-index-position').is(':checked'),
+            'index_position_config': {
+                'ref_chromosome': $('#ref-chromosome').val(),
+                'ref_start_pos': $('#ref-start-pos').val(),
+                'ref_end_pos': $('#ref-end-pos').val(),
+                'query_chromosome': $('#query-chromosome').val(),
+                'query_start_pos': $('#query-start-pos').val(),
+                'query_end_pos': $('#query-end-pos').val(),
+            }
+        }
+
+        // use JSON schema to perform client-side validation on the JSON object
+        var valid = validate(config);
+        if(!valid) {
+            // validation errors encountered!
+            console.log(validate.errors);
+
+            $('#validation-error').slideDown(100);
+
+            // don't send the form
+            return false;
+        }
+
+        // send POST request to start CNEFinder pre-prep and run
+        $.post('/new_cnefinder', JSON.stringify(config), function(data) {
+            if(data['success']) {
+                window.location.replace("/output/" + data.uid);
+            }
+        }, "json");
+
+        return false;
+    });
+
 });
