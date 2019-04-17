@@ -1,81 +1,169 @@
 {
 	"$schema": "http://json-schema.org/draft-07/schema#",
-	"$id": "cnefomder",
+	"$id": "cnefinder",
 	"title": "CNEFinder",
 	"description": "A schema defining a CNEFinder run configuration",
 	"type": "object",
 	"properties": {
-		"cne": {
-			"description": "A string holding the CNE sequence in FASTA format",
-			"type": "string"
-		},
-		"rna_protein": {
-			"description": "A boolean representing whether or not the RNA-protein analysis pipeline should be executed",
-			"type": "boolean"
-		},
-		"rna_protein_config": {
-			"description": "Additional configuration options for the RNA-protein analysis pipeline",
+		"ensembl_request_config": {
+			"description": "Configuration options for the requests that will be made to the user-submitted ensembl sites",
 			"type": "object",
 			"properties": {
-				"drosophila_melanogaster": {
-					"description": "A boolean representing whether or not Drosophila melanogaster is relevant in this analysis",
-					"type": "boolean"
+				"ref_site": {
+					"description": "A string holding the URL of the ensembl site/archive containing the reference genome",
+					"type": "string"
 				},
-				"homo_sapiens": {
-					"description": "A boolean representing whether or not Homo sapiens is relevant in this analysis",
-					"type": "boolean"
+				"query_site": {
+					"description": "A string holding the URL of the ensembl site/archive containing the query genome",
+					"type": "string"
 				},
-				"mus_musculus": {
-					"description": "A boolean representing whether or not Mus musculus is relevant in this analysis",
-					"type": "boolean"
+				"ref_mart": {
+					"description": "A string holding the name of the ensembl BioMart containing the reference genome",
+					"type": "string"
+				},
+				"query_mart": {
+					"description": "A string holding the name of the ensembl BioMart containing the query genome",
+					"type": "string"
+				},
+				"ref_dataset": {
+					"description": "A string holding the name of the ensembl dataset containing the reference genome",
+					"type": "string"
+				},
+				"query_dataset": {
+					"description": "A string holding the name of the ensembl dataset containing the query genome",
+					"type": "string"
 				}
 			},
 			"required": [
-				"drosophila_melanogaster",
-				"homo_sapiens",
-				"mus_musculus"
-			],
-			"anyOf": [
-				{
-					"properties": {
-						"drosophila_melanogaster": {
-							"enum": [true]
-						}
-					}
+				"ref_site",
+				"query_site",
+				"ref_mart",
+				"query_mart",
+				"ref_dataset",
+				"query_dataset"
+			]
+		},
+		"general_config": {
+			"description": "Task-agnostic configuration options for a CNEFinder run",
+			"type": "object",
+			"properties": {
+				"min_cne_length": {
+					"description": "A number holding the minimum CNE length CNEFinder will search for",
+					"type": "number",
+					"minimum": 1,
+					"multipleOf": 1
 				},
-				{
-					"properties": {
-						"homo_sapiens": {
-							"enum": [true]
-						}
-					}
-				},
-				{
-					"properties": {
-						"mus_musculus": {
-							"enum": [true]
-						}
-					}
+				"sim_threshold": {
+					"description": "A number holding the similarity threshold defining matching CNE regions",
+					"type": "number",
+					"minimum": 0,
+					"maximum": 1,
+					"multipleOf": 0.01
 				}
+			},
+			"required": [
+				"min_cne_length",
+				"sim_threshold"
+			]
+		},
+		"gene_name": {
+			"description": "A boolean representing whether CNFinder should search for CNEs based on gene names",
+			"type": "boolean"
+		},
+		"gene_name_config": {
+			"description": "Additional configuration options for a gene-name-focussed CNEFinder run",
+			"type": "object",
+			"properties": {
+				"ref_gene_name": {
+					"description": "A string holding the URL of the name of chosen gene within the reference genome",
+					"type": "string"
+				},
+				"query_gene_name": {
+					"description": "A string holding the URL of the name of chosen gene within the query genome",
+					"type": "string"
+				}
+			},
+			"required": [
+				"min_cne_length",
+				"sim_threshold"
+			]
+		},
+		"index_position": {
+			"description": "A boolean representing whether CNFinder should search for CNEs based on index positions",
+			"type": "boolean"
+		},
+		"index_position_config": {
+			"description": "Additional configuration options for a index-positon-focussed CNEFinder run",
+			"type": "object",
+			"properties": {
+				"ref_chromosome": {
+					"description": "A number holding the chromosome on the reference genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"maximum": 100,
+					"multipleOf": 1
+				},
+				"ref_start_pos": {
+					"description": "A number holding the start index on the reference genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"multipleOf": 1
+				},
+				"ref_end_pos": {
+					"description": "A number holding the end index on the reference genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"multipleOf": 1
+				},
+				"query_chromosome": {
+					"description": "A number holding the chromosome on the query genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"maximum": 100,
+					"multipleOf": 1
+				},
+				"query_start_pos": {
+					"description": "A number holding the start index on the query genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"multipleOf": 1
+				},
+				"query_end_pos": {
+					"description": "A number holding the end index on the query genome to be searched",
+					"type": "number",
+					"minimum": 1,
+					"multipleOf": 1
+				}
+			},
+			"required": [
+				"ref_chromosome",
+				"ref_start_pos",
+				"ref_end_pos",
+				"query_chromosome",
+				"query_start_pos",
+				"query_end_pos"
 			]
 		}
 	},
 	"required": [
-		"cne",
-		"rna_protein",
-		"rna_protein_config"
+		"ensembl_request_config",
+		"general_config",
+		"gene_name",
+		"gene_name_config",
+		"index_position",
+		"index_position_config"
 	],
 	"anyOf": [
         {
 			"properties": {
-				"rna_protein": {
+				"gene_name": {
 					"enum": [true]
 				}
 			}
         },
         {
 			"properties": {
-				"rna_rna": {
+				"index_position": {
 					"enum": [true]
 				}
 			}
