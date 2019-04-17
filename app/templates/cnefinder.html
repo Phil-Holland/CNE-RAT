@@ -75,8 +75,8 @@
                                 <label for="min-cne-length">Minimum CNE length:</label>
                                 <input type="number" id="min-cne-length" min="1" value="100">
                                 <br>
-                                <label for="min-cne-length">Similarity threshold:</label>
-                                <input type="number" id="min-cne-length" min="0" max="1" step="0.01" value="0.95">
+                                <label for="sim-threshold">Similarity threshold:</label>
+                                <input type="number" id="sim-threshold" min="0" max="1" step="0.01" value="0.95">
                                 <br>
                             </div>
 
@@ -102,24 +102,27 @@
                             <div class="config-nested">
                                 <div id="index-position-config">
                                     <label>Choose a chromosome and start and end positions within the reference and query genomes:</label>
+                                    <p>
+                                        Set the position parameters to 0 to search the entire specified chromosome of the reference and/or query genomes.
+                                    </p>
                                     <div class="text-label">Reference chromosome:</div>
-                                    <input type="number" id="ref-chromosome" min="0">
+                                    <input type="number" id="ref-chromosome" min="1" max="100" step="1">
                                     <br>
                                     <div class="text-label">Reference start pos:</div>
-                                    <input type="number" id="ref-start-pos" min="0">
+                                    <input type="number" id="ref-start-pos" min="0" step="1" placeholder="0">
                                     <br>
                                     <div class="text-label">Reference end pos:</div>
-                                    <input type="number" id="ref-end-pos" min="0">
+                                    <input type="number" id="ref-end-pos" min="0" step="1" placeholder="0">
                                     <br>
                                     <br>
                                     <div class="text-label">Query chromosome:</div>
-                                    <input type="number" id="query-chromosome" min="0">
+                                    <input type="number" id="query-chromosome" min="1" max="100" step="1">
                                     <br>
                                     <div class="text-label">Query start pos:</div>
-                                    <input type="number" id="query-start-pos" min="0">
+                                    <input type="number" id="query-start-pos" min="0" step="1" placeholder="0">
                                     <br>
                                     <div class="text-label">Query end pos:</div>
-                                    <input type="number" id="query-end-pos" min="0">
+                                    <input type="number" id="query-end-pos" min="0" step="1" placeholder="0">
                                     <br>
                                 </div>
                             </div>
