@@ -187,7 +187,7 @@ def analysis(uid):
     started = redis.get('analyses:' + uid + ':started').decode("utf-8")
     config = redis.get('analyses:' + uid + ':config').decode("utf-8")
 
-    return render_template('analysis.html', uid=uid, config=config, started=started)
+    return render_template('analysis.html', uid=uid, config=config, started=started, **cneat_metadata)
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
 def get_analysis_status(uid):
