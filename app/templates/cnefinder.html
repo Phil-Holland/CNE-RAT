@@ -40,8 +40,13 @@
                                 Please ensure URL corresponds to a valid Ensembl site.
                             </div>
                             <div class="config-nested">
-                                <div id="ref-dataset">
+                                <div id="ref-mart" style="display: none;">
                                     <span class="text-label">Select a BioMart from the dropdown:</span>
+                                    <select id="ref-mart-dropdown"></select>
+                                    <br>
+                                </div>
+                                <div id="ref-dataset" style="display: none;">
+                                    <span class="text-label">Select a reference dataset from the dropdown:</span>
                                     <select id="ref-dataset-dropdown"></select>
                                     <br>
                                 </div>
@@ -49,16 +54,21 @@
 
                             <label for="ensembl-site">Ensembl site (or site archive) URL for query genome:</label>
                             <input type="url" name="ensembl-site-query" id="ensembl-site-query" placeholder="https://www.ensembl.org/" required>
-                            <div id="query-site-val-error"style="display: none;" >
+                            <div id="query-site-val-error" style="display: none;">
                                 <b>Error!</b>
                                 Please ensure URL corresponds to a valid Ensembl site.
                             </div>
                             <div class="config-nested">
-                                <div id="query-dataset">
+                                <div id="query-mart" style="display: none;">
                                     <span class="text-label">Select a BioMart from the dropdown:</span>
-                                    <select id="query-dataset-dropdown"></select>
+                                    <select id="query-mart-dropdown"></select>
                                     <br>
                                 </div>
+                                <div id="query-dataset" style="display: none;">
+                                        <span class="text-label">Select a query dataset from the dropdown:</span>
+                                        <select id="query-dataset-dropdown"></select>
+                                        <br>
+                                    </div>
                             </div>
 
                             <div class="general-config">
