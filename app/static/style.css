@@ -143,6 +143,10 @@ input[type="text"] {
     background: #f9f9f9 !important;
 }
 
+input[type="url"] {
+    background: #f9f9f9 !important;
+}
+
 input[type="email"] {
     background: #f9f9f9 !important;
 }
@@ -153,6 +157,7 @@ input[type="email"]:disabled {
 
 input[type="number"] {
     width: auto !important;
+    background: #f9f9f9 !important;
 }
 
 #validation-error, #ref-site-val-error, #query-site-val-error {
