@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Get milligram & fonts from CDN -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.6/b-html5-1.5.6/datatables.min.css"/>    
+
+    <!-- Icon pack -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Load custom CSS -->
+    <link rel="stylesheet" type="text/css" href="../style.css" >
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="content">
+        <div id="title-results">
+            <a href="/cnefinder"><strong>&larr;</strong> run CNEFinder again</a>
+            <br>
+            <h3>{{ title }}</h3> <span>{{ subtitle }}</span>
+        </div>
+        <div id="images-results">
+            <img src="../warwick.png" alt="Warwick crest" id="warwick">
+            <img src="../logo.png" alt="Origene logo" id="logo">
+        </div>
+        <hr>
+        <div class="row">
+            <div class="column column-25">
+                CNEFinder run ID: <strong>{{ uid }}</strong>
+            </div>
+            <div class="column column-25">
+                Started: <strong> {{ started }}</strong>
+            </div>
+            <div class="column column-25">
+                Overall status: <strong id="status"></strong>
+            </div>
+            <div class="column column-25">
+                <span id="config-toggle">Show run configuration</span>
+            </div>
+        </div>
+        <div style="display: none" id="config">
+            <pre><code id="config-code"></code></pre>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="column column-25">
+                <span>Select tool to view reports:</span>
+                <ul id="analysis-sidebar-list">
+                </ul>
+            </div>
+            <div class="column column-75">
+                <div id="task-content">
+
+                </div>
+            </div>
+        </div>
+        <hr>
+        <small>{{ footer|safe }}</small>
+    </div>
+
+    <!-- Load JavaScript -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../svg-pan-zoom.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.18/b-1.5.6/b-html5-1.5.6/datatables.min.js"></script>
+
+    <script type="text/javascript">
+        var uid = {{ uid|tojson }};
+        var started = {{ started|tojson }};
+        var config = JSON.parse({{ config|tojson }});
+        $('#config-code').html(JSON.stringify(config, null, 2));
+    </script>
+    <script type="text/javascript" src="../output.js"></script>
+</body>
+</html>
