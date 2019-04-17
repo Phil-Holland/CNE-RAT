@@ -84,8 +84,8 @@
 				}
 			},
 			"required": [
-				"min_cne_length",
-				"sim_threshold"
+				"ref_gene_name",
+				"query_gene_name"
 			]
 		},
 		"index_position": {
@@ -106,13 +106,13 @@
 				"ref_start_pos": {
 					"description": "A number holding the start index on the reference genome to be searched",
 					"type": "number",
-					"minimum": 1,
+					"minimum": 0,
 					"multipleOf": 1
 				},
 				"ref_end_pos": {
 					"description": "A number holding the end index on the reference genome to be searched",
 					"type": "number",
-					"minimum": 1,
+					"minimum": 0,
 					"multipleOf": 1
 				},
 				"query_chromosome": {
@@ -125,13 +125,13 @@
 				"query_start_pos": {
 					"description": "A number holding the start index on the query genome to be searched",
 					"type": "number",
-					"minimum": 1,
+					"minimum": 0,
 					"multipleOf": 1
 				},
 				"query_end_pos": {
 					"description": "A number holding the end index on the query genome to be searched",
 					"type": "number",
-					"minimum": 1,
+					"minimum": 0,
 					"multipleOf": 1
 				}
 			},
