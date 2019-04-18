@@ -1,9 +1,10 @@
 FROM python:3.5
 
+# install python requirements
+ADD requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
 ADD . /app
 WORKDIR /app
-
-# install python requirements
-RUN pip install -r requirements.txt
 
 ENTRYPOINT ["sh", "web_start_script.sh"]

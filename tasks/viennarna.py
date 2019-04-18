@@ -110,18 +110,20 @@ def viennarna(config, uid):
     run_rnacofold = config['rna_rna_config']['vienna_config']['rnacofold']
     
     # parse the two fasta strings, and retrieve the sequences they contain
-    cne_id, cne_sequence = get_sequences_from_fasta(cne_sequences_fasta, limit=1)[0]
+    _, cne_sequence = get_sequences_from_fasta(cne_sequences_fasta, limit=1)[0]
     query_sequences = get_sequences_from_fasta(query_sequences_fasta)
-    
-    cofold_outputs = {}
-    cofold_ss_outputs = {}
-    cofold_dp_outputs = {}
 
-    duplex_outputs = {}
+    # analyses report sections
+    analyses = ''
 
     # iterate over all query sequences, and produce cofold output text for each
-    for (seq_id, sequence) in query_sequences:
+    for i, (seq_id, sequence) in enumerate(query_sequences):
         print('Processing sequence: %s' % sequence)
+
+        duplex_output = None
+        cofold_output = None
+        cofold_ss_output = None
+        cofold_dp_output = None
 
         if run_rnaduplex:
             duplex_input = '>cne\n{cne}\n\n>query\n{query}'.format(
@@ -137,7 +139,7 @@ def viennarna(config, uid):
 
             output, err = p.communicate(input=str.encode(duplex_input))
             output = output.decode("utf-8")
-            duplex_outputs[seq_id] = output
+            duplex_output = output
 
         if run_rnacofold:
             rnacofold_input = '>cofold\n{cne}&{query}'.format(
@@ -153,28 +155,26 @@ def viennarna(config, uid):
 
             output, err = p.communicate(input=str.encode(rnacofold_input))
             output = output.decode("utf-8")
-            cofold_outputs[seq_id] = output
+            cofold_output = output
 
             svg_ss = convert_ps_to_svg('cofold_ss.ps', working_dir)
             svg_dp = convert_ps_to_svg('cofold_dp.ps', working_dir)
-            cofold_ss_outputs[seq_id] = svg_ss
-            cofold_dp_outputs[seq_id] = svg_dp
+            cofold_ss_output = svg_ss
+            cofold_dp_output = svg_dp
 
-    analyses = ''
-    for i, (seq_id, sequence) in enumerate(query_sequences):
         duplex_report = ''
         if run_rnaduplex:
             duplex_report = vienna_duplex_template.format(
                 deltaenergy=rnaduplex_de,
-                duplex_output=duplex_outputs[seq_id]
+                duplex_output=duplex_output
             )
 
         cofold_report = ''
         if run_rnacofold:
             cofold_report = vienna_cofold_template.format(
-                cofold_output=cofold_outputs[seq_id],
-                cofold_ss_output=cofold_ss_outputs[seq_id],
-                cofold_dp_output=cofold_dp_outputs[seq_id]
+                cofold_output=cofold_output,
+                cofold_ss_output=cofold_ss_output,
+                cofold_dp_output=cofold_dp_output
             )
 
         analyses += vienna_analysis_template.format(

@@ -200,6 +200,10 @@ input[type="number"] {
     padding-right: 20px;
 }
 
+#config > pre {
+    margin-bottom: 10px;
+}
+
 #config-toggle {
     text-decoration: underline;
 }
@@ -212,6 +216,24 @@ input[type="number"] {
 #config-code {
     max-height: 240px;
     overflow-y: scroll;
+}
+
+#copy-config {
+    font-size: small;
+    font-weight: normal;
+    color: black;
+    border-color: black;
+    background-color: white;
+    margin-top: 0;
+    margin-bottom: 0;
+    position: relative;
+    float: right;
+    top: -4.5em;
+    right: 2.5em;
+}
+
+#copy-config:hover {
+    background-color: #f0f0f0;
 }
 
 #analysis-sidebar {
@@ -256,6 +278,10 @@ input[type="number"] {
     color: black;
     border-color: black;
     margin-top: 2em;
+}
+
+#task-content .export-button:hover {
+    background-color: #f0f0f0;
 }
 
 #task-content svg {

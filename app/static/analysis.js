@@ -5,7 +5,7 @@ var scrolls = {};
 var failure_text = 'Unfortunately, this tool has failed to complete successfully.';
 
 $(function() {
-    
+
     // populate sidebar tool list
     function add_tool(title, name, id) {
         $('#analysis-sidebar-list').append(
@@ -66,7 +66,16 @@ $(function() {
             $('#config-toggle').html("Hide analysis configuration")
         }
     });
-    
+
+    // when the 'copy config to clipboard' button is pressed
+    $('#copy-config').click(function() {
+        var temp = $("<textarea>");
+        $("body").append(temp);
+        temp.val(JSON.stringify(config, null, 4)).select();
+        document.execCommand("copy");
+        temp.remove();
+    });
+
     // when the window is resized
     $(window).resize(resize_window);
 
@@ -89,7 +98,6 @@ var resize_window = function() {
         });
     }
 }
-
 
 var update_content = function(tid, name) {
     $.post('/get_task_data/' + tid, function(t_data) {

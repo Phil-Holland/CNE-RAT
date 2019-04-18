@@ -29,11 +29,12 @@ RUN cd IntaRNA-2.4.0 && chmod a+x autotools-init.sh && ./autotools-init.sh && ./
 RUN rm viennarna.deb
 RUN rm intarna.tar.gz && rm -r IntaRNA-2.4.0
 
+# install python requirements
+ADD requirements.txt /app/requirements.txt
+RUN pip install -r /app/requirements.txt
+
 ADD . /app
 WORKDIR /app
-
-# install python requirements
-RUN pip install -r requirements.txt
 
 RUN mkdir -p /var/log/celery
 RUN mkdir -p /var/run/celery
