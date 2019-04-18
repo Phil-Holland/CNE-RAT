@@ -1,10 +1,10 @@
 FROM python:3.5
 
-ADD tests /tests
-WORKDIR /tests
-
 # install requirements
 RUN pip install pytest pytest-testdox requests
 
-# run pytest
-ENTRYPOINT ["pytest", "--testdox"]
+ADD tests /tests
+WORKDIR /tests
+
+# run pytest start script
+ENTRYPOINT ["sh", "pytest_start_script.sh"]

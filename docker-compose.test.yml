@@ -1,7 +1,7 @@
 version: '3'
 services:
     pytest:
-        container_name: pytest
+        container_name: cneat_test_pytest
         build:
             context: .
             dockerfile: Dockerfile-pytest
@@ -11,15 +11,17 @@ services:
             - web
             - redis
     web:
-        container_name: web_test
+        container_name: cneat_test_web
         environment:
             - DEBUG=1
+        logging:
+            driver: "none"
     celery:
-        container_name: celery_test
+        container_name: cneat_test_celery
         logging:
             driver: "none"
     redis:
-        container_name: redis_test
+        container_name: cneat_test_redis
         entrypoint: redis-server --requirepass ${REDIS_PASSWORD} --appendonly no
         logging:
             driver: "none"

@@ -107,43 +107,68 @@
 									"type": "number",
 									"minimum": 0
 								}
-							}
+							},
+							"required": ["deltaenergy"]
 						}
 					},
 					"required": [
 						"rnacofold",
-						"rnacofold_config",
-						"rnaduplex",
-						"rnaduplex_config"
+						"rnaduplex"
 					],
-					"anyOf": [
-						{"properties": {"rnacofold": { "enum": [true] }}},
-						{"properties": {"rnaduplex": { "enum": [true] }}}
+					"oneOf": [
+						{
+							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [true] }},
+							"required": ["rnacofold_config", "rnaduplex_config"]
+						},
+						{
+							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [false] }},
+							"required": ["rnacofold_config"]
+						},
+						{
+							"properties": {"rnacofold": { "enum": [false] }, "rnaduplex": { "enum": [true] }},
+							"required": ["rnaduplex_config"]
+						}
 					]
 				}
 			},
 			"required": [
 				"query_sequences",
 				"inta",
-				"inta_config",
-				"vienna",
-				"vienna_config"
+				"vienna"
 			],
-			"anyOf": [
-				{ "properties": { "inta": { "enum": [true] }}},
-				{ "properties": { "vienna": { "enum": [true] }}}
+			"oneOf": [
+				{
+					"properties": { "inta": { "enum": [true] }, "vienna": { "enum": [true] }},
+					"required": ["inta_config", "vienna_config"]
+				},
+				{
+					"properties": { "inta": { "enum": [true] }, "vienna": { "enum": [false] }},
+					"required": ["inta_config"]
+				},
+				{
+					"properties": { "inta": { "enum": [false] }, "vienna": { "enum": [true] }},
+					"required": ["vienna_config"]
+				}
 			]
 		}
 	},
 	"required": [
 		"cne",
 		"rna_protein",
-		"rna_protein_config",
-		"rna_rna",
-		"rna_rna_config"
+		"rna_rna"
 	],
-	"anyOf": [
-		{ "properties": { "rna_protein": { "enum": [true] }}},
-		{ "properties": { "rna_rna": { "enum": [true] }}}
+	"oneOf": [
+		{ 
+			"properties": { "rna_protein": { "enum": [true] }, "rna_rna": { "enum": [true] }}, 
+			"required": ["rna_protein_config", "rna_rna_config"]
+		},
+		{ 
+			"properties": { "rna_protein": { "enum": [true] }, "rna_rna": { "enum": [false] }}, 
+			"required": ["rna_protein_config"]
+		},
+		{ 
+			"properties": { "rna_protein": { "enum": [false] }, "rna_rna": { "enum": [true] }}, 
+			"required": ["rna_rna_config"]
+		}
 	]
 }
