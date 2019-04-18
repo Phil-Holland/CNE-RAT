@@ -36,27 +36,9 @@
 				"mus_musculus"
 			],
 			"anyOf": [
-				{
-					"properties": {
-						"drosophila_melanogaster": { 
-							"enum": [true] 
-						}
-					}
-				},
-				{
-					"properties": {
-						"homo_sapiens": { 
-							"enum": [true]
-						}
-					}
-				},
-				{
-					"properties": {
-						"mus_musculus": { 
-							"enum": [true]
-						}
-					}
-				}
+				{"properties": {"drosophila_melanogaster": { "enum": [true] }}},
+				{"properties": {"homo_sapiens": { "enum": [true] }}},
+				{"properties": {"mus_musculus": { "enum": [true] }}}
 			]
 		},
 		"rna_rna": {
@@ -125,29 +107,26 @@
 									"type": "number",
 									"minimum": 0
 								}
-							}
+							},
+							"required": ["deltaenergy"]
 						}
 					},
 					"required": [
 						"rnacofold",
-						"rnacofold_config",
-						"rnaduplex",
-						"rnaduplex_config"
+						"rnaduplex"
 					],
-					"anyOf": [
+					"oneOf": [
 						{
-							"properties": {
-								"rnacofold": { 
-									"enum": [true] 
-								}
-							}
+							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [true] }},
+							"required": ["rnacofold_config", "rnaduplex_config"]
 						},
 						{
-							"properties": {
-								"rnaduplex": { 
-									"enum": [true]
-								}
-							}
+							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [false] }},
+							"required": ["rnacofold_config"]
+						},
+						{
+							"properties": {"rnacofold": { "enum": [false] }, "rnaduplex": { "enum": [true] }},
+							"required": ["rnaduplex_config"]
 						}
 					]
 				}
@@ -155,24 +134,20 @@
 			"required": [
 				"query_sequences",
 				"inta",
-				"inta_config",
-				"vienna",
-				"vienna_config"
+				"vienna"
 			],
-			"anyOf": [
+			"oneOf": [
 				{
-					"properties": {
-						"inta": { 
-							"enum": [true] 
-						}
-					}
+					"properties": { "inta": { "enum": [true] }, "vienna": { "enum": [true] }},
+					"required": ["inta_config", "vienna_config"]
 				},
 				{
-					"properties": {
-						"vienna": { 
-							"enum": [true]
-						}
-					}
+					"properties": { "inta": { "enum": [true] }, "vienna": { "enum": [false] }},
+					"required": ["inta_config"]
+				},
+				{
+					"properties": { "inta": { "enum": [false] }, "vienna": { "enum": [true] }},
+					"required": ["vienna_config"]
 				}
 			]
 		}
@@ -180,24 +155,20 @@
 	"required": [
 		"cne",
 		"rna_protein",
-		"rna_protein_config",
-		"rna_rna",
-		"rna_rna_config"
+		"rna_rna"
 	],
-	"anyOf": [
-        {
-			"properties": {
-				"rna_protein": { 
-					"enum": [true] 
-				}
-			}
-        },
-        {
-			"properties": {
-				"rna_rna": { 
-					"enum": [true]
-				}
-			}
+	"oneOf": [
+		{ 
+			"properties": { "rna_protein": { "enum": [true] }, "rna_rna": { "enum": [true] }}, 
+			"required": ["rna_protein_config", "rna_rna_config"]
+		},
+		{ 
+			"properties": { "rna_protein": { "enum": [true] }, "rna_rna": { "enum": [false] }}, 
+			"required": ["rna_protein_config"]
+		},
+		{ 
+			"properties": { "rna_protein": { "enum": [false] }, "rna_rna": { "enum": [true] }}, 
+			"required": ["rna_rna_config"]
 		}
 	]
 }

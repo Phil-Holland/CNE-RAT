@@ -1,6 +1,7 @@
 version: '3'
 services:
     web:
+        container_name: cneat_web
         environment:
             - DEBUG=${DEBUG}
             - REDIS_PASSWORD=${REDIS_PASSWORD}
@@ -15,6 +16,7 @@ services:
             - redis
             - celery
     celery:
+        container_name: cneat_celery
         environment:
             - FLOWER_USER=${FLOWER_USER}
             - FLOWER_PASSWORD=${FLOWER_PASSWORD}
@@ -30,6 +32,7 @@ services:
         depends_on:
             - redis
     redis:
+        container_name: cneat_redis
         image: redis
         ports:
             - "9736:6379"
