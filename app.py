@@ -6,7 +6,6 @@ from flask import Flask, render_template, redirect, request, app, abort, json
 from redis import Redis
 from celery import Celery
 from jsonschema import validate, ValidationError
-from tasks import viennarna, intarna, protein
 
 # get the redis password, which is set as a system environment variable through docker
 redis_password = os.environ['REDIS_PASSWORD']
@@ -37,6 +36,8 @@ schema_cneat_json = None
 with open("schemas/cneat.json") as f:
     schema_cneat = f.read()
     schema_cneat_json = json.loads(schema_cneat)
+
+from tasks import viennarna, intarna, protein
 
 @app.context_processor
 def inject_global_vars():
