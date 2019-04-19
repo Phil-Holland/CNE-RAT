@@ -14,6 +14,8 @@ services:
         container_name: cneat_test_web
         environment:
             - DEBUG=1
+        logging:
+            driver: "none"
     celery:
         container_name: cneat_test_celery
         logging:

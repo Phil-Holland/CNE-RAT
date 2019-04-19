@@ -37,6 +37,7 @@ with open("schemas/cneat.json") as f:
     schema_cneat = f.read()
     schema_cneat_json = json.loads(schema_cneat)
 
+# import the task python files here to avoid issues
 from tasks import viennarna, intarna, protein
 
 @app.context_processor
