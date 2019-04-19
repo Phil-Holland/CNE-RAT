@@ -1,70 +1,118 @@
-# CNE Finder + CNEAT
+<center>
+
+![](https://i.imgur.com/1yoLM55.png)
+
+*The Conserved Non-coding Elements Retrieval and Analysis Tool*
+
+</center>
+
+---
 
 [![Build Status](https://travis-ci.com/Phil-Holland/CNEAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNEAT)
 
-![](https://i.imgur.com/HVVRXvT.png)
+**An all-inclusive tool to locate conserved non-coding elements and help further prediction of CNE function through evaluation of RNA interactions.**
 
-This project includes two tools used for the identification and analysis of conserved non-coding elements. It has been developed as part of a masters degree project at the University of Warwick.
+![](https://i.imgur.com/Qq1wnmm.png)
 
-- **CNE Finder**
-	- Processes whole genome sequence data, to locate potential **C**onserved **N**on-coding **E**lements.
-- **CNEAT**
-	- The **C**onserved **N**on-coding **E**lement **A**nalysis **T**ool.
-	- Investigates potential RNA interactions involving the CNE sequence.
+## What's Included
 
-## Usage Guide
+CNE-RAT includes two sub-tools, **CNE-Finder** and **CNEAT**. CNE-Finder provides an interface to locate and extract conserved non-coding sequences from whole genome data. CNEAT, (*the CNE analysis tool*), provides an interface for three distinct analysis pipelines, aiming to predict CNE function through RNA interactions. The three pipelines are as follows:
 
-### Setup
+- Evaluation of RNA-protein interactions, using [the CISBP-RNA database](http://cisbp-rna.ccbr.utoronto.ca).
+- Evaluation of RNA-RNA interactions, using the [ViennaRNA package](https://www.tbi.univie.ac.at/RNA/).
+- Evaluation of RNA-RNA interactions, using [IntaRNA](https://github.com/BackofenLab/IntaRNA).
 
-**IMPORTANT!**
+## Getting Started
 
-- This application has been written using **Docker**.
-	- Please visit https://www.docker.com/get-started to install Docker on your system.
-- Additionally, **Docker Compose** is also required 
-	- Please visit https://docs.docker.com/compose/install/ to install Docker compose on your system
-- Create a new file named `.env` in the project's root directory, using the `.env-template` file as a template.
-	- Change the username/password values to secure your application (necessary if the tool is not being used privately).
-- Some additional files must be downloaded to allow the RNA-protein analysis pipeline to execute successfully, which cannot be distributed with this project.
-	- Please go to the following URL: http://cisbp-rna.ccbr.utoronto.ca/bulk.php
-	- Click on the "Download Entire Datasets Archive" button, and download the linked zip file. 
-	- Extract the contents of this archive into the directory `./tasks/data/cisbp_rna`.
+These instructions will get you a copy of CNE-RAT up and running on your local machine for personal use or development purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Running
+### Prerequisites
 
-- Once the prerequisite setup has been completed, running the following `docker-compose` commands in the project root will build and start the application:
- 
+This application has been developed using **Docker** - all important requirements are downloaded automatically by the Docker build script. Please install the following on your machine:
+
+- **Docker** https://www.docker.com/
+- **Docker Compose** https://docs.docker.com/compose/
+
+Additional files for RNA-Protein interaction prediction pipeline must be downloaded from the CISBP-RNA 
+database. These cannot be bundled with the application's source code. Download the latest zip file from the following link, and unzip its contents into the directory `./tasks/data/cisbp_rna`:
+
+- http://cisbp-rna.ccbr.utoronto.ca/bulk.php
+
+### Installing
+
+Before the application can be built, you must define some environment variables.
+
+**Step 1:** Copy the `.env-template` file to a file named `.env`.
+
+```bash
+cp `.env-template` `.env`
 ```
+
+**Step 2:** Edit the `.env` file, and set the contained environment variables for your needs. This step it not necessary if you are just running the application locally (i.e. not exposing over a network or developing).
+
+- `DEBUG`: set to `0` to run in "production" mode, or `1` to run in "development" mode.
+- `FLOWER_USER`: set to the desired username for the task queue management interface.
+- `FLOWER_PASSWORD`: set to the desired password for the task queue management interface.
+- `REDIS_PASSWORD`: set to the desired password for database access.
+
+**Step 3:** Finally, the application can be built by running the following Docker compose command:
+
+```bash
 docker-compose build
 ```
 
-```
+This may take a few minutes the first time it is executed, as Docker must collect and build all of the necessary requirements.
+
+### Running Locally
+
+To run the application on your local machine, run the following Docker compose command:
+
+```bash
 docker-compose up
 ```
 
-- `docker-compose build` may take a long time to complete on first run.
-- Once the application has started successfully, the web interface can be accessed at [http://localhost:6565](http://localhost:6565).
-	- *This may be different if using Docker toolbox, see: https://stackoverflow.com/questions/42866013/docker-toolbox-localhost-not-working*
+This will take a few seconds to initiate successfully. Once up and running, the web interface can be viewed through a web browser at [http://localhost:6565](http://localhost:6565).
 
-### Configuration/Monitoring
+***Note:*** *this may be different if you are using Docker Toolbox on Windows. If the default Docker Toolbox IP is being used for the VM, CNE-RAT will be accesible at* [http://192.168.99.100:6565](192.168.99.100:6565) *- see [this StackOverflow question](https://stackoverflow.com/questions/42866013/docker-toolbox-localhost-not-working) for more info.*
 
-- By default, the application is set to run in **production** mode, using the Python WSGI HTTP Server ["Gunicorn"](https://gunicorn.org/). To run in **development** mode, modify the `.env` file to set `DEBUG=1`.
-- Redis is used internally for analysis data storage, and as a task broker (see http://www.celeryproject.org/). 
-	- A redis client can be used to inspect the data store.
-	- By default, this can be accessed through port `9736`.
-	- See the file `docker-compose.yml` for more information on exposed ports.
-- Celery is used to process jobs. *Flower* is a web interface to monitor task progress + worker status.
-	- By default, this can be accessed through port `5555`.
-	- This monitoring interface is protected with simple authentication. To set the admin username + password, change the `FLOWER_USER` and `FLOWER_PASSWORD` environment variables in the `.env` file.
+## Running the tests
 
-### Running Tests
+An additional Docker compose configuration is provided to run the included integration tests. This can be built and executed using the following two Docker compose commands:
 
-- This project includes a test suite, which can be run by building a "test" version of the application
-- Use the following two commands to build and run all tests:
-
-```
+```bash
 docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 ```
 
-```
+```bash
 docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit
 ```
+
+## Deployment
+
+To deploy CNE-RAT on a live system, the password within the `.env` file should be set as secure strings. Also ensure that the `DEBUG` variable is set to `0`.
+
+## Built With
+
+- [Docker](https://www.docker.com/) - used for application containerisation.
+- [Flask](http://flask.pocoo.org) - used for the web application server.
+- [Celery](http://www.celeryproject.org/) - used to implement the task queue.
+- [Celery Flower](https://flower.readthedocs.io/en/latest/) - used to monitor the task queue.
+- [Redis](https://redis.io/) - used for the application database
+- [The CISBP-RNA database](http://cisbp-rna.ccbr.utoronto.ca) - used for the RNA-protein interaction analysis pipeline.
+- [ViennaRNA](https://www.tbi.univie.ac.at/RNA/) - used for the ViennaRNA RNA-RNA interaction analysis pipeline.
+- [IntaRNA](https://github.com/BackofenLab/IntaRNA) - used for the IntaRNA RNA-RNA interaction analysis pipeline.
+- [Pytest](https://docs.pytest.org/en/latest/) - used to write the integration tests.
+
+## Authors
+
+- **Philip Holland** - *CNEAT* + *application framework*
+- **Matthew Reggler** - *CNE Finder*
+- **Liam Burke** - *RNA-protein analysis pipeline*
+- **Cristina Smeu** - *IntaRNA analysis pipeline*
+- **Jack Mason**
+
+This project has been developed as part of a masters degree project at the University of Warwick. 
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
