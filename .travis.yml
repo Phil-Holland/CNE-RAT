@@ -1,0 +1,13 @@
+language: python
+
+services:
+  - docker
+
+before_install:
+- wget -O cisbp.zip http://cisbp-rna.ccbr.utoronto.ca/tmp/entiredata_2019_04_19_11:56_am.zip
+- unzip cisbp.zip tasks/data/cisbp_rna
+- rm cisbp.zip
+- docker-compose -f docker-compose.yml -f docker-compose.test.yml build
+
+script:
+- docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit

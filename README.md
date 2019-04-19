@@ -1,5 +1,7 @@
 # CNE Finder + CNEAT
 
+[![Build Status](https://travis-ci.com/Phil-Holland/CNEAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNEAT)
+
 ![](https://i.imgur.com/HVVRXvT.png)
 
 This project includes two tools used for the identification and analysis of conserved non-coding elements. It has been developed as part of a masters degree project at the University of Warwick.
