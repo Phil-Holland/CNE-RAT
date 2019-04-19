@@ -1,6 +1,8 @@
-<p align="center"><img src="https://i.imgur.com/1yoLM55.png" /></p>
-
-<span style="display:block;text-align:center"><i>The Conserved Non-coding Elements Retrieval and Analysis Tool</i></span>
+<p align="center">
+  <img src="https://i.imgur.com/1yoLM55.png" />
+  <br>
+  <i>The Conserved Non-coding Elements Retrieval and Analysis Tool</i>
+</p>
 
 ---
 
