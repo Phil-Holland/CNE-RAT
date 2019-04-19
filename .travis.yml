@@ -1,4 +1,4 @@
-language: python
+language: minimal
 
 services:
   - docker
@@ -7,6 +7,7 @@ before_install:
 - wget -O cisbp.zip http://cisbp-rna.ccbr.utoronto.ca/tmp/entiredata_2019_04_19_11:56_am.zip
 - unzip cisbp.zip -d tasks/data/cisbp_rna
 - rm cisbp.zip
+- cp .env-template .env
 - docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 
 script:
