@@ -33,7 +33,9 @@ This project includes two tools used for the identification and analysis of cons
  
 ```
 docker-compose build
+```
 
+```
 docker-compose up
 ```
 
@@ -59,6 +61,8 @@ docker-compose up
 
 ```
 docker-compose -f docker-compose.yml -f docker-compose.test.yml build
+```
 
+```
 docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit
 ```
