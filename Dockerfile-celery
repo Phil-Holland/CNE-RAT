@@ -1,6 +1,6 @@
 FROM python:3.5
 
-# install any requirements
+# install any system requirements
 RUN apt-get update && apt-get install -y \
 	libgsl2 \
 	libgsl-dev \
@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y \
 	autotools-dev \
 	autoconf
 
-# install viennarna
+# install viennarna binaries and development libraries
 RUN curl -L https://www.tbi.univie.ac.at/RNA/download/debian/debian_9_0/viennarna_2.4.11-1_amd64.deb --output viennarna.deb
 RUN dpkg -i viennarna.deb
 
@@ -20,23 +20,25 @@ RUN dpkg -i viennarna-dev.deb
 
 RUN apt-get install -f -y
 
-# build and install intarna
+# download, build and install intarna
 RUN curl -L https://github.com/BackofenLab/IntaRNA/archive/v2.4.0.tar.gz --output intarna.tar.gz
 RUN tar xvf intarna.tar.gz
 RUN cd IntaRNA-2.4.0 && chmod a+x autotools-init.sh && ./autotools-init.sh && ./configure && make && make install
 
 # clean up
-RUN rm viennarna.deb
-RUN rm intarna.tar.gz && rm -r IntaRNA-2.4.0
+RUN rm viennarna.deb && rm viennarna-dev.deb && rm intarna.tar.gz && rm -r IntaRNA-2.4.0
 
-# install python requirements
+# install python requirements - do this before adding all files for better caching
 ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
+# add all files to the working directory
 ADD . /app
 WORKDIR /app
 
+# make two directories on the system to store worker logs
 RUN mkdir -p /var/log/celery
 RUN mkdir -p /var/run/celery
 
+# define the container start script
 ENTRYPOINT ["sh", "celery_start_script.sh"]

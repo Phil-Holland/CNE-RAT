@@ -1,10 +1,12 @@
 FROM python:3.5
 
-# install python requirements
+# install python requirements - do this before adding all files for better caching
 ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
+# add all files to the working directory
 ADD . /app
 WORKDIR /app
 
+# define the container start script
 ENTRYPOINT ["sh", "web_start_script.sh"]

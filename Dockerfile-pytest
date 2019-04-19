@@ -3,8 +3,9 @@ FROM python:3.5
 # install requirements
 RUN pip install pytest pytest-testdox requests
 
+# add all files to the working directory
 ADD tests /tests
 WORKDIR /tests
 
-# run pytest start script
+# define the container start script
 ENTRYPOINT ["sh", "pytest_start_script.sh"]
