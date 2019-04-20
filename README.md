@@ -7,10 +7,13 @@
 ---
 
 [![Build Status](https://travis-ci.com/Phil-Holland/CNEAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNEAT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
 **An all-inclusive tool to locate conserved non-coding elements and help further prediction of CNE function through evaluation of RNA interactions.**
 
-![](https://i.imgur.com/Qq1wnmm.png)
+<p align="center">
+  <img src="https://i.imgur.com/ScEuAHk.png" />
+</p>
 
 ## What's Included
 
@@ -43,7 +46,7 @@ Before the application can be built, you must define some environment variables.
 **Step 1:** Copy the `.env-template` file to a file named `.env`.
 
 ```bash
-cp `.env-template` `.env`
+cp .env-template .env
 ```
 
 **Step 2:** Edit the `.env` file, and set the contained environment variables for your needs. This step it not necessary if you are just running the application locally (i.e. not exposing over a network or developing).
