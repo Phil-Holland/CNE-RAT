@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-- wget -O cisbp.zip http://download2268.mediafire.com/fwe26vxh3lng/awc7tbx78b7rxe7/entiredata_2019_04_19_11_56_am.zip
+- curl -J -L http://www.mediafire.com/file/awc7tbx78b7rxe7/entiredata_2019_04_19_11_56_am.zip/file --output cisbp.zip
 - unzip cisbp.zip -d tasks/data/cisbp_rna
 - rm cisbp.zip
 - cp .env-template .env
