@@ -163,7 +163,6 @@ var update = function() {
     $.post('/get_analysis_status/' + uid, function(data) {
         data = JSON.parse(data);
         if(data.success) {
-            console.log(data);
             // if statuses have changed, update everything
             if(last_statuses != data.statuses) {
                 var overall_status = 'COMPLETED';

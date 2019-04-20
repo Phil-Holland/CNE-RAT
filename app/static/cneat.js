@@ -84,8 +84,6 @@ $(function() {
         var valid = validate(config);
         if(!valid) {
             // validation errors encountered!
-            console.log(validate.errors);
-            
             $('#validation-error').slideDown(100);
 
             // don't send the form

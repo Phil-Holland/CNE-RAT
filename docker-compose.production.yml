@@ -1,0 +1,21 @@
+version: '3'
+services:
+    web:
+        container_name: cneat_production_web
+        environment:
+            - DEBUG=0
+        ports:
+            - "80:5000"
+    celery:
+        container_name: cneat_production_celery
+        environment:
+            - DEBUG=0
+        ports:
+            - "5555:5555"
+    redis:
+        container_name: cneat_production_redis
+        ports:
+            - "6379:6379"
+        volumes:
+            - ./data:/data
+        restart: always

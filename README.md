@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://i.imgur.com/1yoLM55.png" />
   <br>
-  <i>The Conserved Non-coding Elements Retrieval and Analysis Tool</i>
+  <i>RNA Conserved Non-coding Elements Retrieval and Analysis Tool</i>
 </p>
 
 ---
@@ -9,7 +9,7 @@
 [![Build Status](https://travis-ci.com/Phil-Holland/CNEAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNEAT)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-**An all-inclusive tool to locate conserved non-coding elements and help further prediction of CNE function through evaluation of RNA interactions.**
+**An all-inclusive tool to locate conserved non-coding elements in RNA sequences and help further prediction of RNA CNE function through interaction prediction.**
 
 <p align="center">
   <img src="https://i.imgur.com/ScEuAHk.png" />
@@ -35,13 +35,13 @@ This application has been developed using **Docker** - all important requirement
 - **Docker Compose** https://docs.docker.com/compose/
 
 Additional files for RNA-Protein interaction prediction pipeline must be downloaded from the CISBP-RNA 
-database. These cannot be bundled with the application's source code. Download the latest zip file from the following link, and unzip its contents into the directory `./tasks/data/cisbp_rna`:
+database. These cannot be bundled with the application's source code. Download the latest *"entire datasets archive"* zip file from the following link, and unzip its contents into the directory `./tasks/data/cisbp_rna`:
 
 - http://cisbp-rna.ccbr.utoronto.ca/bulk.php
 
 ### Installing
 
-Before the application can be built, you must define some environment variables.
+Before the application can be built, some environment variables must be defined.
 
 **Step 1:** Copy the `.env-template` file to a file named `.env`.
 
@@ -49,9 +49,8 @@ Before the application can be built, you must define some environment variables.
 cp .env-template .env
 ```
 
-**Step 2:** Edit the `.env` file, and set the contained environment variables for your needs. This step it not necessary if you are just running the application locally (i.e. not exposing over a network or developing).
+**Step 2 (optional):** Edit the `.env` file, and set the contained environment variables for your needs. This step is not necessary if you are just running the application locally (i.e. not exposing over a network).
 
-- `DEBUG`: set to `0` to run in "production" mode, or `1` to run in "development" mode.
 - `FLOWER_USER`: set to the desired username for the task queue management interface.
 - `FLOWER_PASSWORD`: set to the desired password for the task queue management interface.
 - `REDIS_PASSWORD`: set to the desired password for database access.
@@ -69,12 +68,14 @@ This may take a few minutes the first time it is executed, as Docker must collec
 To run the application on your local machine, run the following Docker compose command:
 
 ```bash
-docker-compose up
+docker-compose -f docker-compose.yml -f docker-compose.local.yml up
 ```
 
 This will take a few seconds to initiate successfully. Once up and running, the web interface can be viewed through a web browser at [http://localhost:6565](http://localhost:6565).
 
 ***Note:*** *this may be different if you are using Docker Toolbox on Windows. If the default Docker Toolbox IP is being used for the VM, CNE-RAT will be accesible at* [http://192.168.99.100:6565](192.168.99.100:6565) *- see [this StackOverflow question](https://stackoverflow.com/questions/42866013/docker-toolbox-localhost-not-working) for more info.*
+
+To view the task queue management interface, [Celery Flower](https://flower.readthedocs.io/en/latest/), navigate to [http://localhost:5555](http://localhost:5555). The redis database is accessible through port `6379`, and can be managed/viewed with a [suitable redis client](https://redislabs.com/blog/so-youre-looking-for-the-redis-gui/).
 
 ## Running the tests
 
@@ -88,9 +89,17 @@ docker-compose -f docker-compose.yml -f docker-compose.test.yml build
 docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-container-exit
 ```
 
+The `--abort-on-container-exit` tells Docker to exit once the tests have completed.
+
 ## Deployment
 
-To deploy CNE-RAT on a live system, the password within the `.env` file should be set as secure strings. Also ensure that the `DEBUG` variable is set to `0`.
+To deploy CNE-RAT on a live system, the passwords within the `.env` file should be set to secure strings. Then use the following 
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.production.yml up
+```
+
+In production mode, the web interface is accessible through port `80` by default. This can be changed by editing the `docker-compose.production.yml` file, and modifying the port mappings. 
 
 ## Built With
 
