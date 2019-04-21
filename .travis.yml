@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-- curl -L https://filebin.net/43jhzv4676s4sj8k/entiredata_2019_04_19_11_56_am.zip?t=hcze584x --output cisbp.zip
+- curl -L $(curl http://cisbp-rna.ccbr.utoronto.ca/bulk_archive.php | grep href=\"tmp | grep -o 'tmp/.*\.zip' | awk '{print "http://cisbp-rna.ccbr.utoronto.ca/"$1}') --output cisbp.zip
 - unzip cisbp.zip -d tasks/data/cisbp_rna
 - rm cisbp.zip
 - cp .env-template .env
