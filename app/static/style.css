@@ -162,7 +162,7 @@ input[type="number"] {
     width: auto !important;
 }
 
-#validation-error {
+.error-info {
     color: white;
     padding: 10px 10px;
     -webkit-border-radius: 5px;

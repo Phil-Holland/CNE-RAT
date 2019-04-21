@@ -36,8 +36,8 @@
                 <div id="configuration">
                     <form id="config-form">
                         <fieldset>
-                            <label for="cne-file">CNE FASTA file (upload or paste):</label>
-                            <input type="file" name="cne-file" data-target="cne">
+                            <label for="cne">CNE FASTA file (upload or paste):</label>
+                            <input type="file" data-target="cne">
                             <p>
                                 <i>Only single sequence FASTA files are permitted. The file can be edited before
                                 submission in the textbox below.</i>
@@ -47,7 +47,7 @@
                             <br>
                             <label>Choose analysis pipeline(s) to execute:</label>
                             <p><i>You must choose at least one pipeline to execute.</i></p>
-                            <input type="checkbox" id="task-rna-protein" checked="checked">
+                            <input type="checkbox" name="rna_protein:boolean" id="task-rna-protein" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
@@ -61,19 +61,19 @@
                                 <div id="rna-protein-config">
                                     <label>Select relevant species:</label>
                                     <p><i>You must choose at least one species to consider.</i></p>
-                                    <input type="checkbox" id="species-drosophila" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[drosophila_melanogaster]:boolean" id="species-drosophila" checked="checked">
                                     <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
                                     <br>
-                                    <input type="checkbox" id="species-homo" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[homo_sapiens]:boolean" id="species-homo" checked="checked">
                                     <span class="checkbox-label"><i>Homo sapiens</i> (humans)</span>
                                     <br>
-                                    <input type="checkbox" id="species-mus" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[mus_musculus]:boolean" id="species-mus" checked="checked">
                                     <span class="checkbox-label"><i>Mus musculus</i> (house mouse)</span>
                                     <br>
                                 </div>
                             </div>
                             <br>
-                            <input type="checkbox" id="task-rna-rna" checked="checked">
+                            <input type="checkbox" name="rna_rna:boolean" id="task-rna-rna" checked="checked">
                             <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
@@ -87,20 +87,20 @@
                                     You may choose which of these tools are used during analysis, or run both.
                                 </p>
                                 <div id="rna-rna-config">
-                                    <label for="query-file">Query sequence(s) FASTA file (upload or paste):</label>
+                                    <label for="rna_rna_config[query_sequences]">Query sequence(s) FASTA file (upload or paste):</label>
                                     <p>
                                         <i>Upload/paste the query sequences to evaluate, as a multi-sequence FASTA file.</i>
                                     </p>
-                                    <input type="file" name="query-file" data-target="query-sequences">
+                                    <input type="file" data-target="query-sequences">
                                     <p>
                                         The file can be edited before submission in the textbox below.
                                     </p>
-                                    <textarea id="query-sequences" cols="30" rows="3" placeholder="Paste query sequence(s) FASTA file contents here"></textarea>
+                                    <textarea id="query-sequences" name="rna_rna_config[query_sequences]" cols="30" rows="3" placeholder="Paste query sequence(s) FASTA file contents here"></textarea>
                                     <br>
                                     <label>Select which analysis tool to use:</label>
                                     <p><i>You must select at least one tool to use.</i></p>
 
-                                    <input type="checkbox" id="run-vienna" checked>
+                                    <input type="checkbox" name="rna_rna_config[vienna]:boolean" id="run-vienna" checked>
                                     <span class="checkbox-label">Run the <b>ViennaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="vienna-config">
                                         <p>
@@ -113,15 +113,15 @@
                                         <label>Select which ViennaRNA executables to run in the analysis:</label>
                                         <p><i>You must select at least one executable to run.</i></p>
 
-                                        <input type="checkbox" id="run-rnaduplex" checked>
+                                        <input type="checkbox" name="rna_rna_config[vienna_config[rnaduplex]]:boolean" id="run-rnaduplex" checked>
                                         <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
                                         <div class="config-nested" id="rnaduplex-config">
                                             <p>
                                                 This tool considers only <i>intermolecular</i> interactions between each evaluated 
                                                 sequence pair, allowing for potential binding sites to be quickly identified.
                                             </p>
-                                            <label for="rnaduplex-deltaenergy">Set energy range for returned sub-optimal interactions:</label>
-                                            <input name="rnaduplex-deltaenergy" id="rnaduplex-deltaenergy" type="number" value="0" min="0" step="0.5">
+                                            <label for="rna_rna_config[vienna_config[rnaduplex_config[deltaenergy]]]:number">Set energy range for returned sub-optimal interactions:</label>
+                                            <input name="rna_rna_config[vienna_config[rnaduplex_config[deltaenergy]]]:number" id="rnaduplex-deltaenergy" type="number" value="0" min="0" step="0.5">
                                             <span><code>kcal/mol</code></span>
                                             <p>
                                                 The computed free energy of all returned interactions will be within 
@@ -130,7 +130,7 @@
                                             </p>
                                         </div>
                                         <br>
-                                        <input type="checkbox" id="run-rnacofold" checked>
+                                        <input type="checkbox" name="rna_rna_config[vienna_config[rnacofold]]:boolean" id="run-rnacofold" checked>
                                         <span class="checkbox-label">Run the <b>RNAcofold</b> tool <i>(slow)</i></span>
                                         <div class="config-nested" id="rnacofold-config">
                                             <p>Note: this is not recommended for analysis of very large sequences.</p>
@@ -138,7 +138,7 @@
                                     </div>
                                     <br>
 
-                                    <input type="checkbox" id="run-inta" checked>
+                                    <input type="checkbox" name="rna_rna_config[inta]:boolean" id="run-inta" checked>
                                     <span class="checkbox-label">Run the <b>IntaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="inta-config">
                                         <p>
@@ -147,8 +147,8 @@
                                             quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
                                             consequat.
                                         </p>
-                                        <label for="inta-prediction-mode">Choose interaction prediction mode:</label>
-                                        <select name="inta-prediction-mode" id="inta-prediction-mode">
+                                        <label for="rna_rna_config[inta_config[prediction_mode]]">Choose interaction prediction mode:</label>
+                                        <select name="rna_rna_config[inta_config[prediction_mode]]" id="inta-prediction-mode">
                                             <option value="H">Heuristic (fast)</option>
                                             <option value="M">Exact (slow)</option>
                                         </select>
@@ -160,15 +160,19 @@
                                             <i>Must be within the range 0-1.</i>
                                         </p>
                                         <span><code>Minimum Pu:</code></span>
-                                        <input name="inta-minpu" id="inta-minpu" type="number" value="0" min="0" max="1" step="0.1">
+                                        <input name="rna_rna_config[inta_config[minpu]]:number" id="inta-minpu" type="number" value="0" min="0" max="1" step="0.1">
                                     </div>
                                     <br>
                                 </div>
                             </div>
                             <br>
-                            <div id="validation-error" style="display: none;">
-                                <b>Error!</b>
+                            <div id="validation-error" class="error-info" style="display: none;">
+                                <b>Validation Error!</b>
                                 There is an error in the analysis configuration form, please correct this before trying again.
+                            </div>
+                            <div id="fasta-error" class="error-info" style="display: none;">
+                                <b>Fasta Error!</b>
+                                There is an error in one of the fasta sequence inputs, please correct this before trying again.
                             </div>
                             <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
                         </fieldset>
@@ -182,6 +186,7 @@
     </div>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../jquery.serializejson.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js"></script>
     <script type="text/javascript">
         var schema = JSON.parse({{ schema|tojson }});

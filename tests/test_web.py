@@ -102,6 +102,22 @@ class TestCneatInvalidAnalysis():
 
         assert (code1 == 400 and code2 == 400)
 
+    @pytest.mark.it('Returns a HTTP code 400 when requesting a new analysis with an empty CNE sequence')
+    def test_empty_cne_sequence(self):
+        config = {
+            'cne': '',
+            'rna_protein': True,
+            'rna_rna': False,
+            'rna_protein_config': {
+                'drosophila_melanogaster': True,
+                'homo_sapiens': True,
+                'mus_musculus': True
+            }
+        }
+
+        request = requests.post('http://web:5000/new_analysis', json=config)
+        assert request.status_code == 400
+
 @pytest.mark.describe('CNEAT: Analysis Output')
 class TestCneatAnalysis():
 

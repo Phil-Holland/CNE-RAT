@@ -7,7 +7,8 @@
 	"properties": {
 		"cne": {
 			"description": "A string holding the CNE sequence in FASTA format",
-			"type": "string"
+			"type": "string",
+			"minLength": 1
 		},
 		"rna_protein": {
 			"description": "A boolean representing whether or not the RNA-protein analysis pipeline should be executed",
@@ -51,7 +52,8 @@
 			"properties": {
 				"query_sequences": {
 					"description": "A string holding the query sequence(s) in FASTA format",
-					"type": "string"
+					"type": "string",
+					"minLength": 1
 				},
 				"inta": {
 					"description": "A boolean representing whether or not the IntaRNA pipeline should be executed",
@@ -90,10 +92,6 @@
 							"description": "A boolean representing whether or not the RNAcofold executable should be run",
 							"type": "boolean"
 						},
-						"rnacofold_config": {
-							"description": "Additional configuration options for the RNAcofold executable",
-							"type": "object"
-						},
 						"rnaduplex": {
 							"description": "A boolean representing whether or not the RNAduplex executable should be run",
 							"type": "boolean"
@@ -118,11 +116,10 @@
 					"oneOf": [
 						{
 							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [true] }},
-							"required": ["rnacofold_config", "rnaduplex_config"]
+							"required": ["rnaduplex_config"]
 						},
 						{
-							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [false] }},
-							"required": ["rnacofold_config"]
+							"properties": {"rnacofold": { "enum": [true] }, "rnaduplex": { "enum": [false] }}
 						},
 						{
 							"properties": {"rnacofold": { "enum": [false] }, "rnaduplex": { "enum": [true] }},

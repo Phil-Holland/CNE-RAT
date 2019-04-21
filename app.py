@@ -22,9 +22,11 @@ app.config['CELERY_BROKER_URL'] = 'redis://:{}@redis:6379/1'.format(redis_passwo
 app.config['CELERY_RESULT_BACKEND'] = 'redis://:{}@redis:6379/1'.format(redis_password)
 
 # instantiate the celery task queue instance - use the above broker/result store information
+# also make sure task result data does not expire
 celery = Celery(app.name, 
     backend=app.config['CELERY_RESULT_BACKEND'],
-    broker=app.config['CELERY_BROKER_URL'])
+    broker=app.config['CELERY_BROKER_URL'],
+    result_expires=None)
 celery.conf.update(app.config)
 
 # connect to the redis instance
