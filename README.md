@@ -111,7 +111,8 @@ In production mode, the web interface is accessible through port `80` by default
 - [The CISBP-RNA database](http://cisbp-rna.ccbr.utoronto.ca) - used for the RNA-protein interaction analysis pipeline.
 - [ViennaRNA](https://www.tbi.univie.ac.at/RNA/) - used for the ViennaRNA RNA-RNA interaction analysis pipeline.
 - [IntaRNA](https://github.com/BackofenLab/IntaRNA) - used for the IntaRNA RNA-RNA interaction analysis pipeline.
-- [Pytest](https://docs.pytest.org/en/latest/) - used to write the integration tests.
+- [Pytest](https://docs.pytest.org/en/latest/) - used to run the integration tests.
+- [Requests](https://2.python-requests.org//en/master/) - used within tests to send test HTTP requests.
 
 ## Authors
 
