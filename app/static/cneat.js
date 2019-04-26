@@ -122,7 +122,8 @@ $(function() {
 
         // validate the fasta sequences
         if(!validate_fasta(config['cne']) || 
-            !validate_fasta(config['rna_rna_config']['query_sequences'])) {
+            (config['rna_rna'] &&
+            !validate_fasta(config['rna_rna_config']['query_sequences']))) {
             
             // fasta errors encountered!
             $('#fasta-error').slideDown(100);

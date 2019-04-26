@@ -27,6 +27,28 @@ Query species:
 
 ## Hits Table
 
+**Motif ID:** This column refers to the internal IDs used within the CISBP-RNA database to uniquely identify each motif/PWM and its associated RBP e.g. `M083_0.6.`. The online CISBP-RNA site provides detailed information about each motif, such as RNA binding domains and related RBPs. A user can submit an ID of interest to the site via a search tool in order to retrieve this detailed information.
+
+**Start:** This column contains the start location of the potential binding site.
+
+**Stop:** This column contains the end location of the potential binding site.
+
+**Sequence:** This column contains the sequence of the potential binding site e.g. `GGAGCGA`.
+
+**Score:** This column contains the log-likelihood score of the potential binding site.
+
+**Max score:** This column contains the maximum log-likelihood score possible with the associated motif.
+
+**RBP ID:** This column refers to the internal IDs used within the CISBP-RNA database to unique identify each RBP. As with the motif ID, a user can search for this ID on the CISBP-RNA site e.g. `T02643_0.6`.
+
+**RBP Name:** This column contains the RBP name e.g. `ZC3H10`.
+
+**RBP Species:** This column contains the species from which the RBP originates i.e. *Homo sapiens*, *Drosophila melanogaster* or *Mus musculus*.
+
+**Family Name:** This column contains the names of the RNA-binding domains found within the RBP.
+
+**RBP Status:** This column indicates whether the RBP motif has been experimentally determined (e.g. via RNAcompete) or inferred computationally from RBPs with similar RNA-binding domains.
+
 {table}
 
 """
