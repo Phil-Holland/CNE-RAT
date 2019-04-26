@@ -51,6 +51,7 @@ cp .env-template .env
 
 **Step 2 (optional):** Edit the `.env` file, and set the contained environment variables for your needs. This step is not necessary if you are just running the application locally (i.e. not exposing over a network).
 
+- `CELERY_WORKERS`: set to the desired number of concurrently running background task queue workers.
 - `FLOWER_USER`: set to the desired username for the task queue management interface.
 - `FLOWER_PASSWORD`: set to the desired password for the task queue management interface.
 - `REDIS_PASSWORD`: set to the desired password for database access.
@@ -93,7 +94,7 @@ The `--abort-on-container-exit` tells Docker to exit once the tests have complet
 
 ## Deployment
 
-To deploy CNE-RAT on a live system, the passwords within the `.env` file should be set to secure strings. Then use the following 
+To deploy CNE-RAT on a live system, the passwords within the `.env` file should be set to secure strings. Then use the following command to run the application in "production" mode.
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.production.yml up
