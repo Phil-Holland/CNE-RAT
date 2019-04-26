@@ -142,17 +142,47 @@
                                     <span class="checkbox-label">Run the <b>IntaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="inta-config">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                            consequat.
+                                            <b>IntaRNA</b> is a very accurate tool which takes into account the accessibility of interacting regions 
+                                            and interaction seeding when predicting an intermolecular interaction.
                                         </p>
+                                        <p>
+                                            The <b>stability</b> of an interaction 
+                                            is calculated as a cumulative energy score - the (Gibbs) free energy of the intermolecular interaction 
+                                            plus the energy needed to ensure that the interacting regions are accessible (not blocked by RNA 
+                                            secondary structures). Here, accessibility refers to the probability of each nucleotide to be 
+                                            unpaired (i.e. not bound to another nucleotide of the same RNA sequence through intermolecular 
+                                            interaction).
+                                        </p>
+                                        <p>
+                                            Each interaction returned will have a <b>seed</b> - a shorter (<code>5-8 bp</code>) part of the whole
+                                            interaction which does not contain unpaired nucleotides in the interacting sequences. The seed can
+                                            be seen as the basis of an intermolecular interaction.
+                                        </p>
+                                        <p>
+                                            IntaRNA also accepts suboptimal results. If no 
+                                            configuration is provided, it will always return the <b>minimum free energy result</b> - the 
+                                            theoretical optimal. The analysis can be refined by modifying the <b>minimum unpaired probability</b> parameter, 
+                                            which will yield shorter, higher-accessibility interactions, but with a higher free energy.
+                                        </p>
+                                        <hr>
                                         <label for="rna_rna_config[inta_config[prediction_mode]]">Choose interaction prediction mode:</label>
+                                        <p>
+                                            The <b>exact mode</b> guarantees the best accuracy, but can be slow. This mode should be used in targeted
+                                            searches over short sequences (under 200 nucleotides).
+                                        </p>
+                                        <p>
+                                            The <b>heuristic mode</b> is a simplification of the exact mode. It is recommended 
+                                            to use this mode for analyses over long sequences (e.g. genome-wide scans), and refine the 
+                                            search using the exact mode once a region of interest has been identified.
+                                        </p>
+                                        <p>
+                                            <i>Generally, both modes will achieve the same result.</i>
+                                        </p>
                                         <select name="rna_rna_config[inta_config[prediction_mode]]" id="inta-prediction-mode">
-                                            <option value="H">Heuristic (fast)</option>
                                             <option value="M">Exact (slow)</option>
+                                            <option value="H">Heuristic (fast)</option>
                                         </select>
-
+                                        <hr>
                                         <label for="inta-minpu">Set minimum unpaired probability:</label>
                                         <p>
                                             Only return interactions where each individual position of the interacting 
