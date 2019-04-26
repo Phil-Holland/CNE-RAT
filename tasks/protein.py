@@ -17,9 +17,7 @@ from Bio.Alphabet import IUPAC
 protein_template = """
 # RNA-Protein Toolchain Output
 
-## Overview
-
-Query species: 
+The output shown below has been limited to the following species:
 
 {query_species}
 

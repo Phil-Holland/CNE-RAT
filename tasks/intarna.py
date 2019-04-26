@@ -30,14 +30,71 @@ following query sequence:
 {query}
 </pre>
 
-Using IntaRNA command:
+**Using IntaRNA command:**
 
 <pre>{input}</pre>
 
-Output:
-
-<pre style="max-height: 50pc; overflow-y: scroll;">
 {output}
+
+"""
+
+inta_output_template = """
+
+### Interaction Visualisation
+
+A visual representation of the identified interaction is shown below. 
+The target sequence is shown in the `5'-3'` direction, and the query sequence is 
+shown in the `3'-5'` direction. 
+
+Don't worry if your input sequences are not genes and don't have UTRs, the result 
+is still correct. The notations just mark the ends of the sequences and are used 
+to illustrate direction.
+
+The coordinates of both interaction sites in their respective sequences are shown, 
+marking the start and the end of each interaction site. Each formed base pair is 
+illustrated by lines drawn between pairs of nucleotides from each sequence. Correct 
+(complementary) pairing is marked by solid lines, while dashed lines symbolise 
+unpaired nucleotides. Where more of these occur in a row, gaps are also introduced.
+
+The interaction sites are provided again below the figure. 
+`interaction seq 1` is the target sequence, while `interaction seq 2` is the query sequence.
+
+<pre>
+{interaction}
+</pre>
+
+### Energy Value Calculation
+
+Displayed below is the overall interaction energy value (shown on the first line) followed by 
+a breakdown of the components of its calculation.
+
+- The `'E'` components are the terms of the energy of the intermolecular interaction (based on `RNAhybrid` 
+and the Zuker and Stiegel algorithm).
+- The `'ED'` components are the terms of the accessibility calculation, computed for each sequence 
+(`'seq1'` is the target, `'seq 2'` is the query). These represent the energy needed to make each 
+nucleotide available for intermolecular interaction (i.e. to ensure no RNA secondary structures are formed). 
+
+The unpaired probability score (`Pu`) is derived from the `ED` values (and will approach the minimum Pu limit 
+set in the configuration, if applicable).
+
+<pre>
+{energies}
+</pre>
+
+### Interaction Seed
+
+The results below provide relevant information on the interaction seed.
+
+The seed coordinates are provided for both interaction sites (`'seq1'` is the target, `'seq 2'` 
+is the query), along with the free energy of the seed interaction (this will generally be higher than 
+the whole interaction, due to the shorter interaction length), and the unpaired probabilities of the 
+respective seed regions (these will generally be higher than for the whole interaction).
+
+It is possible for an interaction to have identical seed and whole interaction details. This will 
+especially occur if the `minimum Pu` parameter is used.
+
+<pre>
+{seeds}
 </pre>
 
 """
@@ -85,11 +142,22 @@ def intarna(config, uid):
         output, err = p.communicate()
         output = output.decode("utf-8")
 
+        # has the tool returned a result?
+        output_text = None
+        if len(output.split('\n')) > 30:
+            output_text = inta_output_template.format(
+                interaction='\n'.join(output.split('\n')[1:15]),
+                energies='\n'.join(output.split('\n')[16:28]),
+                seeds='\n'.join(output.split('\n')[29:36])
+            )
+        else:
+            output_text = '<pre>%s</pre>' %  output
+
         analyses += inta_analysis_template.format(
             interaction_no=str(i+1),
             query=sequence,
             input=' '.join(cmd),
-            output=output
+            output=output_text
         )
 
     # convert query sequence list into a presentable string
