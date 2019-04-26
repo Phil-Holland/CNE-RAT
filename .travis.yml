@@ -4,7 +4,7 @@ services:
   - docker
 
 before_install:
-- curl -L $(curl http://cisbp-rna.ccbr.utoronto.ca/bulk_archive.php | grep href=\"tmp | grep -o 'tmp/.*\.zip' | awk '{print "http://cisbp-rna.ccbr.utoronto.ca/"$1}') --output cisbp.zip
+- curl -L $(curl http://cisbp-rna.ccbr.utoronto.ca/bulk_archive.php -X POST -H "Content-Type: application/x-www-form-urlencoded" -d "selSpec=0&Spec%5B%5D=Logos&Spec%5B%5D=RBP_Information&Spec%5B%5D=PFMs&selFamily=0&Family%5B%5D=Logos&Family%5B%5D=RBP_Information&Family%5B%5D=PFMs&EntireDataset%5B%5D=Logos&EntireDataset%5B%5D=RBP_Information&EntireDataset%5B%5D=PWMs&submit=Download+Entire+Datasets+Archive%21" | grep href=\"tmp | grep -o 'tmp/.*\.zip' | awk '{print "http://cisbp-rna.ccbr.utoronto.ca/"$1}') --output cisbp.zip
 - unzip cisbp.zip -d tasks/data/cisbp_rna
 - rm cisbp.zip
 - cp .env-template .env
