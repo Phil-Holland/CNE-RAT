@@ -6,8 +6,8 @@
 
 ---
 
-[![Build Status](https://travis-ci.com/Phil-Holland/CNEAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNEAT)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Build Status](https://travis-ci.com/Phil-Holland/CNE-RAT.svg?token=pzRsFpf4SapMeqEcEqKd&branch=master)](https://travis-ci.com/Phil-Holland/CNE-RAT)
+[![License: GPLv3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 
 **An all-inclusive tool to locate conserved non-coding elements in RNA sequences and help further prediction of RNA CNE function through interaction prediction.**
 
