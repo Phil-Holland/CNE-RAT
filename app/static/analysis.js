@@ -48,7 +48,7 @@ $(function() {
             }).promise().done(function() {
                 $(el).attr('data-active', true);
                 $('#content-' + $(el).attr('data-name')).show();
-                $('#content-' + $(el).attr('data-name')).find('table').each(function(i) {
+                $('#content-' + $(el).attr('data-name')).find('.dataframe').each(function(i) {
                     $(this).resize();
                 });
                 window.scrollTo(0, scrolls[$(el).attr('data-name')]);
@@ -122,7 +122,7 @@ var update_content = function(tid, name) {
 
                 });
             });
-            $('#content-' + name).find('table').each(function(i) {
+            $('#content-' + name).find('.dataframe').each(function(i) {
                 $(this).addClass('display compact nowrap');
                 $(this).DataTable({
                     paging: false,

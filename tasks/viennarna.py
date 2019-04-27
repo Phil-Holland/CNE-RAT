@@ -9,6 +9,24 @@ from .shared import create_working_dir, get_sequences_from_fasta
 viennarna_template = """
 # ViennaRNA Toolchain Output
 
+The **ViennaRNA** package offers a variety of stand-alone executables 
+which each implement a different predictive algorithm related to RNA sequence 
+analysis. 
+
+Two of these tools are available through CNEAT: **RNAduplex** and **RNAcofold**.
+Whilst both tools aim to predict the structure of the dimer formed when two input RNA 
+molecules interact, the underlying algorithm differs greatly.
+
+**RNAduplex** is a simple algorithm which is useful for a fast preliminary screening
+of a set of sequences of interest. Only *inter*molecular interactions are considered, so
+a high-complexity research project should not rely solely on its results. Instead, 
+output from **RNAduplex** is more suited to guide subsequent use of more complex tools.
+
+**RNAcofold** performs a full secondary structure prediction for a dimer formed from
+the given pair of RNA sequences. This means that *intra*molecular interactions are 
+also considered. As a result, the implemented algorithm is quite computationally expensive, 
+and may cause large analyses to take a long time.
+
 ## Overview
 
 Query sequences: 
@@ -106,7 +124,9 @@ def viennarna(config, uid):
     query_sequences_fasta = config['rna_rna_config']['query_sequences']
 
     run_rnaduplex = config['rna_rna_config']['vienna_config']['rnaduplex']
-    rnaduplex_de = config['rna_rna_config']['vienna_config']['rnaduplex_config']['deltaenergy']
+    rnaduplex_de = None
+    if run_rnaduplex:
+        rnaduplex_de = config['rna_rna_config']['vienna_config']['rnaduplex_config']['deltaenergy']
     run_rnacofold = config['rna_rna_config']['vienna_config']['rnacofold']
     
     # parse the two fasta strings, and retrieve the sequences they contain

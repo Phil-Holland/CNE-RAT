@@ -51,21 +51,29 @@
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-                                    cillum dolore eu fugiat nulla. Excepteur sint occaecat cupidatat non 
-                                    ident, sunt in culpa officia deserunt mollit anim id est laborum.
+                                    This pipeline attempts to predict RNA-protein interactions between the CNE and 
+                                    <b>RNA binding proteins</b> (RBPs), using data from 
+                                    <a target="_blank" href="http://cisbp-rna.ccbr.utoronto.ca">CISBP-RNA</a>, an <i>"online library of 
+                                    RNA binding proteins and their motifs"</i>.
+                                </p>
+                                <p>
+                                    Position-specific scoring matrices (PSSMs) are created from the CISBP-RNA data, which are then
+                                    used to scan the CNE sequence. All found potential binding sites are displayed in an <b>interactive table</b>, 
+                                    which can also be exported to a <b>csv file</b>.
                                 </p>
                                 <div id="rna-protein-config">
                                     <label>Select relevant species:</label>
-                                    <p><i>You must choose at least one species to consider.</i></p>
+                                    <p>
+                                        The CISBP-RNA database contains detailed data for three species: <i>Drosophila melanogaster</i> 
+                                        (common fruit fly), <i>Homo sapiens</i> (human) and <i>Mus musculus</i> (house mouse).
+                                    </p>
+                                    <p>Use the following checkboxes to exclude results from any <b>irrelevant</b> species.
+                                    <p><i>You must choose at least one species to include in the analysis.</i></p>
                                     <input type="checkbox" name="rna_protein_config[drosophila_melanogaster]:boolean" id="species-drosophila" checked="checked">
                                     <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
                                     <br>
                                     <input type="checkbox" name="rna_protein_config[homo_sapiens]:boolean" id="species-homo" checked="checked">
-                                    <span class="checkbox-label"><i>Homo sapiens</i> (humans)</span>
+                                    <span class="checkbox-label"><i>Homo sapiens</i> (human)</span>
                                     <br>
                                     <input type="checkbox" name="rna_protein_config[mus_musculus]:boolean" id="species-mus" checked="checked">
                                     <span class="checkbox-label"><i>Mus musculus</i> (house mouse)</span>
@@ -104,10 +112,14 @@
                                     <span class="checkbox-label">Run the <b>ViennaRNA</b> interaction analysis pipeline</span>
                                     <div class="config-nested" id="vienna-config">
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-                                            consequat.
+                                            The <b>ViennaRNA</b> package offers a variety of stand-alone executables 
+                                            which each implement a different predictive algorithm related to RNA sequence 
+                                            analysis. 
+                                        </p> 
+                                        <p>
+                                            Two of these tools are available through CNEAT: <b>RNAduplex</b> and <b>RNAcofold</b>.
+                                            Whilst both tools aim to predict the structure of the dimer formed when two input RNA 
+                                            molecules interact, the underlying algorithm differs greatly.
                                         </p>
 
                                         <label>Select which ViennaRNA executables to run in the analysis:</label>
@@ -117,8 +129,10 @@
                                         <span class="checkbox-label">Run the <b>RNAduplex</b> tool <i>(fast)</i></span>
                                         <div class="config-nested" id="rnaduplex-config">
                                             <p>
-                                                This tool considers only <i>intermolecular</i> interactions between each evaluated 
-                                                sequence pair, allowing for potential binding sites to be quickly identified.
+                                                <b>RNAduplex</b> is a simple algorithm which is useful for a fast preliminary screening
+                                                of a set of sequences of interest. Only <i>inter</i>molecular interactions are considered, so
+                                                a high-complexity research project should not rely solely on its results. Instead, 
+                                                output from <b>RNAduplex</b> is more suited to guide subsequent use of more complex tools.
                                             </p>
                                             <label for="rna_rna_config[vienna_config[rnaduplex_config[deltaenergy]]]:number">Set energy range for returned sub-optimal interactions:</label>
                                             <input name="rna_rna_config[vienna_config[rnaduplex_config[deltaenergy]]]:number" id="rnaduplex-deltaenergy" type="number" value="0" min="0" step="0.5">
@@ -133,7 +147,12 @@
                                         <input type="checkbox" name="rna_rna_config[vienna_config[rnacofold]]:boolean" id="run-rnacofold" checked>
                                         <span class="checkbox-label">Run the <b>RNAcofold</b> tool <i>(slow)</i></span>
                                         <div class="config-nested" id="rnacofold-config">
-                                            <p>Note: this is not recommended for analysis of very large sequences.</p>
+                                            <p>
+                                                <b>RNAcofold</b> performs a full secondary structure prediction for a dimer formed from
+                                                the given pair of RNA sequences. This means that <i>intra</i>molecular interactions are 
+                                                also considered. As a result, the implemented algorithm is quite computationally expensive, 
+                                                and may cause large analyses to take a long time.
+                                            </p>
                                         </div>
                                     </div>
                                     <br>
@@ -154,7 +173,7 @@
                                             interaction).
                                         </p>
                                         <p>
-                                            Each interaction returned will have a <b>seed</b> - a shorter (<code>5-8 bp</code>) part of the whole
+                                            Each interaction returned will have a <b>seed</b> - a shorter (5-8 bp) part of the whole
                                             interaction which does not contain unpaired nucleotides in the interacting sequences. The seed can
                                             be seen as the basis of an intermolecular interaction.
                                         </p>

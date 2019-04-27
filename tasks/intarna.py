@@ -7,6 +7,26 @@ from .shared import create_working_dir, get_sequences_from_fasta
 intarna_template = """
 # IntaRNA Toolchain Output
 
+**IntaRNA** is a very accurate tool which takes into account the accessibility of interacting regions 
+and interaction seeding when predicting an intermolecular interaction.
+
+The **stability** of an interaction is calculated as a cumulative energy score 
+- the (Gibbs) free energy of the intermolecular interaction plus the energy needed 
+to ensure that the interacting regions are accessible (not blocked by RNA 
+secondary structures). Here, accessibility refers to the probability of each nucleotide to be 
+unpaired (i.e. not bound to another nucleotide of the same RNA sequence through intermolecular 
+interaction).
+
+Each interaction returned will have a **seed** - a shorter (5-8 bp) part of the whole
+interaction which does not contain unpaired nucleotides in the interacting sequences. The seed can
+be seen as the basis of an intermolecular interaction.
+
+IntaRNA also accepts suboptimal results. If no 
+configuration is provided, it will always return the **minimum free energy result** - the 
+theoretical optimal. The analysis can be refined by modifying the **minimum unpaired probability** 
+parameter, which will yield shorter, higher-accessibility interactions, 
+but with a higher free energy.
+
 ## Overview
 
 Query sequences: 
@@ -68,7 +88,7 @@ The interaction sites are provided again below the figure.
 Displayed below is the overall interaction energy value (shown on the first line) followed by 
 a breakdown of the components of its calculation.
 
-- The `'E'` components are the terms of the energy of the intermolecular interaction (based on `RNAhybrid` 
+- The `'E'` components are the terms of the energy of the intermolecular interaction (based on RNAhybrid 
 and the Zuker and Stiegel algorithm).
 - The `'ED'` components are the terms of the accessibility calculation, computed for each sequence 
 (`'seq1'` is the target, `'seq 2'` is the query). These represent the energy needed to make each 

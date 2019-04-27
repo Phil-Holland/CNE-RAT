@@ -17,6 +17,11 @@ from Bio.Alphabet import IUPAC
 protein_template = """
 # RNA-Protein Toolchain Output
 
+This pipeline attempts to predict RNA-protein interactions between the CNE and 
+**RNA binding proteins** (RBPs), using data from 
+[CISBP-RNA](http://cisbp-rna.ccbr.utoronto.ca), an *"online library of 
+RNA binding proteins and their motifs"*.
+
 The output shown below has been limited to the following species:
 
 {query_species}
@@ -25,27 +30,25 @@ The output shown below has been limited to the following species:
 
 ## Hits Table
 
-**Motif ID:** This column refers to the internal IDs used within the CISBP-RNA database to uniquely identify each motif/PWM and its associated RBP e.g. `M083_0.6.`. The online CISBP-RNA site provides detailed information about each motif, such as RNA binding domains and related RBPs. A user can submit an ID of interest to the site via a search tool in order to retrieve this detailed information.
+### Column Descriptions
 
-**Start:** This column contains the start location of the potential binding site.
+Column | Description
+--- | ---
+`Motif ID` | Refers to the internal IDs used within the CISBP-RNA database to uniquely identify each motif/PWM and its associated RBP e.g. `M083_0.6.`.<br>The online CISBP-RNA site provides detailed information about each motif, such as RNA binding domains and related RBPs.<br>A user can submit an ID of interest to the site via a search tool in order to retrieve this detailed information.
+`Start` | Contains the start location of the potential binding site.
+`Stop` | Contains the end location of the potential binding site.
+`Sequence` | Contains the sequence of the potential binding site e.g. `GGAGCGA`.
+`Score` | Contains the log-likelihood score of the potential binding site.
+`Max score` | Contains the maximum log-likelihood score possible with the associated motif.
+`RBP ID` | Refers to the internal IDs used within the CISBP-RNA database to unique identify each RBP.<br>As with the motif ID, a user can search for this ID on the CISBP-RNA site e.g. `T02643_0.6`.
+`RBP Name` | Contains the RBP name e.g. `ZC3H10`.
+`RBP Species` | Contains the species from which the RBP originates i.e. *Homo sapiens*, *Drosophila melanogaster* or *Mus musculus*.
+`Family Name` | Contains the names of the RNA-binding domains found within the RBP.
+`RBP Status` | Indicates whether the RBP motif has been experimentally determined (e.g. via RNAcompete) or inferred computationally from<br>RBPs with similar RNA-binding domains.
 
-**Stop:** This column contains the end location of the potential binding site.
+---
 
-**Sequence:** This column contains the sequence of the potential binding site e.g. `GGAGCGA`.
-
-**Score:** This column contains the log-likelihood score of the potential binding site.
-
-**Max score:** This column contains the maximum log-likelihood score possible with the associated motif.
-
-**RBP ID:** This column refers to the internal IDs used within the CISBP-RNA database to unique identify each RBP. As with the motif ID, a user can search for this ID on the CISBP-RNA site e.g. `T02643_0.6`.
-
-**RBP Name:** This column contains the RBP name e.g. `ZC3H10`.
-
-**RBP Species:** This column contains the species from which the RBP originates i.e. *Homo sapiens*, *Drosophila melanogaster* or *Mus musculus*.
-
-**Family Name:** This column contains the names of the RNA-binding domains found within the RBP.
-
-**RBP Status:** This column indicates whether the RBP motif has been experimentally determined (e.g. via RNAcompete) or inferred computationally from RBPs with similar RNA-binding domains.
+### Table
 
 {table}
 
@@ -150,13 +153,13 @@ def protein(config, uid):
     species_display = ''
     if config['rna_protein_config']['drosophila_melanogaster'] == True:
         species.append('drosophila_melanogaster')
-        species_display += '- *Drosophila melanogaster*\n'
+        species_display += '- ***Drosophila melanogaster***\n'
     if config['rna_protein_config']['homo_sapiens'] == True:
         species.append('homo_sapiens')
-        species_display += '- *Homo sapiens*\n'
+        species_display += '- ***Homo sapiens***\n'
     if config['rna_protein_config']['mus_musculus'] == True:
         species.append('mus_musculus')
-        species_display += '- *Mus musculus*\n'
+        species_display += '- ***Mus musculus***\n'
 
     # load data from CISBP-RNA
     cisbp_rna = CisbpRNA(species)

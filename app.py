@@ -112,7 +112,7 @@ def get_task_data(tid):
     res = celery.AsyncResult(tid)
     if res.state == 'SUCCESS':
         # convert the markdown from the task's output to HTML, and return it
-        content = markdown.markdown(res.result)
+        content = markdown.markdown(res.result, extensions=['tables'])
         return json.dumps({'success': True, 'result': content}), 200, {'ContentType':'application/json'} 
     else:
         # task has not yet completed
