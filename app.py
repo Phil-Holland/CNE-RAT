@@ -130,7 +130,10 @@ def new_analysis():
 
     # make sure the config exists after parsing (will be None otherwise)
     if config is None:
-        return json.dumps({'success': False}), 400, {'ContentType':'application/json'}
+        return json.dumps({
+            'success': False,
+            'error': 'Config was not parsed successfully'
+        }), 400, {'ContentType':'application/json'}
 
     # make sure config is valid (using schemas/cneat.json)
     try:
@@ -181,7 +184,10 @@ def new_analysis():
                 })
             )
     
-    return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'} 
+    return json.dumps({
+        'success': True,
+        'uid': uid
+    }), 200, {'ContentType':'application/json'} 
 
 if __name__ == "__main__":
     # script entry point - runs the debugger if the script is executed with python 
