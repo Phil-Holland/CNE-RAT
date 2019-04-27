@@ -15,7 +15,7 @@
 			"type": "boolean"
 		},
 		"rna_protein_config": {
-			"description": "Additional configuration options for the RNA-protein analysis pipeline",
+			"description": "Additional configuration options for the RNA-protein analysis pipeline - required if 'rna_protein' is true",
 			"type": "object",
 			"properties": {
 				"drosophila_melanogaster": {
@@ -47,7 +47,7 @@
 			"type": "boolean"
 		},
 		"rna_rna_config": {
-			"description": "Additional configuration options for the RNA-protein analysis pipeline",
+			"description": "Additional configuration options for the RNA-protein analysis pipeline - required if 'rna_rna' is true",
 			"type": "object",
 			"properties": {
 				"query_sequences": {
@@ -60,7 +60,7 @@
 					"type": "boolean"
 				},
 				"inta_config": {
-					"description": "Additional configuration options for the IntaRNA analysis pipeline",
+					"description": "Additional configuration options for the IntaRNA analysis pipeline - required if 'inta' is true",
 					"type": "object",
 					"properties": {
 						"prediction_mode": {
@@ -85,7 +85,7 @@
 					"type": "boolean"
 				},
 				"vienna_config": {
-					"description": "Additional configuration options for the ViennaRNA analysis pipeline",
+					"description": "Additional configuration options for the ViennaRNA analysis pipeline - required if 'vienna' is true",
 					"type": "object",
 					"properties": {
 						"rnacofold": {
@@ -97,7 +97,7 @@
 							"type": "boolean"
 						},
 						"rnaduplex_config": {
-							"description": "Additional configuration options for the RNAduplex executable",
+							"description": "Additional configuration options for the RNAduplex executable - required if 'rnaduplex' is true",
 							"type": "object",
 							"properties": {
 								"deltaenergy": {

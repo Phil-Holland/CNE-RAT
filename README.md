@@ -92,6 +92,10 @@ docker-compose -f docker-compose.yml -f docker-compose.test.yml up --abort-on-co
 
 The `--abort-on-container-exit` tells Docker to exit once the tests have completed.
 
+## Using the API
+
+CNE-RAT exposes a **REST API** for advanced usage of the application. For more information, please read [API.md](documentation/API.md).
+
 ## Deployment
 
 To deploy CNE-RAT on a live system, the passwords within the `.env` file should be set to secure strings. Then use the following command to run the application in "production" mode.
@@ -109,6 +113,8 @@ In production mode, the web interface is accessible through port `80` by default
 - [Celery](http://www.celeryproject.org/) - used to implement the task queue.
 - [Celery Flower](https://flower.readthedocs.io/en/latest/) - used to monitor the task queue.
 - [Redis](https://redis.io/) - used for the application database
+- [JSON Schema](https://json-schema.org/) - used to validate request objects.
+- [jsonschema2md](https://github.com/adobe/jsonschema2md) - used to generate documentation from JSON schemas.
 - [The CISBP-RNA database](http://cisbp-rna.ccbr.utoronto.ca) - used for the RNA-protein interaction analysis pipeline.
 - [ViennaRNA](https://www.tbi.univie.ac.at/RNA/) - used for the ViennaRNA RNA-RNA interaction analysis pipeline.
 - [IntaRNA](https://github.com/BackofenLab/IntaRNA) - used for the IntaRNA RNA-RNA interaction analysis pipeline.
