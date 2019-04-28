@@ -12,7 +12,7 @@ from ftplib import FTP
 def cnefinder(config, uid):
     # create a working directory, based on the task uid
     working_dir = create_working_dir(uid, 'cnefinder')
-    metadata_file = '.env'
+
 
     # retrieve relevant fields from configuration object
     ensembl_config = config['ensembl_request_config']
@@ -36,6 +36,10 @@ def cnefinder(config, uid):
         download_fasta_file(ref_info),
         download_fasta_file(query_info)]
 
+    # create environment file in working directory
+    trimmed_filenames = [name[:-3] for name in fasta_filenames]
+    json_to_env_file(config, working_dir, trimmed_filenames, debug=True)
+
     # unzip downloaded .fa.gz files
     for idx, f in enumerate(fasta_filenames):
         with gzip.open(f, 'rb') as f_in:
@@ -44,10 +48,29 @@ def cnefinder(config, uid):
         # now delete gzip
         os.remove(f)
 
-    # create environment file in working directory
-    trimmed_filenames = [name[:-3] for name in fasta_filenames]
-    json_to_env_file(config, working_dir, trimmed_filenames, debug=True)
+    #---------------------------------------------
+    # Define output filenames
+    #---------------------------------------------
+    bed_file = '{}/outfile.bed'.format(working_dir)
+    env_file = '{}/.env'.format(working_dir)
+    r_cnes = '{}/ref_cnes.fa'.format(working_dir)
+    q_cnes = '{}/query_cnes.fa'.format(working_dir)
+    json_table = '{}/table.json'.format(working_dir)
 
+    #---------------------------------------------
+    # Run preprocess.main() from CNEFinder package
+    #---------------------------------------------
+    # TODO
+
+    #---------------------------------------------
+    # Run shell script to launch CNEFinder
+    #---------------------------------------------
+    # TODO
+
+    #---------------------------------------------
+    # Run parse_bed.main() from CNEFinder package
+    #---------------------------------------------
+    # TODO
 
 
 def get_release_no(ensembl_url, mart_name):
