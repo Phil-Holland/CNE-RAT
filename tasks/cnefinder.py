@@ -1,5 +1,6 @@
 import sys, time, subprocess, base64
 import json, ftplib, re, requests
+import xml.etree.ElementTree as ET
 sys.path.append('..')
 from Bio import SeqIO
 from io import StringIO
