@@ -10,3 +10,4 @@ pandas==0.24.2
 gunicorn==19.9.0
 jsonschema==3.0.1
 requests==2.21.0
+biopython==1.73
