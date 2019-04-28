@@ -1,0 +1,3 @@
+[submodule "cnefinder"]
+	path = cnefinder
+	url = https://github.com/MReggler/CNEFinder.git

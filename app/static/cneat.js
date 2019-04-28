@@ -43,7 +43,7 @@ $(function() {
 
         var read = new FileReader();
         read.readAsBinaryString(file);
-        
+
         read.onloadend = function() {
             $(target_id).val(read.result);
         }
@@ -70,7 +70,7 @@ $(function() {
         if($(this).prop('checked')) $('#vienna-config').slideDown(100);
         else $('#vienna-config').slideUp(100);
     });
-    
+
     $('#run-inta').click(function() {
         if($(this).prop('checked')) $('#inta-config').slideDown(100);
         else $('#inta-config').slideUp(100);

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Get milligram & fonts from CDN -->
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <link rel="stylesheet" type="text/css" href="//cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css">
+    <!-- Icon pack -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Load custom CSS -->
+    <link rel="stylesheet" type="text/css" href="style.css" >
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="container" id="content">
+        <div class="row" id="configuration-row">
+            <div class="column column-20"></div>
+            <div class="column column-60">
+                <div id="images">
+                    <img src="logo.png" alt="Origene logo" id="logo">
+                    <img src="warwick.png" alt="Warwick crest" id="warwick">
+                </div>
+                <a href="/"><strong>&larr;</strong> back to tool select</a>
+                <h1 id="title">{{ title }}</h1>
+                <div id="subtitle">{{ subtitle }}</div>
+                <hr>
+                <div id="configuration">
+                    <form id="config-form">
+                        <fieldset>
+                            <label for="ensembl-site">Ensembl site (or site archive) URL for reference genome:</label>
+                            <input type="url" name="ensembl-site-ref" id="ensembl-site-ref"  placeholder="https://www.ensembl.org/" required>
+                            <div id="ref-site-val-error"style="display: none;" >
+                                <b>Error!</b>
+                                Please ensure URL corresponds to a valid Ensembl site.
+                            </div>
+                            <div class="config-nested">
+                                <div id="ref-mart" style="display: none;">
+                                    <span class="text-label">Select a BioMart from the dropdown:</span>
+                                    <select id="ref-mart-dropdown"></select>
+                                    <br>
+                                </div>
+                                <div id="ref-dataset" style="display: none;">
+                                    <span class="text-label">Select a reference dataset from the dropdown:</span>
+                                    <select id="ref-dataset-dropdown"></select>
+                                    <br>
+                                </div>
+                            </div>
+
+                            <label for="ensembl-site">Ensembl site (or site archive) URL for query genome:</label>
+                            <input type="url" name="ensembl-site-query" id="ensembl-site-query" placeholder="https://www.ensembl.org/" required>
+                            <div id="query-site-val-error" style="display: none;">
+                                <b>Error!</b>
+                                Please ensure URL corresponds to a valid Ensembl site.
+                            </div>
+                            <div class="config-nested">
+                                <div id="query-mart" style="display: none;">
+                                    <span class="text-label">Select a BioMart from the dropdown:</span>
+                                    <select id="query-mart-dropdown"></select>
+                                    <br>
+                                </div>
+                                <div id="query-dataset" style="display: none;">
+                                        <span class="text-label">Select a query dataset from the dropdown:</span>
+                                        <select id="query-dataset-dropdown"></select>
+                                        <br>
+                                    </div>
+                            </div>
+
+                            <div class="general-config">
+                                <label for="min-cne-length">Minimum CNE length:</label>
+                                <input type="number" id="min-cne-length" min="1" value="100">
+                                <br>
+                                <label for="sim-threshold">Similarity threshold:</label>
+                                <input type="number" id="sim-threshold" min="0" max="1" step="0.01" value="0.95">
+                                <br>
+                            </div>
+
+
+                            <br>
+                            <input type="checkbox" id="task-gene-name">
+                            <span class="checkbox-label">Search for CNEs by <b>gene name</b></span><br>
+                            <div class="config-nested">
+                                <div id="gene-name-config">
+                                    <label>Choose a gene name within the reference and query genomes:</label>
+                                    <span class="text-label">Reference gene name</span>
+                                    <input type="text" id="ref-gene-name">
+                                    <br>
+                                    <span class="text-label">Query gene name</span>
+                                    <input type="text" id="query-gene-name">
+                                    <br>
+                                </div>
+                            </div>
+
+                            <br>
+                            <input type="checkbox" id="task-index-position" checked="checked">
+                            <span class="checkbox-label">Search for CNEs by <b>index position</b></span><br>
+                            <div class="config-nested">
+                                <div id="index-position-config">
+                                    <label>Choose a chromosome and start and end positions within the reference and query genomes:</label>
+                                    <p>
+                                        Set the position parameters to 0 to search the entire specified chromosome of the reference and/or query genomes.
+                                    </p>
+                                    <div class="text-label">Reference chromosome:</div>
+                                    <input type="number" id="ref-chromosome" min="1" max="100" step="1">
+                                    <br>
+                                    <div class="text-label">Reference start pos:</div>
+                                    <input type="number" id="ref-start-pos" min="0" step="1" placeholder="0">
+                                    <br>
+                                    <div class="text-label">Reference end pos:</div>
+                                    <input type="number" id="ref-end-pos" min="0" step="1" placeholder="0">
+                                    <br>
+                                    <br>
+                                    <div class="text-label">Query chromosome:</div>
+                                    <input type="number" id="query-chromosome" min="1" max="100" step="1">
+                                    <br>
+                                    <div class="text-label">Query start pos:</div>
+                                    <input type="number" id="query-start-pos" min="0" step="1" placeholder="0">
+                                    <br>
+                                    <div class="text-label">Query end pos:</div>
+                                    <input type="number" id="query-end-pos" min="0" step="1" placeholder="0">
+                                    <br>
+                                </div>
+                            </div>
+
+                            <div id="validation-error" style="display: none;">
+                                <b>Error!</b>
+                                There is an error in the analysis configuration form, please correct this before trying again.
+                            </div>
+                            <input class="button-large button-black" type="submit" id="submit-button" value="Launch CNEFinder">
+                        </fieldset>
+                    </form>
+                    <small>View original CNEFinder project source <a href="https://github.com/lorrainea/CNEFinder">here</a></small>
+                </div>
+                <hr>
+                <small>{{ footer|safe }}</small>
+            </div>
+            <div class="column column-20"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.10.0/ajv.min.js"></script>
+    <script type="text/javascript">
+        var schema = JSON.parse({{ schema|tojson }});
+
+        // validator
+        var ajv = new Ajv();
+        var validate = ajv.compile(schema);
+    </script>
+    <script type="text/javascript" src="cnefinder.js"></script>
+
+</body>
+</html>
