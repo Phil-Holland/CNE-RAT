@@ -48,6 +48,8 @@ with open("schemas/cnefinder.schema.json") as g:
     schema_cnefinder = g.read()
     schema_cnefinder_json = json.loads(schema_cnefinder)
 
+# import the task python files here to avoid issues
+from tasks import viennarna, intarna, protein
 
 cnefinder_metadata = dict(
         title='CNEFinder',
