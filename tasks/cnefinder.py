@@ -8,6 +8,10 @@ from app import celery
 from .shared import create_working_dir, get_sequences_from_fasta
 from ftplib import FTP
 
+# don't know if this will work
+import cnefinder.scripts.parse_bed as parse_bed
+import cnefinder.scripts.pre_process as pre_process
+
 cnefinder_template = """
 # CNEFinder Run Output
 
@@ -95,18 +99,17 @@ def cnefinder(config, uid):
     #---------------------------------------------
     # Run preprocess.main() from CNEFinder package
     #---------------------------------------------
-    # TODO
+    pre_process.main(working_dir=working_dir)
 
     #---------------------------------------------
     # Run shell script to launch CNEFinder
     #---------------------------------------------
-    # TODO
+    subprocess.call(['.cnefinder/run_cnefinder.sh'])
 
     #---------------------------------------------
     # Run parse_bed.main() from CNEFinder package
     #---------------------------------------------
-    # TODO
-
+    parse_bed.main(bed_file, env_file, r_cnes, q_cnes, json_table)
 
     #---------------------------------------------
     # Convert json_table to pandas DataFrame
