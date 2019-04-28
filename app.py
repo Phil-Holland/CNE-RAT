@@ -39,12 +39,15 @@ redis = Redis(host='redis', port=6379, password=redis_password)
 schema_cneat = ''
 schema_cneat_json = None
 schema_cnefinder = ''
-with open("schemas/cneat.json") as f:
+schema_cnefinder_json = None
+
+with open("schemas/cneat.schema.json") as f:
     schema_cneat = f.read()
     schema_cneat_json = json.loads(schema_cneat)
 
-with open("schemas/cnefinder.json") as g:
+with open("schemas/cnefinder.schema.json") as g:
     schema_cnefinder = g.read()
+    schema_cnefinder_json = json.loads(schema_cnefinder)
 
 
 cnefinder_metadata = dict(

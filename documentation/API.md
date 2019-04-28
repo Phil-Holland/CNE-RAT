@@ -8,6 +8,8 @@ Detailed documentation is generated using [jsonschema2md](https://github.com/ado
 
 ## CNE-Finder
 
+### Detailed request documentation: **[cnefinder.schema.md](cnefinder.schema.md)**
+
 ## CNEAT
 
 **API endpoint**: `/new_analysis`
@@ -43,7 +45,7 @@ Detailed documentation is generated using [jsonschema2md](https://github.com/ado
 }
 ```
 
-### Detailed request documentation: **[cneat.md](cneat.md)**
+### Detailed request documentation: **[cneat.schema.md](cneat.schema.md)**
 
 ### Response
 

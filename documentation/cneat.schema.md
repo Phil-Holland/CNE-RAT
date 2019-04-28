@@ -9,7 +9,7 @@ A schema defining a CNEAT analysis configuration
 
 | Abstract | Extensible | Status | Identifiable | Custom Properties | Additional Properties | Defined In |
 |----------|------------|--------|--------------|-------------------|-----------------------|------------|
-| Can be instantiated | No | Experimental | No | Forbidden | Permitted |  |
+| Can be instantiated | No | Experimental | No | Forbidden | Permitted | [cneat.schema.json](cneat.schema.json) |
 
 # CNEAT Properties
 
