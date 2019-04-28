@@ -47,7 +47,7 @@
 			"description": "Task-agnostic configuration options for a CNEFinder run",
 			"type": "object",
 			"properties": {
-				"min_cne_length": {
+				"min_seq_length": {
 					"description": "A number holding the minimum CNE length CNEFinder will search for",
 					"type": "number",
 					"minimum": 1,
@@ -62,7 +62,7 @@
 				}
 			},
 			"required": [
-				"min_cne_length",
+				"min_seq_length",
 				"sim_threshold"
 			]
 		},
@@ -74,18 +74,18 @@
 			"description": "Additional configuration options for a gene-name-focussed CNEFinder run",
 			"type": "object",
 			"properties": {
-				"ref_gene_name": {
+				"ref_gene": {
 					"description": "A string holding the URL of the name of chosen gene within the reference genome",
 					"type": "string"
 				},
-				"query_gene_name": {
+				"query_gene": {
 					"description": "A string holding the URL of the name of chosen gene within the query genome",
 					"type": "string"
 				}
 			},
 			"required": [
-				"ref_gene_name",
-				"query_gene_name"
+				"ref_gene",
+				"query_gene"
 			]
 		},
 		"index_position": {
@@ -96,39 +96,39 @@
 			"description": "Additional configuration options for a index-positon-focussed CNEFinder run",
 			"type": "object",
 			"properties": {
-				"ref_chromosome": {
+				"ref_chrom": {
 					"description": "A number holding the chromosome on the reference genome to be searched",
 					"type": "number",
 					"minimum": 1,
 					"maximum": 100,
 					"multipleOf": 1
 				},
-				"ref_start_pos": {
+				"ref_start": {
 					"description": "A number holding the start index on the reference genome to be searched",
 					"type": "number",
 					"minimum": 0,
 					"multipleOf": 1
 				},
-				"ref_end_pos": {
+				"ref_end": {
 					"description": "A number holding the end index on the reference genome to be searched",
 					"type": "number",
 					"minimum": 0,
 					"multipleOf": 1
 				},
-				"query_chromosome": {
+				"query_chrom": {
 					"description": "A number holding the chromosome on the query genome to be searched",
 					"type": "number",
 					"minimum": 1,
 					"maximum": 100,
 					"multipleOf": 1
 				},
-				"query_start_pos": {
+				"query_start": {
 					"description": "A number holding the start index on the query genome to be searched",
 					"type": "number",
 					"minimum": 0,
 					"multipleOf": 1
 				},
-				"query_end_pos": {
+				"query_end": {
 					"description": "A number holding the end index on the query genome to be searched",
 					"type": "number",
 					"minimum": 0,
@@ -136,12 +136,12 @@
 				}
 			},
 			"required": [
-				"ref_chromosome",
-				"ref_start_pos",
-				"ref_end_pos",
-				"query_chromosome",
-				"query_start_pos",
-				"query_end_pos"
+				"ref_chrom",
+				"ref_start",
+				"ref_end",
+				"query_chrom",
+				"query_start",
+				"query_end"
 			]
 		}
 	},

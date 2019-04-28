@@ -162,22 +162,22 @@ $(function() {
 
             },
             'general_config': {
-                'min_cne_length': parseFloat($('#min-cne-length').val()),
+                'min_seq_length': parseFloat($('#min-cne-length').val()),
                 'sim_threshold': parseFloat($('#sim-threshold').val()),
             },
             'gene_name': $('#task-gene-name').is(':checked'),
             'gene_name_config': {
-                'ref_gene_name': $('#ref-gene-name').val(),
-                'query_gene_name': $('#query-gene-name').val(),
+                'ref_gene': $('#ref-gene-name').val(),
+                'query_gene': $('#query-gene-name').val(),
             },
             'index_position': $('#task-index-position').is(':checked'),
             'index_position_config': {
-                'ref_chromosome': parseFloat($('#ref-chromosome').val()),
-                'ref_start_pos': parseFloat($('#ref-start-pos').val()),
-                'ref_end_pos': parseFloat($('#ref-end-pos').val()),
-                'query_chromosome': parseFloat($('#query-chromosome').val()),
-                'query_start_pos': parseFloat($('#query-start-pos').val()),
-                'query_end_pos': parseFloat($('#query-end-pos').val()),
+                'ref_chrom': parseFloat($('#ref-chromosome').val()),
+                'ref_start': parseFloat($('#ref-start-pos').val()),
+                'ref_end': parseFloat($('#ref-end-pos').val()),
+                'query_chrom': parseFloat($('#query-chromosome').val()),
+                'query_start': parseFloat($('#query-start-pos').val()),
+                'query_end': parseFloat($('#query-end-pos').val()),
             }
         }
 
