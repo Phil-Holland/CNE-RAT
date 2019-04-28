@@ -15,16 +15,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 	liblzma-dev \
 	libpcre3-dev \
 	python3.5 \
-	python3.5-gdbm \
 	python3-pip \
 	python3-setuptools \
 	python3-dev \
 	python3-wheel \
+	python3.5-gdbm \
 	libreadline-dev \
 	libgsl2 \
 	libgsl-dev \
 	libmpfr-dev \
 	texlive-binaries \
+	texlive-font-utils \
 	build-essential \
 	libboost-all-dev \
 	autotools-dev \
