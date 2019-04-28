@@ -7,7 +7,6 @@ from flask import Flask, render_template, redirect, request, app, abort, json
 from redis import Redis
 from celery import Celery
 from jsonschema import validate, ValidationError
-from forms import EnsemblForm
 import xml.etree.ElementTree as ET
 
 # get the redis password, which is set as a system environment variable through docker

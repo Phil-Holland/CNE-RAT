@@ -84,20 +84,18 @@
                             <br>
                             <input type="checkbox" id="task-gene-name">
                             <span class="checkbox-label">Search for CNEs by <b>gene name</b></span><br>
-                            <div class="config-nested">
-                                <div id="gene-name-config">
-                                    <label>Choose a gene name within the reference and query genomes:</label>
-                                    <span class="text-label">Reference gene name</span>
-                                    <input type="text" id="ref-gene-name">
-                                    <br>
-                                    <span class="text-label">Query gene name</span>
-                                    <input type="text" id="query-gene-name">
-                                    <br>
-                                </div>
+                            <div class="config-nested" id="gene-name-config" style="display:none">
+                                <label>Choose a gene name within the reference and query genomes:</label>
+                                <span class="text-label">Reference gene name</span>
+                                <input type="text" id="ref-gene-name">
+                                <br>
+                                <span class="text-label">Query gene name</span>
+                                <input type="text" id="query-gene-name">
+                                <br>
                             </div>
 
                             <br>
-                            <input type="checkbox" id="task-index-position" checked="checked">
+                            <input type="checkbox" id="task-index-position" checked>
                             <span class="checkbox-label">Search for CNEs by <b>index position</b></span><br>
                             <div class="config-nested">
                                 <div id="index-position-config">
