@@ -205,7 +205,7 @@ class TestCneatAnalysis():
         content = json.loads(request.content.decode("utf-8"))
         uid = content['uid']
 
-        # poll analysis status - do this 30 times (i.e. wait 60s)
+        # poll analysis status - do this 60 times (i.e. wait 120s)
         i = 0
         while True:
             request = requests.post('http://web:5000/get_analysis_status/%s' % uid)
@@ -224,8 +224,8 @@ class TestCneatAnalysis():
                 break
 
             i += 1
-            if i >= 30:
-                pytest.fail('Task did not complete quickly enough (waited 60s)')
+            if i >= 60:
+                pytest.fail('Task did not complete quickly enough (waited 120s)')
 
             time.sleep(2)
 
@@ -248,7 +248,7 @@ class TestCneatAnalysis():
         content = json.loads(request.content.decode("utf-8"))
         uid = content['uid']
 
-        # poll analysis status - do this 30 times (i.e. wait 60s)
+        # poll analysis status - do this 60 times (i.e. wait 120s)
         i = 0
         while True:
             request = requests.post('http://web:5000/get_analysis_status/%s' % uid)
@@ -267,8 +267,8 @@ class TestCneatAnalysis():
                 break
 
             i += 1
-            if i >= 30:
-                pytest.fail('Task did not complete quickly enough (waited 60s)')
+            if i >= 60:
+                pytest.fail('Task did not complete quickly enough (waited 120s)')
 
             time.sleep(2)
 
@@ -291,7 +291,7 @@ class TestCneatAnalysis():
         content = json.loads(request.content.decode("utf-8"))
         uid = content['uid']
 
-        # poll analysis status - do this 30 times (i.e. wait 60s)
+        # poll analysis status - do this 60 times (i.e. wait 120s)
         i = 0
         while True:
             request = requests.post('http://web:5000/get_analysis_status/%s' % uid)
@@ -310,8 +310,8 @@ class TestCneatAnalysis():
                 break
 
             i += 1
-            if i >= 30:
-                pytest.fail('Task did not complete quickly enough (waited 60s)')
+            if i >= 60:
+                pytest.fail('Task did not complete quickly enough (waited 120s)')
 
             time.sleep(2)
 

@@ -48,9 +48,6 @@ with open("schemas/cnefinder.schema.json") as g:
     schema_cnefinder = g.read()
     schema_cnefinder_json = json.loads(schema_cnefinder)
 
-# import the task python files here to avoid issues
-from tasks import viennarna, intarna, protein
-
 cnefinder_metadata = dict(
     title='CNEFinder',
     subtitle='Finding Conserved Non-coding Elements in Genomes',
@@ -288,7 +285,7 @@ def new_analysis():
     # create and queue each desired task, and store tracking information in redis
 
     if config['rna_protein'] == True:
-        t0 = protein.protein.delay(config, uid)
+        t0 = celery.send_task('protein', (config, uid))
         redis.lpush('analyses:' + uid + ':tasks',
             json.dumps({
                 'task_name': 'protein',
@@ -298,7 +295,7 @@ def new_analysis():
 
     if config['rna_rna'] == True:
         if config['rna_rna_config']['vienna'] == True:
-            t1 = viennarna.viennarna.delay(config, uid)
+            t1 = celery.send_task('viennarna', (config, uid))
             redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
                     'task_name': 'viennarna',
@@ -307,7 +304,7 @@ def new_analysis():
             )
 
         if config['rna_rna_config']['inta'] == True:
-            t2 = intarna.intarna.delay(config, uid)
+            t2 = celery.send_task('intarna', (config, uid))
             redis.lpush('analyses:' + uid + ':tasks',
                 json.dumps({
                     'task_name': 'intarna',
