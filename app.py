@@ -52,15 +52,15 @@ with open("schemas/cnefinder.schema.json") as g:
 from tasks import viennarna, intarna, protein
 
 cnefinder_metadata = dict(
-        title='CNEFinder',
-        subtitle='Finding Conserved Non-coding Elements in Genomes',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>',
+    title='CNEFinder',
+    subtitle='Finding Conserved Non-coding Elements in Genomes',
+    footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>',
 )
 
 cneat_metadata = dict(
-        title='CNEAT',
-        subtitle='The CNE Analysis Tool',
-        footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'
+    title='CNEAT',
+    subtitle='The CNE Analysis Tool',
+    footer='Built with <a target="_blank" href="http://flask.pocoo.org/">Flask</a>'
 )
 
 @app.route('/')

@@ -11,3 +11,4 @@ gunicorn==19.9.0
 jsonschema==3.0.1
 requests==2.21.0
 biopython==1.73
+tzlocal==1.5.1
