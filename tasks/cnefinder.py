@@ -104,7 +104,7 @@ def cnefinder(config, uid):
     #---------------------------------------------
     # Run shell script to launch CNEFinder
     #---------------------------------------------
-    subprocess.call(['.cnefinder/run_cnefinder.sh'])
+    subprocess.call(['./cnefinder/run_cnefinder.sh'])
 
     #---------------------------------------------
     # Run parse_bed.main() from CNEFinder package
