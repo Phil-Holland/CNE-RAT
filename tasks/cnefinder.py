@@ -1,5 +1,5 @@
 import sys, time, subprocess, base64, os
-import json, ftplib, re, requests, shutil, gzip
+import json, ftplib, re, requests, shutil, gzip, pandas
 import xml.etree.ElementTree as ET
 sys.path.append('..')
 from Bio import SeqIO
@@ -7,6 +7,41 @@ from io import StringIO
 from app import celery
 from .shared import create_working_dir, get_sequences_from_fasta
 from ftplib import FTP
+
+cnefinder_template = """
+# CNEFinder Run Output
+
+The page contains all the identified CNEs found by CNEFinder based on the run configuration supplied.
+
+The table below contains the CNE identified between the following species:
+
+{reference_species}
+
+{query_species}
+
+## Table
+### Column Descriptions
+
+Column | Description
+--- | ---
+`ref_chromosome` | Refers to the chromosome in the reference genome in which the CNE has been found
+`ref_start_coord` | Contains the starting index position in the reference genome of the identified CNE.
+`ref_end_coord` | Contains the ending index position in the reference genome of the identified CNE.
+`query_chromosome` | Refers to the chromosome in the query genome in which the CNE has been found
+`query_start_coord` | Contains the starting index position in the query genome of the identified CNE.
+`query_end_coord` | Contains the ending index position in the query genome of the identified CNE.
+`ref_cne_length` | Contains the length of the identified CNE in the reference genome.
+`query_cne_length` | Contains the length of the identified CNE in the query genome.
+`similarity` | Contains the degree of similarity between the reference and query sequences
+
+---
+
+### Table
+
+{table}
+
+"""
+
 
 @celery.task(name='cnefinder')
 def cnefinder(config, uid):
@@ -72,6 +107,24 @@ def cnefinder(config, uid):
     #---------------------------------------------
     # TODO
 
+
+    #---------------------------------------------
+    # Convert json_table to pandas DataFrame
+    #---------------------------------------------
+    with open(json_table) as datafile:
+        data = json.load(datafile)
+    dataframe = pandas.DataFrame(data)
+
+    # drop these to prevent clutter
+    dataframe.drop('ref_sequence', axis=1, inplace=True)
+    dataframe.drop('query_sequence', axis=1, inplace=True)
+
+
+    return cnefinder_template.format(
+        reference_species=reference_dataset,
+        query_species=query_dataset,
+        table=str(dataframe.to_html())
+    )
 
 def get_release_no(ensembl_url, mart_name):
     """Gets the release number from XML MartURLLocation `database` attribute.
