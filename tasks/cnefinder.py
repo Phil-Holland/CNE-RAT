@@ -1,5 +1,5 @@
-import sys, time, subprocess, base64
-import json, ftplib, re, requests
+import sys, time, subprocess, base64, os
+import json, ftplib, re, requests, shutil, gzip
 import xml.etree.ElementTree as ET
 sys.path.append('..')
 from Bio import SeqIO
@@ -36,8 +36,18 @@ def cnefinder(config, uid):
         download_fasta_file(ref_info),
         download_fasta_file(query_info)]
 
+    # unzip downloaded .fa.gz files
+    for idx, f in enumerate(fasta_filenames):
+        with gzip.open(f, 'rb') as f_in:
+            with open(trimmed_filenames[idx], 'wb') as f_out:
+                shutil.copyfileobj(f_in, f_out)
+        # now delete gzip
+        os.remove(f)
+
     # create environment file in working directory
-    json_to_env_file(config, working_dir, fasta_filenames, debug=True)
+    trimmed_filenames = [name[:-3] for name in fasta_filenames]
+    json_to_env_file(config, working_dir, trimmed_filenames, debug=True)
+
 
 
 def get_release_no(ensembl_url, mart_name):
