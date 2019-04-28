@@ -49,8 +49,29 @@ def get_release_no(ensembl_url, mart_name):
     Returns:
         a string holding the release number of the BioMart with mart_name.
     """
-    # TODO
-    return ""
+    path = "/biomart/martservice"
+    payload = {'type': 'registry', 'requestid': 'biomaRt'}
+    urlstring = ensembl_url
+
+    if urlstring[-1] == '/':
+        urlstring = urlstring[:-1]
+
+    r = requests.post(urlstring + path, data=payload)
+    print(r.text)
+
+    tree = ET.ElementTree(ET.fromstring(r.text))
+    root = tree.getroot()
+
+    number = ""
+    for child in root:
+        attributes = child.attrib
+        database = attributes.get('database')
+        name = attributes.get('name')
+
+        if mart_name.upper() == name.upper():
+            number = database.split('_')[-1]
+
+    return "release-{}".format(number)
 
 
 def download_fasta_file(info_list):
