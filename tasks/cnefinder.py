@@ -99,6 +99,7 @@ def cnefinder(config, uid):
     #---------------------------------------------
     # Run preprocess.main() from CNEFinder package
     #---------------------------------------------
+    os.environ['LD_LIBRARY_PATH'] += os.pathsep + "/usr/local/lib/R/lib"
     pre_process.main(working_dir=working_dir)
 
     #---------------------------------------------
