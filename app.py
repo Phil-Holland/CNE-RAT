@@ -2,6 +2,7 @@ import markdown
 import uuid
 import datetime
 import os
+import sys
 import requests
 from flask import Flask, render_template, redirect, request, app, abort, json
 from redis import Redis
@@ -25,9 +26,11 @@ app.config['CELERY_RESULT_BACKEND'] = 'redis://:{}@redis:6379/1'.format(redis_pa
 
 # instantiate the celery task queue instance - use the above broker/result store information
 # also make sure task result data does not expire
+sys.path.append('tasks')
 celery = Celery(app.name, 
     backend=app.config['CELERY_RESULT_BACKEND'],
     broker=app.config['CELERY_BROKER_URL'],
+    include=['protein', 'viennarna', 'intarna', 'cnefinder', 'shared'],
     result_expires=None)
 celery.conf.update(app.config)
 

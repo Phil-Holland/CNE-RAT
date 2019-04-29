@@ -2,7 +2,7 @@ import sys, time, subprocess, base64, os
 sys.path.append('..')
 from app import celery
 from flask import Markup
-from .shared import create_working_dir, get_sequences_from_fasta
+from shared import create_working_dir, get_sequences_from_fasta
 
 intarna_template = """
 # IntaRNA Toolchain Output

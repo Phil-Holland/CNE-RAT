@@ -5,7 +5,7 @@ sys.path.append('..')
 from Bio import SeqIO
 from io import StringIO
 from app import celery
-from .shared import create_working_dir, get_sequences_from_fasta
+from shared import create_working_dir, get_sequences_from_fasta
 from ftplib import FTP
 
 # don't know if this will work
