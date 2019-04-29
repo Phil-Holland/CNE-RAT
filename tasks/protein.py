@@ -1,7 +1,7 @@
 import sys, time
 sys.path.append('..')
 from app import celery 
-from .shared import create_working_dir, get_sequences_from_fasta
+from shared import create_working_dir, get_sequences_from_fasta
 import os
 import glob
 from os import listdir

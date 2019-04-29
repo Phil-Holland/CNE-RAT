@@ -57,8 +57,10 @@ RUN bash -c ./pre-install.sh
 RUN make -f Makefile
 
 # install python requirements - do this before adding all files for better caching
-ADD requirements.txt /app/requirements.txt
-RUN pip3 install -r /app/requirements.txt
+ADD requirements.web.txt /app/requirements.web.txt
+ADD requirements.celery.txt /app/requirements.celery.txt
+RUN pip3 install -r /app/requirements.web.txt
+RUN pip3 install -r /app/requirements.celery.txt
 
 RUN pip3 install rpy2==2.9.4
 
