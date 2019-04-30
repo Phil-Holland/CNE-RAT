@@ -1,0 +1,6 @@
+Flask==1.0.2
+redis==3.2.0
+celery==4.2.1
+jsonschema==3.0.1
+Markdown==3.0.1
+requests==2.21.0

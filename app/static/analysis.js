@@ -177,8 +177,8 @@ var update = function() {
                         $('#tool-icon-' + el.name).css('font-weight', 'bold');
 
                         $('#content-' + el.name).html(failure_text);
-                    } else if(el.status == 'STARTED' || 
-                        el.status == 'RECEIVED' || 
+                    } else if(el.status == 'STARTED' ||
+                        el.status == 'RECEIVED' ||
                         el.status == 'PENDING') {
                         overall_status = 'PROCESSING';
                     } else if(el.status != 'SUCCESS') {

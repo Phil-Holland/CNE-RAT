@@ -1,7 +1,7 @@
 import sys, time
 sys.path.append('..')
 from app import celery 
-from .shared import create_working_dir, get_sequences_from_fasta
+from shared import create_working_dir, get_sequences_from_fasta
 import os
 import glob
 from os import listdir
@@ -67,7 +67,11 @@ class CisbpRNA:
         self.species = species
 
     def _load_db(self):
-        """Loads and returns formatted db."""
+        """Loads and returns formatted db.
+        
+        Returns:
+            a pandas dataframe holding the formatting database
+        """
 
         dir_path = os.path.dirname(os.path.realpath(__file__))
         db_path = dir_path + "/data/cisbp_rna/RBP_Information.txt"
@@ -79,7 +83,11 @@ class CisbpRNA:
         return db
         
     def _load_pwms(self):
-        """Loads and returns PWMs."""
+        """Loads and returns position weight matrices.
+        
+        Returns:
+            a dictionary of pwms, where the key is the CISBP id code
+        """
         
         pwms = {}
         dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -98,7 +106,17 @@ class CisbpRNA:
         return pwms
     
     def _scan_seq(self, seq_record, threshold, ids):
-        """Scans a single sequence for motif hits."""
+        """Scans a single sequence for motif hits.
+        
+        Args:
+            seq_record: the Biopython sequence object to scan
+            threshold: the threshold to use to identify hits
+            ids: the ids to scan
+        Returns:
+            a list of sequence match 'hits' - each being a row, with the fields:
+                'pwm id', 'start position', 'end position', 'hit sequence', 'hit score',
+                'hit max score'
+        """
 
         pwms = self.pwms
         hits = [] 
@@ -119,12 +137,16 @@ class CisbpRNA:
         return hits
 
     def scan(self, seq_record, threshold=6.0, ids=[]):
-        """Scans a sequence for motif hits."""
-
-        # create a directory for results
-        # date_time = time.strftime("%Y%m%d_%H-%M-%S", time.localtime())
-        # save_dir = os.path.join("results", date_time)
-        # os.mkdir(save_dir)
+        """Scans a sequence for motif hits.
+        
+        Args:
+            seq_record: the Biopython sequence object to scan
+            threshold: the threshold to use to identify hits
+            ids: the ids to scan
+        
+        Returns:
+            a pandas dataframe - each row representing an individual sequence hit
+            """
 
         # these are the columns from the database that we want to fetch
         cols = ["rbp_id", "rbp_name", "rbp_species", "family_name", "rbp_status", "motif_id"]

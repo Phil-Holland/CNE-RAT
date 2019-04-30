@@ -43,11 +43,11 @@
                                 submission in the textbox below.</i>
                             </p>
                             <textarea name="cne" id="cne" cols="30" rows="3" placeholder="Paste CNE FASTA file contents here"></textarea>
-                            
+
                             <br>
                             <label>Choose analysis pipeline(s) to execute:</label>
                             <p><i>You must choose at least one pipeline to execute.</i></p>
-                            <input type="checkbox" name="rna_protein:boolean" id="task-rna-protein" checked="checked">
+                            <input type="checkbox" name="rna_protein:boolean" id="task-rna-protein" checked>
                             <span class="checkbox-label">Run <b>RNA-protein interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
@@ -69,29 +69,29 @@
                                     </p>
                                     <p>Use the following checkboxes to exclude results from any <b>irrelevant</b> species.
                                     <p><i>You must choose at least one species to include in the analysis.</i></p>
-                                    <input type="checkbox" name="rna_protein_config[drosophila_melanogaster]:boolean" id="species-drosophila" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[drosophila_melanogaster]:boolean" id="species-drosophila" checked>
                                     <span class="checkbox-label"><i>Drosophila melanogaster</i> (common fruit fly)</span>
                                     <br>
-                                    <input type="checkbox" name="rna_protein_config[homo_sapiens]:boolean" id="species-homo" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[homo_sapiens]:boolean" id="species-homo" checked>
                                     <span class="checkbox-label"><i>Homo sapiens</i> (human)</span>
                                     <br>
-                                    <input type="checkbox" name="rna_protein_config[mus_musculus]:boolean" id="species-mus" checked="checked">
+                                    <input type="checkbox" name="rna_protein_config[mus_musculus]:boolean" id="species-mus" checked>
                                     <span class="checkbox-label"><i>Mus musculus</i> (house mouse)</span>
                                     <br>
                                 </div>
                             </div>
                             <br>
-                            <input type="checkbox" name="rna_rna:boolean" id="task-rna-rna" checked="checked">
+                            <input type="checkbox" name="rna_rna:boolean" id="task-rna-rna" checked>
                             <span class="checkbox-label">Run <b>RNA-RNA interaction</b> analysis pipeline</span><br>
                             <div class="config-nested">
                                 <p>
                                     This pipeline attempts to predict RNA-RNA interactions between the CNE sequence, and a given
-                                    set of query RNA sequences. 
+                                    set of query RNA sequences.
                                     Each query sequence is treated independently in the analysis - only 2-molecule interactions are considered.
 
-                                    Two separate tools are used in RNA-RNA interaction analysis: 
+                                    Two separate tools are used in RNA-RNA interaction analysis:
                                     <a target="_blank" href="https://www.tbi.univie.ac.at/RNA/">ViennaRNA</a> and
-                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>. 
+                                    <a target="_blank" href="http://rna.informatik.uni-freiburg.de/IntaRNA/Input.jsp">IntaRNA</a>.
                                     You may choose which of these tools are used during analysis, or run both.
                                 </p>
                                 <div id="rna-rna-config">
@@ -138,8 +138,8 @@
                                             <input name="rna_rna_config[vienna_config[rnaduplex_config[deltaenergy]]]:number" id="rnaduplex-deltaenergy" type="number" value="0" min="0" step="0.5">
                                             <span><code>kcal/mol</code></span>
                                             <p>
-                                                The computed free energy of all returned interactions will be within 
-                                                the defined range away from the minimum free energy interaction solution. 
+                                                The computed free energy of all returned interactions will be within
+                                                the defined range away from the minimum free energy interaction solution.
                                                 Higher values will return more potential interactions.
                                             </p>
                                         </div>
@@ -225,7 +225,7 @@
                             </div>
                             <input class="button-large button-black" type="submit" id="submit-button" value="Submit Analysis">
                         </fieldset>
-                    </form>    
+                    </form>
                 </div>
                 <hr>
                 <small>{{ footer|safe }}</small>

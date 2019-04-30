@@ -1,15 +1,37 @@
-FROM python:3.5
+# unfortunately, CNEFinder's requirements are quite specific, and so the easiest way
+# to install everything nicely is to work off of the bioconductor docker image. In the
+# future, a nicer solution would be to work from a generic Linux image and obtain only
+# the very necessary requirements
+FROM bioconductor/release_core2
 
-# install any system requirements
-RUN apt-get update && apt-get install -y \
+# install any system requirements - including a basic python 3 install
+RUN apt-get update && apt-get upgrade -y --fix-missing
+RUN apt-get update && apt-get install -y --no-install-recommends \
+	locate \
+	libssl-dev \
+	libffi-dev \
+	libffi-dev \
+	libbz2-dev \
+	liblzma-dev \
+	libpcre3-dev \
+	python3.5 \
+	python3-pip \
+	python3-setuptools \
+	python3-dev \
+	python3-wheel \
+	python3.5-gdbm \
+	libreadline-dev \
 	libgsl2 \
 	libgsl-dev \
 	libmpfr-dev \
 	texlive-binaries \
+	texlive-font-utils \
 	build-essential \
 	libboost-all-dev \
 	autotools-dev \
-	autoconf
+	automake \
+	autoconf \
+	curl
 
 # install viennarna binaries and development libraries
 RUN curl -L https://www.tbi.univie.ac.at/RNA/download/debian/debian_9_0/viennarna_2.4.11-1_amd64.deb --output viennarna.deb
@@ -28,17 +50,27 @@ RUN cd IntaRNA-2.4.0 && chmod a+x autotools-init.sh && ./autotools-init.sh && ./
 # clean up
 RUN rm viennarna.deb && rm viennarna-dev.deb && rm intarna.tar.gz && rm -r IntaRNA-2.4.0
 
+# add and build cnefinder - do this before adding all files for better caching
+ADD ./cnefinder /app/cnefinder
+WORKDIR /app/cnefinder/source
+RUN bash -c ./pre-install.sh
+RUN make -f Makefile
+
 # install python requirements - do this before adding all files for better caching
-ADD requirements.txt /app/requirements.txt
-RUN pip install -r /app/requirements.txt
+ADD requirements.web.txt /app/requirements.web.txt
+ADD requirements.celery.txt /app/requirements.celery.txt
+RUN pip3 install -r /app/requirements.web.txt
+RUN pip3 install -r /app/requirements.celery.txt
+
+RUN pip3 install rpy2==2.9.4
 
 # add all files to the working directory
 ADD . /app
-WORKDIR /app
 
 # make two directories on the system to store worker logs
 RUN mkdir -p /var/log/celery
 RUN mkdir -p /var/run/celery
 
 # define the container start script
+WORKDIR /app
 ENTRYPOINT ["sh", "celery_start_script.sh"]

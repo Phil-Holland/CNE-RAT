@@ -2,7 +2,7 @@ import sys, time, subprocess, base64, os
 sys.path.append('..')
 from app import celery
 from flask import Markup
-from .shared import create_working_dir, get_sequences_from_fasta
+from shared import create_working_dir, get_sequences_from_fasta
 
 # define the main report templates here, and fill out the contents later:
 # overall report template
@@ -99,6 +99,17 @@ following query sequence:
 """
 
 def convert_ps_to_svg(filename, working_dir):
+    """takes a PostScript file on the filesystem, and converts it to the SVG
+    format using 'dvisvgm'.
+
+    Args:
+        filename: a string filename representing the desired ps file
+        working_dir: which directory to run the command in
+    
+    Returns:
+        the string contents of the SVG file (SVG is not a binary file format)
+    """
+    
     p = subprocess.Popen(['dvisvgm', '-E', filename, '-v', '0', 
         '-o', filename + '.svg'],
         cwd=working_dir,
