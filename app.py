@@ -65,20 +65,24 @@ cneat_metadata = dict(
 
 @app.route('/')
 def index():
-    '''route for the site's homepage - render the simple index template'''
+    """route for the site's homepage - render the simple index template"""
     return render_template('index.html')
 
 @app.route('/cneat')
 def cneat():
+    """route for the CNEAT analysis configuration interface"""
     return render_template('cneat.html', schema=schema_cneat, **cneat_metadata)
 
 @app.route('/cnefinder')
 def cnefinder():
+    """route for the CNEFinder job configuration interface"""
     return render_template('cnefinder.html', schema=schema_cnefinder, **cnefinder_metadata)
 
 @app.route('/check_url', methods=['POST'])
 def check_url():
-    data = request.get_json(force=True) #json.loads(request.data)
+    """simple POST request endpoint to check a CNEFinder biomart URL"""
+
+    data = request.get_json(force=True)
     path = "/biomart/martservice"
     payload = {'type': 'registry', 'requestid': 'biomaRt'}
 
@@ -111,7 +115,9 @@ def check_url():
 
 @app.route('/find_datasets', methods=['POST'])
 def find_datasets():
-    data = request.get_json(force=True) #json.loads(request.data)
+    """POST request endpoint to find available datasets at a given biomart URL"""
+
+    data = request.get_json(force=True)
     path = "/biomart/martservice"
 
     mart = data.get('mart')
@@ -145,6 +151,8 @@ def find_datasets():
 
 @app.route('/output/<uid>')
 def output(uid):
+    """route for the CNEFinder results interface"""
+
     # make sure the cnefinder exists
     if not redis.exists('cnefinder:' + uid):
         return abort(404)
@@ -156,6 +164,8 @@ def output(uid):
 
 @app.route('/get_cnefinder_status/<uid>', methods=['POST'])
 def get_cnefinder_status(uid):
+    """simple POST request to check the status of an active/failed/finished CNEFinder job"""
+
     # make sure the analysis exists
     if not redis.exists('cnefinder:' + uid):
         return abort(404)
@@ -173,6 +183,8 @@ def get_cnefinder_status(uid):
 
 @app.route('/new_cnefinder', methods=['POST'])
 def new_cnefinder():
+    """POST request endpoint to create a new CNEFinder job"""
+
     # get cnefinder run start time
     started = datetime.datetime.utcnow().strftime("%H:%M:%S %Y-%m-%d")
     config = request.get_json(force=True)
@@ -198,8 +210,8 @@ def new_cnefinder():
 
 @app.route('/analysis/<uid>')
 def analysis(uid):
-    '''returns the analysis page for the analysis specified by its unique identifier
-    passes through the stored start time and full initial json config'''
+    """returns the analysis page for the analysis specified by its unique identifier
+    passes through the stored start time and full initial json config"""
 
     # make sure the analysis exists
     if not redis.exists('analyses:' + uid):
@@ -213,8 +225,8 @@ def analysis(uid):
 
 @app.route('/get_analysis_status/<uid>', methods=['POST'])
 def get_analysis_status(uid):
-    '''POST request endpoint to poll for analysis status - returns the status of each
-    component task involved in the analysis'''
+    """POST request endpoint to poll for analysis status - returns the status of each
+    component task involved in the analysis"""
 
     # make sure the analysis exists
     if not redis.exists('analyses:' + uid):
@@ -237,8 +249,8 @@ def get_analysis_status(uid):
 
 @app.route('/get_task_data/<tid>', methods=['POST'])
 def get_task_data(tid):
-    '''POST request endpoint to return the output data from a specific task, 
-    identified by it's unique id'''
+    """POST request endpoint to return the output data from a specific task, 
+    identified by it's unique id"""
 
     res = celery.AsyncResult(tid)
     if res.state == 'SUCCESS':
@@ -251,7 +263,7 @@ def get_task_data(tid):
 
 @app.route('/new_analysis', methods=['POST'])
 def new_analysis():
-    '''POST request endpoint to create and start a new analysis'''
+    """POST request endpoint to create and start a new analysis"""
 
     # get analysis start time
     started = datetime.datetime.utcnow().strftime("%H:%M:%S %Y-%m-%d")
