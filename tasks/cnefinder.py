@@ -46,7 +46,6 @@ Column | Description
 
 """
 
-
 @celery.task(name='cnefinder')
 def cnefinder(config, uid):
     # create a working directory, based on the task uid

@@ -27,6 +27,12 @@ CNE-RAT includes two sub-tools, **CNE-Finder** and **CNEAT**. CNE-Finder provide
 
 These instructions will get you a copy of CNE-RAT up and running on your local machine for personal use or development purposes. See deployment for notes on how to deploy the project on a live system.
 
+The project code can be downloaded using **Git**, from this very repository using the following command:
+
+```bash
+git clone --recursive https://github.com/Phil-Holland/CNE-RAT.git
+```
+
 ### Prerequisites
 
 This application has been developed using **Docker** - all important requirements are downloaded automatically by the Docker build script. Please install the following on your machine:

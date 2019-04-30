@@ -205,6 +205,14 @@ def new_cnefinder():
         # no if-blocks needed for task type gene-name or index-position, as they
         # are handled by the same python task script.
 
+    task = celery.send_task('cnefinder', (config, uid))
+    redis.lpush('analyses:' + uid + ':tasks',
+        json.dumps({
+            'task_name': 'cnefinder',
+            'task_id': task.task_id
+        })
+    )
+    
     return json.dumps({'success': True, 'uid': uid}), 200, {'ContentType':'application/json'}
 
 
