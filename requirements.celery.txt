@@ -3,6 +3,5 @@ tornado>=4.2.0,<6.0.0
 biopython==1.73
 werkzeug==0.14.1
 pandas==0.24.2
-gunicorn==19.9.0
 biopython==1.73
 tzlocal==1.5.1
