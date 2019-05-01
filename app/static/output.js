@@ -61,19 +61,19 @@ var update = function() {
     // get task status from flask
     $.post('/get_cnefinder_status/' + uid, function(data) {
         data = JSON.parse(data);
+        console.log(data);
         if(data.success) {
             // if status has changed, update everything
-            if(last_status != data.statuses[0]) {
-                $('#status').html(data.statuses[0]);
+            if(last_status != data.statuses[0].status) {
+                $('#status').html(data.statuses[0].status);
                 if(data.statuses[0] == 'SUCCESS') {
                     update_content(data.statuses[0].id, data.statuses[0].name);
-                } else if(data.statuses[0] == 'FAILURE') {
+                } else if(data.statuses[0].status == 'FAILURE') {
                     $('#task-content').html(failure_text);
                 }
-                last_status = data.statuses[0];
+                last_status = data.statuses[0].status
             }
         }
-        $('#status').html('PROCESSING');
         // check again after 10 seconds
         setTimeout(update, 10000);
     });

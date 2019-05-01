@@ -9,8 +9,8 @@ from shared import create_working_dir, get_sequences_from_fasta
 from ftplib import FTP
 
 # don't know if this will work
-import cnefinder.scripts.parse_bed as parse_bed
-import cnefinder.scripts.pre_process as pre_process
+from cnefinder.scripts.parse_bed import main
+from cnefinder.scripts.pre_process import main
 
 cnefinder_template = """
 # CNEFinder Run Output

@@ -30,7 +30,7 @@ sys.path.append('tasks')
 celery = Celery(app.name, 
     backend=app.config['CELERY_RESULT_BACKEND'],
     broker=app.config['CELERY_BROKER_URL'],
-    include=['protein', 'viennarna', 'intarna', 'cnefinder', 'shared'],
+    include=['protein_celery', 'viennarna_celery', 'intarna_celery', 'cnefinder_celery'],
     result_expires=None)
 celery.conf.update(app.config)
 
@@ -43,11 +43,13 @@ schema_cneat_json = None
 schema_cnefinder = ''
 schema_cnefinder_json = None
 
-with open("schemas/cneat.schema.json") as f:
+with open(os.path.dirname(os.path.abspath(__file__)) + 
+    "/schemas/cneat.schema.json") as f:
     schema_cneat = f.read()
     schema_cneat_json = json.loads(schema_cneat)
 
-with open("schemas/cnefinder.schema.json") as g:
+with open(os.path.dirname(os.path.abspath(__file__)) + 
+    "/schemas/cnefinder.schema.json") as g:
     schema_cnefinder = g.read()
     schema_cnefinder_json = json.loads(schema_cnefinder)
 
@@ -171,7 +173,7 @@ def get_cnefinder_status(uid):
         return abort(404)
 
     tasks = redis.lrange('cnefinder:' + uid + ':tasks', 0, -1)
-
+    
     statuses = []
     for t in tasks:
         t = json.loads(t.decode('UTF-8'))
@@ -206,7 +208,7 @@ def new_cnefinder():
         # are handled by the same python task script.
 
     task = celery.send_task('cnefinder', (config, uid))
-    redis.lpush('analyses:' + uid + ':tasks',
+    redis.lpush('cnefinder:' + uid + ':tasks',
         json.dumps({
             'task_name': 'cnefinder',
             'task_id': task.task_id
