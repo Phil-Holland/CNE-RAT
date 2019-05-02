@@ -84,9 +84,14 @@
 
                             <div class="general-config">
                                 <label for="min-cne-length">Minimum CNE length:</label>
+                                <p>This sets the minimum sequence length of returned CNEs.</p>
                                 <input type="number" id="min-cne-length" min="1" value="100">
                                 <br>
                                 <label for="sim-threshold">Similarity threshold:</label>
+                                <p>
+                                    This defines the similarity threshold for CNEFinder's underlying
+                                    <b>k-mers maximal exact match-based</b> algorithm.
+                                </p>
                                 <input type="number" id="sim-threshold" min="0" max="1" step="0.01" value="0.95">
                                 <br>
                             </div>
