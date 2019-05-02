@@ -34,8 +34,19 @@
                     <form id="config-form">
                         <fieldset>
                             <label for="ensembl-site">Ensembl site (or site archive) URL for reference genome:</label>
+                            <p>
+                                For example: 
+                                <br>
+                                <code>https://www.ensembl.org</code>
+                                <br>
+                                <code>http://metazoa.ensembl.org</code>
+                                <br>
+                                <code>https://jul2016.archive.ensembl.org</code>
+                                <br>
+                                <i>Remember to format the URL as it appears in your browser.</i>
+                            </p>
                             <input type="url" name="ensembl-site-ref" id="ensembl-site-ref"  placeholder="https://www.ensembl.org/" required>
-                            <div id="ref-site-val-error"style="display: none;" >
+                            <div id="ref-site-val-error" class="error-info" style="display: none;" >
                                 <b>Error!</b>
                                 Please ensure URL corresponds to a valid Ensembl site.
                             </div>
@@ -54,7 +65,7 @@
 
                             <label for="ensembl-site">Ensembl site (or site archive) URL for query genome:</label>
                             <input type="url" name="ensembl-site-query" id="ensembl-site-query" placeholder="https://www.ensembl.org/" required>
-                            <div id="query-site-val-error" style="display: none;">
+                            <div id="query-site-val-error" class="error-info" style="display: none;">
                                 <b>Error!</b>
                                 Please ensure URL corresponds to a valid Ensembl site.
                             </div>

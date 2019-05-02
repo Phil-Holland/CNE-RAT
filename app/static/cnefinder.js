@@ -157,8 +157,8 @@ $(function() {
                 'query_site': $('#ensembl-site-query').val(),
                 'ref_mart': $('#ref-mart-dropdown option:selected').val(),
                 'query_mart': $('#query-mart-dropdown option:selected').val(),
-                'ref_dataset': $('#ref-dataset-dropdown option:selected').val(),
-                'query_dataset': $('#query-dataset-dropdown option:selected').val(),
+                'ref_dataset': $('#ref-dataset-dropdown option:selected').attr('title'),
+                'query_dataset': $('#query-dataset-dropdown option:selected').attr('title'),
 
             },
             'general_config': {

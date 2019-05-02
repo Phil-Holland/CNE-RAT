@@ -96,23 +96,26 @@ def check_url():
         if urlstring[-1] == '/': # trim trailing forward slash if necessary
             urlstring = urlstring[:-1]
 
-        r = requests.post(urlstring + path, data=payload)
+        try:
+            r = requests.post(urlstring + path, data=payload)
+            # if no valid marts, likely to return 404
+            if r.status_code != 200:
+                flag = False
+            else:
+                tree = ET.ElementTree(ET.fromstring(r.text))
+                root = tree.getroot()
 
-        # if no valid marts, likely to return 404
-        if r.status_code != 200:
+                # parse xml reponse as tree looking for `visible` biomarts
+                for child in root:
+                    attributes = child.attrib
+                    if attributes.get('visible', "0") == "1":
+
+                        content[attributes.get('name')] = {
+                            'displayName': attributes.get('displayName'),
+                            'database': attributes.get('database') }
+        except Exception as e:
             flag = False
-        else:
-            tree = ET.ElementTree(ET.fromstring(r.text))
-            root = tree.getroot()
-
-            # parse xml reponse as tree looking for `visible` biomarts
-            for child in root:
-                attributes = child.attrib
-                if attributes.get('visible', "0") == "1":
-
-                    content[attributes.get('name')] = {
-                        'displayName': attributes.get('displayName'),
-                        'database': attributes.get('database') }
+            
     return json.dumps({'success': flag, 'content': content}), 200, {'ContentType':'application/json'}
 
 @app.route('/find_datasets', methods=['POST'])
@@ -173,7 +176,7 @@ def get_cnefinder_status(uid):
         return abort(404)
 
     tasks = redis.lrange('cnefinder:' + uid + ':tasks', 0, -1)
-    
+
     statuses = []
     for t in tasks:
         t = json.loads(t.decode('UTF-8'))

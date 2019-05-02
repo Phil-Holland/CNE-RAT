@@ -48,10 +48,10 @@ var update_content = function(tid, name) {
 $('#config-toggle').click(function() {
     if($("#config").is(':visible')) {
         $("#config").slideUp();
-        $('#config-toggle').html("Show analysis configuration")
+        $('#config-toggle').html("Show job configuration")
     } else {
         $("#config").slideDown();
-        $('#config-toggle').html("Hide analysis configuration")
+        $('#config-toggle').html("Hide job configuration")
     }
 });
 
