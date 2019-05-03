@@ -86,11 +86,13 @@ def cnefinder(config, uid):
 
     # unzip downloaded .fa.gz files
     for idx, f in enumerate(fasta_filenames):
-        with gzip.open(f, 'rb') as f_in:
-            with open(trimmed_filenames[idx], 'wb') as f_out:
+        gz_path = "{}/{}".format(working_dir, f)
+        with gzip.open(gz_path, 'rb') as f_in:
+            new_path = "{}/{}".format(working_dir, trimmed_filenames[idx])
+            with open(new_path, 'wb') as f_out:
                 shutil.copyfileobj(f_in, f_out)
         # now delete gzip
-        os.remove(f)
+        os.remove(gz_path)
 
     #---------------------------------------------
     # Define output filenames
