@@ -52,6 +52,12 @@ def cnefinder(config, uid):
     working_dir = create_working_dir(uid, 'cnefinder')
 
 
+    # whilst we haven't moved on to the serialize-based config validation,
+    # we need to remove the dicts items where value = ""
+    empty_keys = [k for k,v in config.items() if  v is not None]
+    for k in empty_keys:
+        del config[k]
+
     # retrieve relevant fields from configuration object
     ensembl_config = config['ensembl_request_config']
 
