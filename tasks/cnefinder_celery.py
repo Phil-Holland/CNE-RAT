@@ -98,7 +98,7 @@ def cnefinder(config, uid):
     # Define output filenames
     #---------------------------------------------
     bed_file = '{}/outfile.bed'.format(working_dir)
-    env_file = '{}/.env'.format(working_dir)
+    env_file = '{}/metadata.txt'.format(working_dir)
     r_cnes = '{}/ref_cnes.fa'.format(working_dir)
     q_cnes = '{}/query_cnes.fa'.format(working_dir)
     json_table = '{}/table.json'.format(working_dir)
