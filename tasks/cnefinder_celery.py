@@ -54,7 +54,7 @@ def cnefinder(config, uid):
 
     # whilst we haven't moved on to the serialize-based config validation,
     # we need to remove the dicts items where value = ""
-    empty_keys = [k for k,v in config.items() if  v is not None]
+    empty_keys = [k for k,v in config.items() if v is None]
     for k in empty_keys:
         del config[k]
 
