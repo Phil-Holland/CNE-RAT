@@ -77,8 +77,8 @@ def cnefinder(config, uid):
 
     # download FASTA files and return filenames
     fasta_filenames = [
-        download_fasta_file(ref_info),
-        download_fasta_file(query_info)]
+        download_fasta_file(ref_info, working_dir),
+        download_fasta_file(query_info, working_dir)]
 
     # create environment file in working directory
     trimmed_filenames = [name[:-3] for name in fasta_filenames]
@@ -170,12 +170,13 @@ def get_release_no(ensembl_url, mart_name):
     return "release-{}".format(number)
 
 
-def download_fasta_file(info_list):
+def download_fasta_file(info_list, working_dir):
     """Downloads masked FASTA file from ensembl ftp server(s).
 
     Args:
         info_list: a list containing information pertaining to the
             reference ensembl dataset.
+        working_dir: the temporary directory to download the files to.
 
     info_list = [reference_dataset, reference_url, reference_mart, release_no]
 
@@ -214,7 +215,8 @@ def download_fasta_file(info_list):
     fasta_file = find_file_from_pattern(ftp, fasta_pattern)
 
     # download file
-    with open(fasta_file, 'wb') as f:
+    download_path = "{}/{}".format(working_dir, fasta_file)
+    with open(download_path, 'wb') as f:
         ftp.retrbinary('RETR ' + fasta_file, f.write)
 
     return fasta_file
