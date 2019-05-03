@@ -117,6 +117,7 @@ def cnefinder(config, uid):
     #---------------------------------------------
     # Run parse_bed.main() from CNEFinder package
     #---------------------------------------------
+    os.environ['APP_ENV'] = 'docker'
     parse_main(bed_file, env_file, r_cnes, q_cnes, json_table)
 
     #---------------------------------------------
