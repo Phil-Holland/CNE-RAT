@@ -76,7 +76,7 @@ def cnefinder(config, uid):
 
     # create environment file in working directory
     trimmed_filenames = [name[:-3] for name in fasta_filenames]
-    json_to_env_file(config, working_dir, trimmed_filenames, debug=True)
+    json_to_env_file(config, working_dir, trimmed_filenames, env_name='metadata.txt', debug=True)
 
     # unzip downloaded .fa.gz files
     for idx, f in enumerate(fasta_filenames):
@@ -99,7 +99,7 @@ def cnefinder(config, uid):
     # Run preprocess.main() from CNEFinder package
     #---------------------------------------------
     os.environ['LD_LIBRARY_PATH'] += os.pathsep + "/usr/local/lib/R/lib"
-    pre_process_main(working_dir=working_dir)
+    pre_process_main(working_dir=working_dir, meta_name='metadata.txt')
 
     #---------------------------------------------
     # Run shell script to launch CNEFinder
@@ -252,7 +252,7 @@ def find_file_from_pattern(ftp, pattern):
     return path
 
 
-def json_to_env_file(config, working_dir, fasta_filenames, debug=True):
+def json_to_env_file(config, working_dir, fasta_filenames, env_name='metadata.txt', debug=True):
     """Produces .env file from JSON object.
 
     Args:
@@ -286,6 +286,6 @@ def json_to_env_file(config, working_dir, fasta_filenames, debug=True):
     envs.append("EXONS_QUERY_FILE={}/query_exons".format(working_dir))
     envs.append("OUTPUT_PATH={}/outfile.bed".format(working_dir))
 
-    with open('.env', 'w') as f:
+    with open(env_name, 'w') as f:
         for e in envs:
             f.write("{}\n".format(e))
