@@ -271,14 +271,18 @@ def json_to_env_file(config, working_dir, fasta_filenames, env_name='metadata.tx
         debug: a boolean flag that allows for additional
             debug printing.
     """
+    # if sub_v is not None:
+    # this is temporary handling of empty sub-values
+    # if we move to serialize validation can remove
     envs = []
     for k, v in config.items():
         if isinstance(v, dict):
             for sub_k, sub_v in v.items():
-                if 'site' in sub_k:
+                if 'host' in sub_k:
                     url = sub_v[:-1] if sub_v[-1] == '/' else sub_v
                     sub_v = url.split('.', 1)[1]
-                envs.append("{}={}".format(sub_k.upper(), sub_v))
+                if sub_v is not None:
+                    envs.append("{}={}".format(sub_k.upper(), sub_v))
         else:
             envs.append("{}={}".format(k.upper(), v))
 
