@@ -285,7 +285,8 @@ def json_to_env_file(config, working_dir, fasta_filenames, env_name='metadata.tx
                 if sub_v is not None:
                     envs.append("{}={}".format(sub_k.upper(), sub_v))
         else:
-            envs.append("{}={}".format(k.upper(), v))
+            if v is not None:
+                envs.append("{}={}".format(k.upper(), v))
 
     if debug:
         print("Contents of config object:\n{}".format(envs))
