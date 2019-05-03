@@ -62,11 +62,11 @@ def cnefinder(config, uid):
     ensembl_config = config['ensembl_request_config']
 
     reference_dataset = ensembl_config['ref_dataset']
-    reference_url     = ensembl_config['ref_site']
+    reference_url     = ensembl_config['ref_host']
     reference_mart    = ensembl_config['ref_mart']
 
     query_dataset = ensembl_config['query_dataset']
-    query_url     = ensembl_config['query_site']
+    query_url     = ensembl_config['query_host']
     query_mart    = ensembl_config['query_mart']
 
     ref_release = get_release_no(reference_url, reference_mart)

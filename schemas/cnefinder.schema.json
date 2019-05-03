@@ -9,11 +9,11 @@
 			"description": "Configuration options for the requests that will be made to the user-submitted ensembl sites",
 			"type": "object",
 			"properties": {
-				"ref_site": {
+				"ref_host": {
 					"description": "A string holding the URL of the ensembl site/archive containing the reference genome",
 					"type": "string"
 				},
-				"query_site": {
+				"query_host": {
 					"description": "A string holding the URL of the ensembl site/archive containing the query genome",
 					"type": "string"
 				},
@@ -35,8 +35,8 @@
 				}
 			},
 			"required": [
-				"ref_site",
-				"query_site",
+				"ref_host",
+				"query_host",
 				"ref_mart",
 				"query_mart",
 				"ref_dataset",
