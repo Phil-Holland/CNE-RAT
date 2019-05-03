@@ -122,7 +122,7 @@ def cnefinder(config, uid):
         for k, v in env_dict.items():
             my_env[k] = str(v)
 
-    subprocess.call(['/app/cnefinder/source/run.sh'], env=my_env)
+    subprocess.call(['/app/tasks/cnefinder_celery.sh'], env=my_env)
 
     #---------------------------------------------
     # Run parse_bed.main() from CNEFinder package
