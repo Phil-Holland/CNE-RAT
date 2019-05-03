@@ -294,6 +294,7 @@ def json_to_env_file(config, working_dir, fasta_filenames, env_name='metadata.tx
     envs.append("EXONS_QUERY_FILE={}/query_exons".format(working_dir))
     envs.append("OUTPUT_PATH={}/outfile.bed".format(working_dir))
 
-    with open(env_name, 'w') as f:
+    meta_path = "{}/{}".format(working_dir, env_name)
+    with open(meta_path, 'w') as f:
         for e in envs:
             f.write("{}\n".format(e))
