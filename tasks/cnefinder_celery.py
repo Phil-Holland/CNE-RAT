@@ -147,7 +147,7 @@ def get_release_no(ensembl_url, mart_name):
         urlstring = urlstring[:-1]
 
     r = requests.post(urlstring + path, data=payload)
-    print(r.text)
+    #print(r.text)
 
     tree = ET.ElementTree(ET.fromstring(r.text))
     root = tree.getroot()
@@ -180,14 +180,14 @@ def download_fasta_file(info_list):
     url = info_list[1]
     release_no = info_list[3]
 
-    non_standards = ["metazoa, plants, fungi, bacteria"]
+    non_standards = ["metazoa", "plants", "fungi", "bacteria"]
 
     base = "ftp.ensembl.org"
-    top = "/pub/{}/".format(release_no)
+    top = "/pub/{}/fasta/".format(release_no)
     for elem in non_standards:
         if elem in url:
-            base = "ftp://ftp.ensemblgenomes"
-            top = "/pub/{}/{}/".format(elem, release_no)
+            base = "ftp.ensemblgenomes.org"# "ftp://ftp.ensemblgenomes.org"
+            top = "/pub/{}/{}/fasta/".format(elem, release_no)
             break
 
     # Login to the ensembl ftp server
