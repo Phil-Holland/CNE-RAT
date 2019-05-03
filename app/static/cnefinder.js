@@ -153,8 +153,8 @@ $(function() {
         // get form data, and attempt to build config object
         config = {
             'ensembl_request_config': {
-                'ref_site': $('#ensembl-site-ref').val(),
-                'query_site': $('#ensembl-site-query').val(),
+                'ref_host': $('#ensembl-site-ref').val(),
+                'query_host': $('#ensembl-site-query').val(),
                 'ref_mart': $('#ref-mart-dropdown option:selected').val(),
                 'query_mart': $('#query-mart-dropdown option:selected').val(),
                 'ref_dataset': $('#ref-dataset-dropdown option:selected').attr('title'),
